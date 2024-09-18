@@ -1,0 +1,15 @@
+
+
+quarkus:
+  datasource:
+    db-kind: postgresql
+  hibernate-orm:
+    database:
+      generation: update
+
+
+"%dev":
+  quarkus:
+    hibernate-orm:
+      database:
+        generation: drop-and-create
