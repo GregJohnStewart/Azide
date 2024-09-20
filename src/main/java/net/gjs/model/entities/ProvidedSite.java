@@ -24,6 +24,7 @@ public class ProvidedSite extends PanacheEntityBase {
 
     @NotNull
     @Basic(optional=false)
+    @Column(unique=true)
     public URL url;
 
     @Version

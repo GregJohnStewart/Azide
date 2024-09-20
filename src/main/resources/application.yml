@@ -6,7 +6,15 @@ quarkus:
   hibernate-orm:
     database:
       generation: update
-
+  oidc:
+    client-id: azide
+    application-type: web-app
+  http:
+    auth:
+      permission:
+        authenticated:
+          paths: /*
+          policy: authenticated
 
 "%dev":
   quarkus:
