@@ -1,8 +1,8 @@
-package net.gjs.interfaces.ui;
+package net.gjs.azide.interfaces.ui;
 
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
-import net.gjs.interfaces.RestInterface;
+import net.gjs.azide.interfaces.RestInterface;
 
 public abstract class UiInterface extends RestInterface {
 

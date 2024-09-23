@@ -1,11 +1,12 @@
-package net.gjs.service;
+package net.gjs.azide.service;
 
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import net.datafaker.Faker;
-import net.gjs.model.entities.Person;
+import net.gjs.azide.entities.model.Person;
+import net.gjs.azide.service.PersonRepository;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;

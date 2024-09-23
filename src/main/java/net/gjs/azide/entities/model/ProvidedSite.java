@@ -1,14 +1,20 @@
-package net.gjs.model.entities;
+package net.gjs.azide.entities.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.UUID;
-
+@Getter
+@Setter
 @Entity
+@ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProvidedSite extends PanacheEntityBase {
     @Id
     @GeneratedValue
@@ -16,16 +22,18 @@ public class ProvidedSite extends PanacheEntityBase {
 
     @NotNull
     @Basic(optional=false)
-    public String title;
+    private String title;
 
     @NotNull
     @Basic(optional=false)
-    public String description;
+    private String description;
 
     @NotNull
     @Basic(optional=false)
     @Column(unique=true)
-    public URL url;
+    private URL url;
+
+    //TODO:: image
 
     @Version
     LocalDateTime lastUpdated;

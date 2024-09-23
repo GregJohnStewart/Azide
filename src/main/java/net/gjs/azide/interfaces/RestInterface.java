@@ -1,4 +1,4 @@
-package net.gjs.interfaces;
+package net.gjs.azide.interfaces;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
@@ -8,8 +8,8 @@ import jakarta.ws.rs.core.SecurityContext;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import net.gjs.model.entities.Person;
-import net.gjs.service.PersonRepository;
+import net.gjs.azide.entities.model.Person;
+import net.gjs.azide.service.PersonRepository;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package net.gjs.model.entities;
+package net.gjs.azide.entities.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;

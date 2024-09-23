@@ -15,9 +15,15 @@ quarkus:
         authenticated:
           paths: /*
           policy: authenticated
-
 "%dev":
   quarkus:
+    log:
+      level: DEBUG
     hibernate-orm:
       database:
         generation: drop-and-create
+  providedSites:
+    sites:
+    - title: Google
+      description: It's Google
+      url: https://google.com
