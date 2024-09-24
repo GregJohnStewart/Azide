@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en_us">
+<head>
+    <meta charset="UTF-8">
+    <title>Azide Viewer</title>
+    <link href="/res/lib/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/res/lib/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        html, body, .grid {
+            height: 100%;
+            padding: 0;
+        }
+        {#include components/viewer/viewerCss.qute.css /}
+
+    </style>
+</head>
+<body>
+
+
+<div class="grid">
+        {#include components/viewer/viewerHtml /}
+</div>
+
+
+<script src="/res/lib/jquery/3.7.1/jquery.min.js.js"></script>
+<script src="/res/lib/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="/res/lib/htmx/2.0.2/htmx.min.js"></script>
+<script src="/res/lib/htmx/extensions/json-enc/2.0.1/json-enc.js"></script>
+<script src="/res/lib/split-grid-js/1.0.11/split-grid.js"></script>
+<script>
+        {#include components/viewer/viewerJs.qute.js /}
+</script>
+</body>
+</html>

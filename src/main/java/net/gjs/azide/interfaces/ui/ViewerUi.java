@@ -15,17 +15,33 @@ import net.gjs.azide.service.ProvidedSiteRepository;
 public class ViewerUi extends UiInterface {
 
     @Getter
-    @Location("pages/viewer")
+    @Location("pages/viewerPage")
     Template pageTemplate;
+
+    @Getter
+    @Location("components/viewer/viewerPane")
+    Template paneTemplate;
 
     @Inject
     ProvidedSiteRepository providedSiteRepository;
 
+
+
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public TemplateInstance get() {
+    public TemplateInstance getViewer() {
         return this.getDefaultPageSetup()
                 .data("providedSites", providedSiteRepository.findAll().list());
     }
+
+    @GET
+    @Path("pane")
+    @Produces(MediaType.TEXT_HTML)
+    public TemplateInstance getPane() {
+        return this.getDefaultPageSetup(this.getPaneTemplate())
+                .data("providedSites", providedSiteRepository.findAll().list());
+    }
+
+
 
 }

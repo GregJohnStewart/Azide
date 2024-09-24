@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en_us">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello {name ?: "Qute"}</title>
+    <link href="/res/lib/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/res/lib/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+    <style>
+    </style>
+</head>
+<body class="min-vh-100 vstack">
+
+<div class="container-fluid min-vh-100 d-flex flex-column" style="">
+    <main id="mainContent">
+        <div class="row">
+            <div class="col">
+                <h1>
+                    Hello {user.getName()}
+                </h1>
+                <ol>
+                    {#for curProvidedSite in providedSites}
+                        <li>
+                            <a href="{curProvidedSite.getUrl()}" title="Go to {curProvidedSite.getTitle()}">{curProvidedSite.getTitle()}</a>
+                            <a href="{curProvidedSite.getUrl()}" title="Go to {curProvidedSite.getTitle()} in new tab." target="_blank">
+                                <i class="bi bi-box-arrow-up-right"></i>
+                            </a>
+                        </li>
+                    {/for}
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <form class="customNavigationForm">
+                    <div class="input-group input-group-lg">
+                        <input type="url" class="form-control" placeholder="Url" aria-label="Url to navigate to." name="navigationUrl">
+                        <button class="btn btn-outline-success" type="button" title="Go to URL">
+                            <i class="bi bi-box-arrow-right"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="/res/lib/jquery/3.7.1/jquery.min.js.js"></script>
+<script src="/res/lib/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="/res/lib/htmx/2.0.2/htmx.min.js"></script>
+<script src="/res/lib/htmx/extensions/json-enc/2.0.1/json-enc.js"></script>
+<script>
+    $(".customNavigationForm").on("submit", function (e){
+       e.preventDefault();
+       let form = $(this);
+       let navUrl = form.find('input[name="navigationUrl"]').val();
+       console.log("Navigating to : ", navUrl);
+       window.location.href  = navUrl;
+    });
+</script>
+</body>
+</html>
