@@ -24,6 +24,15 @@ quarkus:
         generation: drop-and-create
   providedSites:
     sites:
-    - title: Google
-      description: It's Google
-      url: https://google.com
+      - title: Google
+        description: It's Google
+        url: https://google.com
+      - title: Yahoo
+        description: Yahoooooo
+        url: https://yahoo.com
+      - title: Facebook
+        description: No privacy here
+        url: https://facebook.com
+      - title: Red Hat
+        description: It's neat
+        url: https://redhat.com

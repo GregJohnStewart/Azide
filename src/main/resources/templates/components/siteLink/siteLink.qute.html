@@ -1,0 +1,15 @@
+<div class="card">
+    <h5 class="card-header">
+        {providedSite.getTitle()}
+        {!<a href="{providedSite.getUrl()}" aria-label="Open in new tab" target="_blank">!}
+            {!<i class="bi bi-box-arrow-up-right"></i>!}
+        {!</a>!}
+    </h5>
+    {!<img src="/media/{{$product->media[0]->id}}" class="card-img-top" alt="{{$product->name}}">!}
+    <div class="card-body">
+        <p class="card-text">
+            {providedSite.getDescription()}
+        </p>
+    </div>
+    <a href="{providedSite.getUrl()}" class="stretched-link"></a>
+</div>
