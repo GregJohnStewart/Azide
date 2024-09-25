@@ -5,56 +5,9 @@
     <title>Hello {name ?: "Qute"}</title>
     <link href="/res/lib/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/res/lib/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/res/css/cardCarousel.css">
     <style>
-        .card-carousel .carousel-inner {
-            padding: 1em;
-        }
 
-        .card-carousel .card {
-            margin: 0 0.5em;
-            box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
-            border: none;
-        }
-
-        .card-carousel .carousel-control-prev,
-        .card-carousel .carousel-control-next {
-            background-color: #e1e1e1;
-            width: 6vh;
-            height: 6vh;
-            border-radius: 50%;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        @media (min-width: 768px) {
-            .card-carousel .carousel-item {
-                margin-right: 0;
-                flex: 0 0 33.333333%;
-                display: block;
-            }
-
-            .carousel-inner {
-                display: flex;
-            }
-        }
-
-        .card-carousel .card .img-wrapper {
-            max-width: 100%;
-            height: 13em;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .card-carousel .card img {
-            max-height: 100%;
-        }
-
-        @media (max-width: 767px) {
-            .card-carousel .card .img-wrapper {
-                height: 17em;
-            }
-        }
     </style>
 </head>
 <body class="min-vh-100 vstack">
@@ -83,20 +36,6 @@
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
-
-
-                {!<ol>!}
-                    {!{#for curProvidedSite in providedSites}!}
-                        {!<li>!}
-                            {!<a href="{curProvidedSite.getUrl()}"!}
-                               {!title="Go to {curProvidedSite.getTitle()}">{curProvidedSite.getTitle()}</a>!}
-                            {!<a href="{curProvidedSite.getUrl()}" title="Go to {curProvidedSite.getTitle()} in new tab."!}
-                               {!target="_blank">!}
-                                {!<i class="bi bi-box-arrow-up-right"></i>!}
-                            {!</a>!}
-                        {!</li>!}
-                    {!{/for}!}
-                {!</ol>!}
             </div>
         </div>
         <div class="row">
@@ -119,6 +58,7 @@
 <script src="/res/lib/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
 <script src="/res/lib/htmx/2.0.2/htmx.min.js"></script>
 <script src="/res/lib/htmx/extensions/json-enc/2.0.1/json-enc.js"></script>
+<script src="/res/js/cardCarousel.js"></script>
 <script>
     $(".customNavigationForm").on("submit", function (e) {
         e.preventDefault();
@@ -127,40 +67,7 @@
         console.log("Navigating to : ", navUrl);
         window.location.href = navUrl;
     });
-    $(".card-carousel").each(function(i, multipleCardCarouselDiv){
-        console.log("Found card carousel: ", multipleCardCarouselDiv);
-        let multipleCardCarouselJq = $(multipleCardCarouselDiv);
-        if (window.matchMedia("(min-width: 768px)").matches) {
-            let carousel = new bootstrap.Carousel(multipleCardCarouselDiv, {
-                interval: false,
-            });
-            let carouselWidth = multipleCardCarouselJq.find(".carousel-inner")[0].scrollWidth;
-            let cardWidth = multipleCardCarouselJq.find(".carousel-item").width();
-            let scrollPosition = 0;
-            multipleCardCarouselJq.find(".carousel-control-next").on("click", function () {
-                console.log("Next Clicked")
-                if (scrollPosition < carouselWidth - cardWidth * 4) {
-                    scrollPosition += cardWidth;
-                    multipleCardCarouselJq.find(".carousel-inner").animate(
-                        { scrollLeft: scrollPosition },
-                        600
-                    );
-                }
-            });
-            multipleCardCarouselJq.find(".carousel-control-prev").on("click", function () {
-                console.log("Prev Clicked")
-                if (scrollPosition > 0) {
-                    scrollPosition -= cardWidth;
-                    multipleCardCarouselJq.find(".carousel-inner").animate(
-                        { scrollLeft: scrollPosition },
-                        600
-                    );
-                }
-            });
-        } else {
-            multipleCardCarouselJq.addClass("slide");
-        }
-    });
+
 </script>
 </body>
 </html>
