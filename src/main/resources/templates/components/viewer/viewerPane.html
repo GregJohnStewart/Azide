@@ -16,12 +16,14 @@
     <main id="mainContent">
         <div class="row">
             <div class="col">
-
+                <h1 class="h3">
+                    Provided Sites:
+                </h1>
                 <div id="providedLinksCarousel" class="carousel card-carousel">
                     <div class="carousel-inner">
                         {#for curProvidedSite in providedSites}
                             <div class="carousel-item {curProvidedSite.count==0 ? " active" : ""}">
-                                {#include components/siteLink/siteLink.qute.html providedSite=curProvidedSite /}
+                                    {#include components/siteLink/siteLink.qute.html providedSite=curProvidedSite /}
                             </div>
                         {/for}
                     </div>
@@ -38,6 +40,34 @@
                 </div>
             </div>
         </div>
+        {#if !user.getCustomSites().isEmpty()}
+        <div class="row">
+            <div class="col">
+                <h1 class="h3">
+                    Your Sites:
+                </h1>
+                <div id="userLinksCarousel" class="carousel card-carousel">
+                    <div class="carousel-inner">
+                        {#for curCustomSite in user.getCustomSites()}
+                            <div class="carousel-item {curCustomSite.count==0 ? " active" : ""}">
+                                    {#include components/siteLink/siteLink.qute.html providedSite=curCustomSite /}
+                            </div>
+                        {/for}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#userLinksCarousel"
+                            data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#userLinksCarousel"
+                            data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {/if}
         <div class="row">
             <div class="col text-center">
                 <form class="customNavigationForm">

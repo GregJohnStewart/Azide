@@ -25,8 +25,6 @@ public class ViewerUi extends UiInterface {
     @Inject
     ProvidedSiteRepository providedSiteRepository;
 
-
-
     @GET
     @Produces(MediaType.TEXT_HTML)
     public TemplateInstance getViewer() {
