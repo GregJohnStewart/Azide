@@ -10,7 +10,7 @@ public abstract class UiInterface extends RestInterface {
 
     protected TemplateInstance getDefaultPageSetup(Template template){
         return template
-                .data("user", this.requireAndGetEntity());
+                .data("user", this.getFullUser());
     }
 
     protected TemplateInstance getDefaultPageSetup(){

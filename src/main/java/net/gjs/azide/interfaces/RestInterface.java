@@ -1,7 +1,9 @@
 package net.gjs.azide.interfaces;
 
+import io.quarkus.narayana.jta.QuarkusTransaction;
 import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.ForbiddenException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.SecurityContext;
@@ -28,8 +30,16 @@ public abstract class RestInterface {
     @Context
     SecurityContext securityContext;
 
-    @Getter(AccessLevel.PROTECTED)
+    @Getter(AccessLevel.PRIVATE)
     Person user = null;
+
+    protected Person getFullUser(){
+        if(this.getUser() == null){
+            this.user = this.getPersonRepository().ensurePerson(this.getSecurityContext(), this.getUserToken());
+        }
+
+        return this.getUser();
+    }
 
     protected boolean hasAccessToken(){
         return this.getAccessToken() != null && this.getAccessToken().getClaimNames() != null;
@@ -46,33 +56,5 @@ public abstract class RestInterface {
             return this.getAccessToken();
         }
         return null;
-    }
-
-    private Optional<Person> logRequestAndProcessEntity() {
-        log.debug("JWT: {}", this.getAccessToken());
-        if (this.getSecurityContext().isSecure()) {
-            log.warn("Request with Auth made without HTTPS");
-        }
-
-        this.user = this.getPersonRepository().ensurePerson(this.getSecurityContext(), this.getUserToken());
-
-        log.info("Processing request with Auth; interacting entity: {}", user);
-        return Optional.of(this.user);
-    }
-
-    protected Person requireAndGetEntity() {
-        Person entity = this.getUser();
-
-        if(entity == null){
-            //TODO:: review this
-            throw new ForbiddenException("Required to have auth. No entity.");
-        }
-
-        return entity;
-    }
-
-    @PostConstruct
-    void initialLogAndEntityProcess(){
-        this.logRequestAndProcessEntity();
     }
 }
