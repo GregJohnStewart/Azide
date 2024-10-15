@@ -50,7 +50,7 @@ public class CustomSiteEndpoints extends RestInterface {
                     .person(user)
                     .title(newSiteJson.get("title").asText())
                     .description(newSiteJson.get("description").asText())
-                    .uri(new URI(newSiteJson.get("url").asText()))
+                    .uri(new URI(newSiteJson.get("uri").asText()))
                     .build();
         } catch (URISyntaxException e) {
             throw new IllegalArgumentException("Invalid URL given.", e);

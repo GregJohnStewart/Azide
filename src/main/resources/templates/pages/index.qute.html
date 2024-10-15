@@ -54,7 +54,7 @@
                     url: "/api/customSite",
                     dataType: "json"
                 }).done(function (response) {
-                    d.resolve(response.value);
+                    d.resolve(response);
                 });
 
                 return d.promise();
@@ -99,7 +99,7 @@
                 type: "textarea", width: 150
             },
             {
-                name: "url", type: "text"
+                name: "uri", type: "text"
                 //TODO:: url validator
             },
             {
