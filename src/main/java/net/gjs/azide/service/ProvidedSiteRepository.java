@@ -31,15 +31,15 @@ public class ProvidedSiteRepository implements PanacheRepository<ProvidedSite> {
         log.info("Populating provided sites.");
 
         for (ProvidedSitesConfig.Site curSite : this.providedSitesConfig.sites()) {
-            Optional<ProvidedSite> fromDb = this.find("url", curSite.url()).firstResultOptional();
+            Optional<ProvidedSite> fromDb = this.find("uri", curSite.uri()).firstResultOptional();
 
             if (fromDb.isEmpty()) {
-                log.debug("Adding new site: {}", curSite.url());
+                log.debug("Adding new site: {}", curSite.uri());
                 this.persist(
                         ProvidedSite.builder()
                                 .title(curSite.title())
                                 .description(curSite.description())
-                                .url(curSite.url())
+                                .uri(curSite.uri())
                                 .build()
                 );
             }

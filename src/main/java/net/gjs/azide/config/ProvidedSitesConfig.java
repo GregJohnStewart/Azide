@@ -2,6 +2,7 @@ package net.gjs.azide.config;
 
 import io.smallrye.config.ConfigMapping;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface ProvidedSitesConfig {
     interface Site {
         String title();
         String description();
-        URL url();
+        URI uri();
 
         //TODO:: image
     }

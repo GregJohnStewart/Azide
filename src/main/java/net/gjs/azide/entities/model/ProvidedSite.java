@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.net.URI;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -31,7 +32,7 @@ public class ProvidedSite extends PanacheEntityBase {
     @NotNull
     @Basic(optional=false)
     @Column(unique=true)
-    private URL url;
+    private URI uri;
 
     //TODO:: image
 

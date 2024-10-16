@@ -26,13 +26,13 @@ quarkus:
     sites:
       - title: Google
         description: It's Google
-        url: https://google.com
+        uri: https://google.com
       - title: Yahoo
         description: Yahoooooo
-        url: https://yahoo.com
+        uri: https://yahoo.com
       - title: Facebook
         description: No privacy here
-        url: https://facebook.com
+        uri: https://facebook.com
       - title: Red Hat
         description: It's neat
-        url: https://redhat.com
+        uri: https://redhat.com
