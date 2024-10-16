@@ -9,7 +9,7 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import java.util.Optional;
 
-//@ApplicationScoped
-//public class CustomSiteRepository implements PanacheRepository<CustomSite> {
-//
-//}
+@ApplicationScoped
+public class CustomSiteRepository implements PanacheRepository<CustomSite> {
+
+}

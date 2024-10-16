@@ -11,19 +11,21 @@ import jakarta.ws.rs.core.MediaType;
 import lombok.extern.slf4j.Slf4j;
 import net.gjs.azide.entities.model.CustomSite;
 import net.gjs.azide.entities.model.Person;
+import net.gjs.azide.service.CustomSiteRepository;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Slf4j
 @RequestScoped
 @Path(RestInterface.BASE_PATH + "/customSite")
 public class CustomSiteEndpoints extends RestInterface {
 
-//    @Inject
-//    CustomSiteRepository customSiteRepository;
+    @Inject
+    CustomSiteRepository customSiteRepository;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -65,8 +67,53 @@ public class CustomSiteEndpoints extends RestInterface {
         return newSite;
     }
 
-    @PostConstruct
-    public void debug(){
-        log.info("debug!");
+    @PUT
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public @NotNull CustomSite update(
+            @NotNull @PathParam("id") UUID id,
+            ObjectNode newSiteJson
+    ) throws URISyntaxException {
+        log.info("Updating a custom site: {}", newSiteJson);
+
+        CustomSite site = this.customSiteRepository.find("id", id).firstResultOptional()
+                .orElseThrow(NotFoundException::new);
+
+        if(!site.getPerson().equals(this.getFullUser())){
+            throw new BadRequestException();
+        }
+
+        site.setTitle(newSiteJson.get("title").asText());
+        site.setDescription(newSiteJson.get("description").asText());
+        site.setUri(new URI(newSiteJson.get("uri").asText()));
+
+        return site;
+    }
+
+    @DELETE
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public @NotNull CustomSite delete(
+            @NotNull @PathParam("id") UUID id
+    ) throws URISyntaxException {
+        log.info("Deleting a custom site: {}", id);
+        Person user = this.getFullUser();
+
+        CustomSite site = this.customSiteRepository.find("id", id).firstResultOptional()
+                .orElseThrow(NotFoundException::new);
+
+        if(!site.getPerson().equals(user)){
+            throw new BadRequestException();
+        }
+
+        this.customSiteRepository.delete(site);
+        user.getCustomSites().remove(site);
+        this.getPersonRepository().persist(user);
+
+        return site;
     }
 }

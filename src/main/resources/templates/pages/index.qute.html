@@ -73,7 +73,7 @@
             updateItem: function (item) {
                 return $.ajax({
                     type: "PUT",
-                    url: "/api/customSite",
+                    url: "/api/customSite/" + item.id,
                     dataType: "json",
                     contentType: "application/json; charset=UTF-8",
                     data: JSON.stringify(item)
@@ -83,8 +83,7 @@
             deleteItem: function (item) {
                 return $.ajax({
                     type: "DELETE",
-                    url: "/api/customSite",
-                    data: item
+                    url: "/api/customSite/" + item.id
                 });
             }
         },
