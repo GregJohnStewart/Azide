@@ -13,19 +13,66 @@
 <body class="min-vh-100 vstack">
 
 <div class="container-fluid min-vh-100 d-flex flex-column" style="">
-    <main class="col" id="mainContent">
-        <h1>
-            Hello {user.getName()}
-        </h1>
-        <ol>
-            {#for curProvidedSite in providedSites}
-                <li>{curProvidedSite.getTitle()}</li>
-            {/for}
-        </ol>
-        <h2>
-            Your sites:
-        </h2>
-        <div id="userSiteGrid"></div>
+    <main id="mainContent">
+        <div class="row">
+            <div class="col text-center">
+                <h1>
+                    Hello, {user.getName()}
+                </h1>
+                <p>
+                <div class="d-grid gap-2">
+                    <a href="/viewer" class="btn btn-lg btn-success">
+                        <i class="bi bi-rocket-takeoff-fill"></i>
+                        Launch Viewer
+                    </a>
+                </div>
+                </p>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col">
+                <h2>
+                    Your sites:
+                </h2>
+                <div id="userSiteGrid"></div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col">
+                <h2>
+                    Provided Sites:
+                </h2>
+
+            </div>
+        </div>
+        <div class="row">
+            {#if providedSites.isEmpty()}
+                <div class="col-12 text-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                No provided sites
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            {#else}
+                {#for curProvidedSite in providedSites}
+                    <div class="col-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    {curProvidedSite.getTitle()}
+                                </h5>
+                                <p class="card-text">{curProvidedSite.getDescription()}</p>
+                                {!<a href="#" class="btn btn-primary">Go somewhere</a>!}
+                            </div>
+                        </div>
+                    </div>
+                {/for}
+            {/if}
+        </div>
     </main>
 </div>
 
