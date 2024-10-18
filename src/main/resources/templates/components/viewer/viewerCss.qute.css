@@ -13,19 +13,19 @@
 .gutter-col {
     grid-row: 1/-1;
     cursor: col-resize;
-    background-image: url(/media/gutter-vertical.png);
-}
-
-.gutter-col-1 {
-    grid-column: 2;
+    background-image: url(/res/media/gutter-vertical.png);
 }
 
 .gutter-row {
     grid-column: 1/-1;
     cursor: row-resize;
-    background-image: url(/media/gutter-horizontal.png);
+    background-image: url(/res/media/gutter-horizontal.png);
 }
 
+
+.gutter-col-1 {
+    grid-column: 2;
+}
 .gutter-row-1 {
     grid-row: 2;
 }
