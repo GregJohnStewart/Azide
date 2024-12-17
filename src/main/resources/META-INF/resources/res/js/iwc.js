@@ -6,24 +6,31 @@
 
 
 /**
- *
+ * The main configuration object to inform the setup of the {@link Iwc} object.
  */
 class IwcConfig {
-    #channelPrepend;
+    #channelNetwork;
     #allChannel;
     #roleCallChannel;
     #appName;
     #windowId;
     #nameSeparator;
 
+    /**
+     * @param {string|null} appName (optional, but recommended) the name of this app.
+     * @param {string} network "Network" in this case refers to the "network" of windows that want to talk to each other. All channels made will be prepended with this to provide the ability to separate from other instances/networks.
+     * @param {string} allChannel The channel to use to broadcast to all messages in network. Recommend not changing.
+     * @param roleCallChannel The channel used to communicate to other windows what windows are open. Recommend not changing.
+     * @param nameSeparator The character used to separate channel names. Recommend not changing.
+     */
     constructor({
                     appName = null,
-                    channelPrepend = "iwc",
+                    network = "iwc",
                     allChannel = "all",
                     roleCallChannel = "roleCall",
                     nameSeparator = "-"
                 }) {
-        this.#channelPrepend = channelPrepend;
+        this.#channelNetwork = network;
         this.#allChannel = allChannel;
         this.#roleCallChannel = roleCallChannel;
         this.#appName = appName;
@@ -36,8 +43,8 @@ class IwcConfig {
         ) + crypto.randomUUID();
     }
 
-    getChannelPrepend() {
-        return this.#channelPrepend;
+    getChannelNetwork() {
+        return this.#channelNetwork;
     }
 
     getAllChannel() {
@@ -225,8 +232,8 @@ class IwcChannels {
      */
     ensureInOthers(appName, windowId) {
         // Ensure we have other apps in, but not for this app (we already have that)
-        if (this.#config.getAppName() !== appName && !(appName in this.getOtherChannels())) {
-            console.log("Adding " + appname + " app to other channels.");
+        if (appName != null && this.#config.getAppName() !== appName && !(appName in this.getOtherChannels())) {
+            console.log("Adding " + appName + " app to other channels.");
             this.getOtherChannels()[appName] = new BroadcastChannel(IwcChannels.#formatAppChannelName(this.#config, appName));
         }
 
@@ -246,7 +253,9 @@ class IwcChannels {
 
         //if no other windows under app exist, remove other app.
         let otherWindowKeyPrepend = appName;
-        if (!Object.keys(this.getOtherChannels()).some(function (k) {
+        if (
+            appName != null &&
+            !Object.keys(this.getOtherChannels()).some(function (k) {
             return ~k.indexOf(otherWindowKeyPrepend);
         }) &&
             appName in this.getOtherChannels()
@@ -267,15 +276,15 @@ class IwcChannels {
     }
 
     static #formatAllChannelName(config) {
-        return config.getChannelPrepend() + config.getNameSeparator() + config.getAllChannel();
+        return config.getChannelNetwork() + config.getNameSeparator() + config.getAllChannel();
     }
 
     static #formatRoleCallChannelName(config) {
-        return config.getChannelPrepend() + config.getNameSeparator() + config.getRoleCallChannel();
+        return config.getChannelNetwork() + config.getNameSeparator() + config.getRoleCallChannel();
     }
 
     static #formatAppChannelName(config, appName) {
-        return config.getChannelPrepend() + config.getNameSeparator() + appName;
+        return config.getChannelNetwork() + config.getNameSeparator() + appName;
     }
 
     static #formatThisAppChannelName(config) {
@@ -283,11 +292,17 @@ class IwcChannels {
     }
 
     static #formatOtherWindowChannelName(config, windowId) {
-        return config.getChannelPrepend() + config.getNameSeparator() + windowId;
+        return config.getChannelNetwork() + config.getNameSeparator() + windowId;
     }
 
-    static #formatThisWindowChannelName(config, appName, windowId) {
-        return config.getChannelPrepend() + config.getNameSeparator() + config.getAppName() + config.getNameSeparator() + config.getWindowId();
+    static #formatThisWindowChannelName(config) {
+        if(config.hasAppName()){
+            return config.getChannelNetwork() + config.getNameSeparator() + config.getAppName() + config.getNameSeparator() + config.getWindowId();
+        } else {
+            return config.getChannelNetwork() + config.getNameSeparator() + config.getWindowId();
+        }
+
+
     }
 
     /**
@@ -343,7 +358,22 @@ class IwcChannels {
     }
 }
 
-class IWC {
+/**
+ * The main class that manages an instance of inter-window communication.
+ *
+ * Automatically handles rolecalls in order for all windows to be aware of every other window.
+ *
+ * Intended to be used with other Iwc instances on other windows, with the same channel
+ *
+ * <pre>
+ * let iwc = new Iwc(new IwcConfig({ appName: "test" }));
+ * </pre>
+ */
+class Iwc {
+    static #roleCallIntentCall = "CALL"
+    static #roleCallIntentHere = "HERE"
+    static #roleCallIntentExit = "EXIT"
+
     #config;
     #channels;
 
@@ -355,11 +385,11 @@ class IWC {
         this.#config = config;
         this.#channels = new IwcChannels(this.#config);
 
-        this.#channels.getRoleCallChannel().onmessage = (event) => this.#msgReceived(event, this.#roleCallChannelHandler.bind(this));
+        this.registerHandler(this.getChannels().getRoleCallChannel(), this.#roleCallChannelHandler.bind(this));
 
         window.addEventListener('unload', () => {this.close();});
 
-        this.sendMessage(this.#channels.getRoleCallChannel(), IwcMessage.create(this.getConfig(), "call"));
+        this.sendMessage(this.#channels.getRoleCallChannel(), IwcMessage.create(this.getConfig(), Iwc.#roleCallIntentCall));
 
         console.log(
             "New IWC is initialized. " +
@@ -370,38 +400,53 @@ class IWC {
     }
 
     /**
+     * This is the default handler to take in raw messages from te channels.
      *
+     * Intended use like:
+     * <pre>
+     * this.#channels.getRoleCallChannel().onmessage = (event) => this.#msgReceived(event, this.#roleCallChannelHandler);
+     * </pre>
      * @param {MessageEvent} event The raw message from the BroadcastChannel
      * @param {function} handler The handler to further handle the deserialized message.
      * @returns {*} What is returned by the handler.
      */
     #msgReceived(event, handler) {
-        console.trace("New event received: ", event);
+        console.debug("New event received: ", event);
         let message = IwcMessage.deserialize(event.data);
 
-        console.debug("Received a new message: ", message);
+        console.debug("Received a new message on channel '" + event.target.name + "': ", message);
 
         return handler(message);
     }
 
     /**
-     *
+     * registers a handler with a channel, wrapping it in the default handler.
+     * @param {BroadcastChannel} channel
+     * @param {function} handler
+     */
+    registerHandler(channel, handler){
+        channel.onmessage = (event) => this.#msgReceived(event, handler);
+    }
+
+    /**
+     * Handler for role call messages.
+     * Broadcasts back out a "HERE" on a "call" message so everyone can know who is open.
      * @param {IwcMessage} message
      */
     #roleCallChannelHandler(message) {
         console.log("Received new role call message: ", message);
 
         switch (message.getIntent()) {
-            case "call":
+            case Iwc.#roleCallIntentCall:
                 console.log("Calling HERE for rolecall.");
-                this.sendMessage(this.getChannels().getRoleCallChannel(), IwcMessage.create(this.getConfig(), "here"));
+                this.sendMessage(this.getChannels().getRoleCallChannel(), IwcMessage.create(this.getConfig(), Iwc.#roleCallIntentHere));
                 this.#channels.ensureInOthers(message.getAppName(), message.getWindowId());
                 break;
-            case "here":
+            case Iwc.#roleCallIntentHere:
                 console.debug("Received a HERE from rolecall.");
                 this.#channels.ensureInOthers(message.getAppName(), message.getWindowId());
                 break;
-            case "exit":
+            case Iwc.#roleCallIntentExit:
                 console.debug("Exit message received.");
                 this.getChannels().removeFromOthers(message.getAppName(), message.getWindowId());
                 break;
@@ -416,22 +461,44 @@ class IWC {
      * @param {IwcMessage} message
      */
     sendMessage(channel, message) {
-        console.debug("Sending message.");
+        console.log("Sending message: ", message);
         channel.postMessage(message.serialize());
     }
 
+    /**
+     * Responds to a given message with another message. Determines who to send it to based on the incoming message, sends to specific window.
+     * @param {IwcMessage} received The message we are responding to.
+     * @param {IwcMessage} message The message we are sending in response.
+     */
+    respondToMessage(received, message){
+        this.sendMessage(
+            this.getChannels().getOtherWindowChannel(received.getWindowId()),
+            message
+        );
+    }
+
+    /**
+     * @returns {IwcConfig}
+     */
     getConfig() {
         return this.#config;
     }
 
+    /**
+     * @returns {IwcChannels}
+     */
     getChannels() {
         return this.#channels;
     }
 
+    /**
+     * Closes out this Iwc Object.
+     *
+     * Given we expect the whole page to be closing, we don't explicitly close channels, but that might be something to do in the future.
+     */
     close() {
         console.log("Closing IWC object.");
-        this.sendMessage(this.#channels.getRoleCallChannel(), IwcMessage.create(this.getConfig(), "exit"));
+        this.sendMessage(this.#channels.getRoleCallChannel(), IwcMessage.create(this.getConfig(), Iwc.#roleCallIntentExit));
         //TODO:: determine if this is adequate, or if we need to do anything else, clean-wise to clear dead windows
     }
 }
-
