@@ -36,3 +36,6 @@ quarkus:
       - title: Red Hat
         description: It's neat
         uri: https://redhat.com
+  classificationBanner: 
+    classification: CUSTOM CLASSIFICATION
+    color: "#007a33"

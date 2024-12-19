@@ -1,0 +1,5 @@
+
+.securityBanner {
+    text-align: center;
+    background-color: {classificationBanner.getColor()};
+}

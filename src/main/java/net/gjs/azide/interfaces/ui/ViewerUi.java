@@ -11,6 +11,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import lombok.Getter;
+import net.gjs.azide.service.ClassificationRepository;
 import net.gjs.azide.service.ProvidedSiteRepository;
 
 @RequestScoped
@@ -27,13 +28,16 @@ public class ViewerUi extends UiInterface {
 
     @Inject
     ProvidedSiteRepository providedSiteRepository;
+    
+    @Inject
+    ClassificationRepository classificationRepository;
 
     @GET
     @Produces(MediaType.TEXT_HTML)
     @Transactional
     public TemplateInstance getViewer() {
         return this.getDefaultPageSetup()
-                .data("providedSites", providedSiteRepository.findAll().list());
+                .data("providedSites", providedSiteRepository.findAll().list()).data("classificationBanner", classificationRepository.findAll().list().getFirst());
     }
 
     @GET

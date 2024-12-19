@@ -15,6 +15,8 @@ import net.gjs.azide.service.PersonRepository;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import java.util.Optional;
+import net.gjs.azide.entities.model.ClassificationBanner;
+import net.gjs.azide.service.ClassificationRepository;
 
 @Slf4j
 public abstract class RestInterface {
@@ -29,6 +31,9 @@ public abstract class RestInterface {
     @Getter(AccessLevel.PROTECTED)
     @Context
     SecurityContext securityContext;
+    
+    @Getter(AccessLevel.PRIVATE)
+    ClassificationRepository classificationRepository;
 
     @Getter(AccessLevel.PRIVATE)
     Person user = null;
@@ -39,6 +44,11 @@ public abstract class RestInterface {
         }
 
         return this.getUser();
+    }
+    
+    protected ClassificationRepository getClassificationBanner(){
+        
+        return this.getClassificationRepository();
     }
 
     protected boolean hasAccessToken(){

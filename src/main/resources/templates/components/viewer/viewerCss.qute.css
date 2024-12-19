@@ -29,3 +29,38 @@
 .gutter-row-1 {
     grid-row: 2;
 }
+
+        /* Fixed Header */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #007a33;
+    color: #fff;
+    text-align: center;
+    padding: 2px 0;
+    font-size: 0.75rem;
+    z-index: 1000;
+}
+
+/* Fixed Footer */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #007a33;
+    color: #fff;
+    text-align: center;
+    padding: 2px 0;
+    font-size: 0.75rem;
+    z-index: 1000;
+}
+/* Main Content */
+.content {
+    margin-top: 18px; /* Space below the header */
+    margin-bottom: 18px; /* Space above the footer */
+    padding: 20px;
+    background-color: #f4f4f4;
+}

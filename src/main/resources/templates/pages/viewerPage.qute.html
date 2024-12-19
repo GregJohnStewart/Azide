@@ -23,11 +23,11 @@
         {!<a class="navbar-brand" href="#">Navbar</a>!}
     {!</div>!}
 {!</nav>!}
-
-<div class="grid" id="pageGrid">
+<header><div class="securityBanner">{classificationBanner.getClassification()}</div></header>
+<div class="content grid" id="pageGrid">
         {#include components/viewer/viewerHtml /}
 </div>
-
+<footer><div class="securityBanner">{classificationBanner.getClassification()}</div></footer>
 
 <script src="/res/lib/jquery/3.7.1/jquery.min.js.js"></script>
 <script src="/res/lib/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>

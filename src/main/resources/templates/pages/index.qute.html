@@ -8,11 +8,12 @@
     <link rel="stylesheet" href="/res/lib/jsgrid/1.5.3/jsgrid.min.css">
     <link rel="stylesheet" href="/res/lib/jsgrid/1.5.3/jsgrid-theme.min.css">
     <style>
+        {#include components/viewer/viewerCss.qute.css /}
     </style>
 </head>
 <body class="min-vh-100 vstack">
-
-<div class="container-fluid min-vh-100 d-flex flex-column" style="">
+    <header style="background-color:{classificationBanner.getColor()}">{classificationBanner.getClassification()}</header>
+<div class="content container-fluid min-vh-100 d-flex flex-column" style="">
     <main id="mainContent">
         <div class="row">
             <div class="col text-center">
@@ -74,6 +75,7 @@
             {/if}
         </div>
     </main>
+    <footer style="background-color:{classificationBanner.getColor()}">{classificationBanner.getClassification()}</footer>
 </div>
 
 <script src="/res/lib/jquery/3.7.1/jquery.min.js.js"></script>

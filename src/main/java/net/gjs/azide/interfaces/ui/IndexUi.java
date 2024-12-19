@@ -14,6 +14,7 @@ import lombok.Getter;
 import net.gjs.azide.service.ProvidedSiteRepository;
 
 import static java.util.Objects.requireNonNull;
+import net.gjs.azide.service.ClassificationRepository;
 
 @RequestScoped
 @Path("/")
@@ -25,13 +26,16 @@ public class IndexUi extends UiInterface {
 
     @Inject
     ProvidedSiteRepository providedSiteRepository;
+    
+    @Inject
+    ClassificationRepository classificationRepository;
 
     @GET
     @Produces(MediaType.TEXT_HTML)
     @Transactional
     public TemplateInstance get() {
         return this.getDefaultPageSetup()
-                .data("providedSites", providedSiteRepository.findAll().list());
+                .data("providedSites", providedSiteRepository.findAll().list()).data("classificationBanner", classificationRepository.findAll().list().getFirst());
     }
 
 }

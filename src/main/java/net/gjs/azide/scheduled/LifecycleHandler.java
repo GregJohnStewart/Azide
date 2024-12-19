@@ -6,6 +6,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import net.gjs.azide.service.ClassificationRepository;
 import net.gjs.azide.service.ProvidedSiteRepository;
 
 @Singleton
@@ -14,6 +15,9 @@ public class LifecycleHandler {
 
     @Inject
     ProvidedSiteRepository providedSiteRepository;
+    
+    @Inject
+    ClassificationRepository classificationRepository;
 
     @Transactional
     void onStart(
@@ -21,5 +25,6 @@ public class LifecycleHandler {
             StartupEvent ev
     ) {
         this.providedSiteRepository.populate();
+        this.classificationRepository.populate();
     }
 }
