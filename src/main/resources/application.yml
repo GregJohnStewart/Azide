@@ -13,8 +13,11 @@ quarkus:
     auth:
       permission:
         authenticated:
-          paths: /*
+          paths: /app/*
           policy: authenticated
+classificationBanner: 
+  classification: UNCLASSIFIED - FOR TESTING PURPOSES ONLY
+  color: "#007a33"
 "%dev":
   quarkus:
     log:
@@ -36,6 +39,3 @@ quarkus:
       - title: Red Hat
         description: It's neat
         uri: https://redhat.com
-  classificationBanner: 
-    classification: CUSTOM CLASSIFICATION
-    color: "#007a33"

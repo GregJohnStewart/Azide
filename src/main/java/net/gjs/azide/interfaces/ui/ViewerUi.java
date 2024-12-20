@@ -15,7 +15,7 @@ import net.gjs.azide.service.ClassificationRepository;
 import net.gjs.azide.service.ProvidedSiteRepository;
 
 @RequestScoped
-@Path("/viewer")
+@Path("/app/viewer")
 public class ViewerUi extends UiInterface {
 
     @Getter
@@ -36,16 +36,16 @@ public class ViewerUi extends UiInterface {
     @Produces(MediaType.TEXT_HTML)
     @Transactional
     public TemplateInstance getViewer() {
-        return this.getDefaultPageSetup()
+        return this.getDefaultAuthPageSetup()
                 .data("providedSites", providedSiteRepository.findAll().list()).data("classificationBanner", classificationRepository.findAll().list().getFirst());
     }
 
     @GET
-    @Path("pane")
+    @Path("/pane")
     @Produces(MediaType.TEXT_HTML)
     @Transactional
     public TemplateInstance getPane() {
-        return this.getDefaultPageSetup(this.getPaneTemplate())
+        return this.getDefaultAuthPageSetup(this.getPaneTemplate())
                 .data("providedSites", providedSiteRepository.findAll().list());
     }
 
