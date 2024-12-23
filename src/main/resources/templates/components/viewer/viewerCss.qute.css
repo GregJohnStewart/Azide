@@ -12,15 +12,6 @@
 textarea {
     overflow-y: scroll;
     height: 200px;
-    resize: none; /* Remove this if you want the user to resize the textarea */
-}
-
-tr:nth-child(even) {
-    background-color: #D6EEEE;
-}
-
-tr:nth-child(odd) {
-    background-color: #FFFFFF;
 }
 
 .message-list:hover {
@@ -32,3 +23,7 @@ tr:nth-child(odd) {
     cursor: pointer;
 }
 
+textarea#messageContent {
+    background: darkslategray;
+    color: white;
+}
