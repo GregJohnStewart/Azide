@@ -30,6 +30,9 @@ public class ViewerUi extends UiInterface {
     ProvidedSiteRepository providedSiteRepository;
     
     @Inject
+    ProvidedSiteRepository providedMessageRepository;
+    
+    @Inject
     ClassificationRepository classificationRepository;
 
     @GET
@@ -37,7 +40,7 @@ public class ViewerUi extends UiInterface {
     @Transactional
     public TemplateInstance getViewer() {
         return this.getDefaultPageSetup()
-                .data("providedSites", providedSiteRepository.findAll().list()).data("classificationBanner", classificationRepository.findAll().list().getFirst());
+                .data("providedSites", providedSiteRepository.findAll().list()).data("providedMessages", providedMessageRepository.findAll().list()).data("classificationBanner", classificationRepository.findAll().list().getFirst());
     }
 
     @GET

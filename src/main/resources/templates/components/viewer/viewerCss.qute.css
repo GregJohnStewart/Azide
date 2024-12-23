@@ -64,3 +64,22 @@ footer {
     padding: 20px;
     background-color: #f4f4f4;
 }
+
+textarea {
+        overflow-y: scroll;
+        height: 100px;
+        resize: none; /* Remove this if you want the user to resize the textarea */
+}
+
+tr:nth-child(even) {
+  background-color: #D6EEEE;
+}
+
+tr:nth-child(odd) {
+  background-color: #FFFFFF;
+}
+
+.message-list:hover {
+  color: var(--white);
+  background: var(--darkblue); 
+}

@@ -15,6 +15,7 @@ import net.gjs.azide.service.ProvidedSiteRepository;
 
 import static java.util.Objects.requireNonNull;
 import net.gjs.azide.service.ClassificationRepository;
+import net.gjs.azide.service.ProvidedMessageRepository;
 
 @RequestScoped
 @Path("/")
@@ -28,6 +29,9 @@ public class IndexUi extends UiInterface {
     ProvidedSiteRepository providedSiteRepository;
     
     @Inject
+    ProvidedMessageRepository providedMessageRepository;
+    
+    @Inject
     ClassificationRepository classificationRepository;
 
     @GET
@@ -35,7 +39,7 @@ public class IndexUi extends UiInterface {
     @Transactional
     public TemplateInstance get() {
         return this.getDefaultPageSetup()
-                .data("providedSites", providedSiteRepository.findAll().list()).data("classificationBanner", classificationRepository.findAll().list().getFirst());
+                .data("providedSites", providedSiteRepository.findAll().list()).data("providedMessages", providedMessageRepository.findAll().list()).data("classificationBanner", classificationRepository.findAll().list().getFirst());
     }
 
 }
