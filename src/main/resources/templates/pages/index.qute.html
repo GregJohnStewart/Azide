@@ -1,161 +1,84 @@
 <!DOCTYPE html>
 <html lang="en_us">
+<<<<<<< HEAD
 <head>
-    <meta charset="UTF-8">
-    <title>Hello {name ?: "Qute"}</title>
-    <link href="/res/lib/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/res/lib/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="/res/lib/jsgrid/1.5.3/jsgrid.min.css">
-    <link rel="stylesheet" href="/res/lib/jsgrid/1.5.3/jsgrid-theme.min.css">
-    <style>
-        {#include components/viewer/viewerCss.qute.css /}
-    </style>
-</head>
-<body class="min-vh-100 vstack">
-    <header style="background-color:{classificationBanner.getColor()}">{classificationBanner.getClassification()}</header>
-<div class="content container-fluid min-vh-100 d-flex flex-column" style="">
-    <main id="mainContent">
-        <div class="row">
-            <div class="col text-center">
-                <h1>
-                    Hello, {user.getName()}
-                </h1>
-                <!--uuid
-                    date
-                    priority
-                    message title
-                    message content -->
-                <p>
-                <div class="d-grid gap-2">
-                    <a href="/viewer" class="btn btn-lg btn-success">
-                        <i class="bi bi-rocket-takeoff-fill"></i>
-                        Launch Viewer
-                    </a>
+        <meta charset="UTF-8">
+        <title>DCGSA - Azide</title>
+        <link href="/res/lib/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/res/lib/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" href="/res/lib/jsgrid/1.5.3/jsgrid.min.css">
+        <link rel="stylesheet" href="/res/lib/jsgrid/1.5.3/jsgrid-theme.min.css">
+        <style>
+            {#include components/viewer/viewerCss.qute.css /}
+        </style>
+    </head>
+    <body class="min-vh-100 vstack">
+        <!-- Header -->
+        <header class="text-white text-center fixed-top" style="background-color:{classificationBanner.getColor()};font-size:0.75rem">
+            {classificationBanner.getClassification()}
+        </header>
+        <!-- Sub-header -->
+        <div class="bg-secondary text-white fixed-top py-2" style="top: 18px">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
+                <!-- Left: Image -->
+                <img src="/res/media/dcgsalogo.png" alt="DCGSA Logo" width="65" height="30">
+
+                <!-- Right: Dropdown Menu -->
+                 <a href="/app/viewer" style="color:#ffffff;">Login to Azide</a>
+            </div>
+        </div>
+        <div class="content container-fluid min-vh-100 d-flex flex-column" style="">
+            <main id="mainContent">
+                <div class="row mt-5">
+                    <div class="col">
+                        <h2>
+                            Your messages:
+                        </h2>
+                        <table width="100%">
+                            <thead>
+                                <tr style="outline: thin solid">
+                                    <td style="outline: thin solid">Title</td>
+                                    <td style="outline: thin solid">Priority</td>
+                                    <td style="outline: thin solid">Date</td>
+                                </tr>
+                            </thead>
+                            {#for curProvidedMessage in providedMessages}
+                            <tr class="message-list">
+                                <td>{curProvidedMessage.getTitle()}</td>
+                                <td>{curProvidedMessage.getPriority()}</td>
+                                <td>{curProvidedMessage.getDate()}</td>
+                            </tr>
+                            {/for}
+                        </table>
+
+                    </div>
                 </div>
-                </p>
-            </div>
-        </div>
-        <div class="row mt-5">
-            <div class="col">
-                <h2>
-                    Your messages:
-                </h2>
-                <table width="100%">
-                    <thead>
-                        <tr style="outline: thin solid">
-                            <td style="outline: thin solid">Title</td>
-                            <td style="outline: thin solid">Priority</td>
-                            <td style="outline: thin solid">Date</td>
-                        </tr>
-                    </thead>
-                    {#for curProvidedMessage in providedMessages}
-                    <tr class="message-list">
-                        <td>{curProvidedMessage.getTitle()}</td>
-                        <td>{curProvidedMessage.getPriority()}</td>
-                        <td>{curProvidedMessage.getDate()}</td>
-                    </tr>
-                    {/for}
-                </table>
-                
-            </div>
+
+                <div class="row mt-5">
+                    <div class="col">
+                        <h2>
+                            Message:
+                        </h2>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <textarea></textarea>
+                </div>
+            </main>
         </div>
 
-        <div class="row mt-5">
-            <div class="col">
-                <h2>
-                    Message:
-                </h2>
+        <!-- Footer -->
+        <footer class="text-white text-center fixed-bottom" style="background-color: {classificationBanner.getColor()};font-size:0.75rem">
+            {classificationBanner.getClassification()}
+        </footer>
 
-            </div>
-        </div>
-        <div class="row">
-            <textarea></textarea>
-        </div>
-    </main>
-    
-    <footer style="background-color:{classificationBanner.getColor()}">{classificationBanner.getClassification()}</footer>
-</div>
-
-<script src="/res/lib/jquery/3.7.1/jquery.min.js.js"></script>
-<script src="/res/lib/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-<script src="/res/lib/htmx/2.0.2/htmx.min.js"></script>
-<script src="/res/lib/htmx/extensions/json-enc/2.0.1/json-enc.js"></script>
-<script src="/res/lib/jsgrid/1.5.3/jsgrid.min.js"></script>
-<script src="/res/js/iwc.js"></script>
-<script>
-    $("#userSiteGrid").jsGrid({
-        height: "auto",
-        width: "100%",
-
-        filtering: true,
-        editing: true,
-        inserting: true,
-        sorting: true,
-        paging: true,
-        autoload: true,
-
-        controller: {
-            loadData: function () {
-                let d = $.Deferred();
-
-                $.ajax({
-                    url: "/api/customSite",
-                    dataType: "json"
-                }).done(function (response) {
-                    d.resolve(response);
-                });
-
-                return d.promise();
-            },
-
-            insertItem: function (customSite) {
-                return $.ajax({
-                    type: "POST",
-                    url: "/api/customSite",
-                    dataType: "json",
-                    contentType: "application/json; charset=UTF-8",
-                    data: JSON.stringify(customSite)
-                });
-            },
-
-            updateItem: function (item) {
-                return $.ajax({
-                    type: "PUT",
-                    url: "/api/customSite/" + item.id,
-                    dataType: "json",
-                    contentType: "application/json; charset=UTF-8",
-                    data: JSON.stringify(item)
-                });
-            },
-
-            deleteItem: function (item) {
-                return $.ajax({
-                    type: "DELETE",
-                    url: "/api/customSite/" + item.id
-                });
-            }
-        },
-
-        fields: [
-            {
-                name: "title",
-                type: "text"
-            },
-            {
-                name: "description",
-                type: "textarea", width: 150
-            },
-            {
-                name: "uri", type: "text"
-                //TODO:: url validator
-            },
-            {
-                type: "control"
-            }
-        ]
-    });
-
-    let iwc_app1 = new Iwc(new IwcConfig({ appName: "test1" }));
-</script>
-</body>
+        <script src="/res/lib/jquery/3.7.1/jquery.min.js.js"></script>
+        <script src="/res/lib/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+        <script src="/res/lib/htmx/2.0.2/htmx.min.js"></script>
+        <script src="/res/lib/htmx/extensions/json-enc/2.0.1/json-enc.js"></script>
+        <script src="/res/lib/split-grid-js/1.0.11/split-grid.js"></script>
+        <script>
+        </script>
+    </body>
 </html>

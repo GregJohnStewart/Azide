@@ -46,9 +46,9 @@ public abstract class RestInterface {
         return this.getUser();
     }
     
-    protected ClassificationRepository getClassificationBanner(){
+    protected ClassificationBanner getClassificationBanner(){
         
-        return this.getClassificationRepository();
+        return this.getClassificationRepository().findAll().list().getFirst();
     }
 
     protected boolean hasAccessToken(){

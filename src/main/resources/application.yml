@@ -13,8 +13,11 @@ quarkus:
     auth:
       permission:
         authenticated:
-          paths: /*
+          paths: /app/*
           policy: authenticated
+classificationBanner: 
+  classification: UNCLASSIFIED - FOR TESTING PURPOSES ONLY
+  color: "#007a33"
 "%dev":
   quarkus:
     log:

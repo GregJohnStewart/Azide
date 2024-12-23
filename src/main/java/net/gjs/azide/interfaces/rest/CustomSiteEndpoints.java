@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @Slf4j
 @RequestScoped
-@Path(RestInterface.BASE_PATH + "/customSite")
+@Path(RestInterface.BASE_PATH + "/app/customSite")
 public class CustomSiteEndpoints extends RestInterface {
 
     @Inject
@@ -68,7 +68,7 @@ public class CustomSiteEndpoints extends RestInterface {
     }
 
     @PUT
-    @Path("{id}")
+    @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
@@ -93,7 +93,7 @@ public class CustomSiteEndpoints extends RestInterface {
     }
 
     @DELETE
-    @Path("{id}")
+    @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional

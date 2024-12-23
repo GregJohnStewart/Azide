@@ -24,9 +24,6 @@ public class IndexUi extends UiInterface {
     @Getter
     @Location("pages/index")
     Template pageTemplate;
-
-    @Inject
-    ProvidedSiteRepository providedSiteRepository;
     
     @Inject
     ProvidedMessageRepository providedMessageRepository;
@@ -39,7 +36,8 @@ public class IndexUi extends UiInterface {
     @Transactional
     public TemplateInstance get() {
         return this.getDefaultPageSetup()
-                .data("providedSites", providedSiteRepository.findAll().list()).data("providedMessages", providedMessageRepository.findAll().list()).data("classificationBanner", classificationRepository.findAll().list().getFirst());
+                .data("providedMessages", providedMessageRepository.findAll().list()).data("classificationBanner", classificationRepository.findAll().list().getFirst());
+
     }
 
 }
