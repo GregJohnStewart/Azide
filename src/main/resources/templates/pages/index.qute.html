@@ -34,12 +34,12 @@
                         <h2>
                             Your messages:
                         </h2>
-                        <table width="100%">
+                        <table width="100%" class="table table-hover table-bordered table-clickable">
                             <thead>
                                 <tr style="outline: thin solid">
-                                    <td style="outline: thin solid">Title</td>
-                                    <td style="outline: thin solid">Priority</td>
-                                    <td style="outline: thin solid">Date</td>
+                                    <td>Title</td>
+                                    <td>Priority</td>
+                                    <td>Date</td>
                                 </tr>
                             </thead>
                             {#for curProvidedMessage in providedMessages}
@@ -47,6 +47,7 @@
                                 <td>{curProvidedMessage.getTitle()}</td>
                                 <td>{curProvidedMessage.getPriority()}</td>
                                 <td>{curProvidedMessage.getDate()}</td>
+                                <td hidden>{curProvidedMessage.getContent()}</td>
                             </tr>
                             {/for}
                         </table>
@@ -63,7 +64,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <textarea></textarea>
+                    <textarea readonly id="messageContent"></textarea>
                 </div>
             </main>
         </div>
@@ -79,6 +80,12 @@
         <script src="/res/lib/htmx/extensions/json-enc/2.0.1/json-enc.js"></script>
         <script src="/res/lib/split-grid-js/1.0.11/split-grid.js"></script>
         <script>
+            const tableRows = document.querySelectorAll(".table-clickable tbody tr");
+            for (const tableRow of tableRows) {
+              tableRow.addEventListener("click", function () {
+                  document.getElementById('messageContent').value = tableRow.cells[3].innerHTML;
+              });
+            }
         </script>
     </body>
 </html>
