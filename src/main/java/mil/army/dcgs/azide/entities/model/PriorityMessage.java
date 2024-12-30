@@ -36,8 +36,6 @@ public class PriorityMessage extends PanacheEntityBase {
     @Basic(optional=false)
     private String content;
 
-    //TODO:: image
-
     @Version
     LocalDateTime lastUpdated;
 }

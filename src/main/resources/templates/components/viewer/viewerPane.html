@@ -108,7 +108,7 @@
 
                 if (editingRow) {
                     const id = editingRow.dataset.id;
-                    await fetch(`${apiBaseUrl}/${id}`, {
+                    await fetch(apiBaseUrl + "/" + id, {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(message),
@@ -130,7 +130,7 @@
             deleteMessageButton.addEventListener('click', async () => {
                 if (editingRow) {
                     const id = editingRow.dataset.id;
-                    await fetch(`apiBaseUrl/${id}`, { method: "DELETE" });
+                    await fetch(apiBaseUrl + "/" + id, { method: "DELETE" });
                     fetchMessages();
                     form.reset();
                     editingRow = null;

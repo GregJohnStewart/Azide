@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.util.*;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -27,13 +27,4 @@ public class Person extends PanacheEntityBase {
     @NotNull
     @Basic(optional=false)
     public String name;
-
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Builder.Default
-    private List<CustomSite> customSites = new ArrayList<>();
-
-    @NotNull
-    @OneToMany
-    @Builder.Default
-    private Set<ProvidedSite> favoriteProvidedSites = new LinkedHashSet<>();
 }
