@@ -13,7 +13,6 @@ import jakarta.ws.rs.core.MediaType;
 import lombok.Getter;
 
 import mil.army.dcgs.azide.service.ClassificationRepository;
-import mil.army.dcgs.azide.service.ProvidedMessageRepository;
 import mil.army.dcgs.azide.service.PriorityMessageRepository;
 
 @RequestScoped
@@ -23,9 +22,6 @@ public class IndexUi extends UiInterface {
     @Getter
     @Location("pages/index")
     Template pageTemplate;
-    
-    @Inject
-    ProvidedMessageRepository providedMessageRepository;
     
     @Inject
     ClassificationRepository classificationRepository;
@@ -38,10 +34,8 @@ public class IndexUi extends UiInterface {
     @Transactional
     public TemplateInstance get() {
         return this.getDefaultPageSetup()
-                .data("providedMessages", providedMessageRepository.findAll().list())
-                .data("priorityMessages", priorityMessageRepository.findAll().list())
-                .data("classificationBanner", classificationRepository.findAll().list().getFirst());
-
+            .data("priorityMessages", priorityMessageRepository.findAll().list())
+            .data("classificationBanner", classificationRepository.findAll().list().getFirst());
     }
 
 }

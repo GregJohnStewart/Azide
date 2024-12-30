@@ -39,7 +39,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- dynamnic content goes here -->
+                        {#for message in priorityMessages}
+                        <tr>
+                            <td>{message.title}</td>
+                            <td>{message.priority}</td>
+                            <td>{message.date}</td>
+                        </tr>
+                        {/for}
                     </tbody>
                 </table>
             </div>
@@ -61,46 +67,6 @@
         <script src="/res/lib/htmx/extensions/json-enc/2.0.1/json-enc.js"></script>
         <script src="/res/lib/split-grid-js/1.0.11/split-grid.js"></script>
         <script>
-            const apiBaseUrl = "/api/messages";
-            const tableBody = document.querySelector('#message-table tbody');
-            const contentDisplay = document.getElementById('content-display');
-
-            // Fetch all messages and populate the table
-            async function fetchMessages() {
-                const response = await fetch(apiBaseUrl);
-                const messages = await response.json();
-                tableBody.innerHTML = "";
-                priorityMessages.forEach(message => {
-                    const row = createTableRow(message);
-                    tableBody.appendChild(row);
-                });
-            }
-
-
-            // Create a table row
-            function createTableRow(priorityMessage) {
-                const row = document.createElement('tr');
-                row.dataset.id = priorityMessage.id;
-                row.dataset.message = JSON.stringify(priorityMessage);
-                row.innerHTML = `
-                    <td>priorityMessage.title</td>
-                    <td>priorityMessage.priority</td>
-                    <td>priorityMessage.date</td>
-                `;
-                return row;
-            }
-
-            // Display message content on row click
-            tableBody.addEventListener('click', (event) => {
-                const row = event.target.closest('tr');
-                if (row) {
-                    const message = JSON.parse(row.dataset.message);
-                    contentDisplay.textContent = message.content;
-                }
-            });
-
-            // Initialize
-            fetchMessages();
         </script>
     </body>
 </html>

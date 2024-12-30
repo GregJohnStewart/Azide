@@ -23,27 +23,3 @@ classificationBanner:
     hibernate-orm:
       database:
         generation: drop-and-create
-  providedSites:
-    sites:
-      - title: Google
-        description: It's Google
-        uri: https://google.com
-      - title: Yahoo
-        description: Yahoooooo
-        uri: https://yahoo.com
-      - title: Facebook
-        description: No privacy here
-        uri: https://facebook.com
-      - title: Red Hat
-        description: It's neat
-        uri: https://redhat.com
-  providedMessages:
-    messages:
-      - title: This is the title
-        date: 12/19/2024
-        priority: 1
-        content: This is the content!
-      - title: This is another title
-        date: 12/20/2024
-        priority: 2
-        content: This is more content!

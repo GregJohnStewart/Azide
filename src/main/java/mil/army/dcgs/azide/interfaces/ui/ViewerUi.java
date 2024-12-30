@@ -13,7 +13,6 @@ import jakarta.ws.rs.core.MediaType;
 import lombok.Getter;
 import mil.army.dcgs.azide.service.ClassificationRepository;
 import mil.army.dcgs.azide.service.PriorityMessageRepository;
-import mil.army.dcgs.azide.service.ProvidedSiteRepository;
 
 @RequestScoped
 @Path("/app/viewer")
@@ -28,12 +27,6 @@ public class ViewerUi extends UiInterface {
     Template paneTemplate;
 
     @Inject
-    ProvidedSiteRepository providedSiteRepository;
-    
-    @Inject
-    ProvidedSiteRepository providedMessageRepository;
-    
-    @Inject
     ClassificationRepository classificationRepository;
     
     @Inject
@@ -44,7 +37,6 @@ public class ViewerUi extends UiInterface {
     @Transactional
     public TemplateInstance getViewer() {
         return this.getDefaultPageSetup()
-            .data("providedMessages", providedMessageRepository.findAll().list())
             .data("priorityMessages", priorityMessageRepository.findAll().list())
             .data("classificationBanner", classificationRepository.findAll().list().getFirst());
     }
@@ -56,9 +48,6 @@ public class ViewerUi extends UiInterface {
     public TemplateInstance getPane() {
         return this.getDefaultAuthPageSetup(this.getPaneTemplate())
             .data("priorityMessages", priorityMessageRepository.findAll().list())
-            .data("providedSites", providedSiteRepository.findAll().list());
+            .data("classificationBanner", classificationRepository.findAll().list().getFirst());
     }
-
-
-
 }
