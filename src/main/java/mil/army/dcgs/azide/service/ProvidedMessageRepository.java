@@ -1,4 +1,4 @@
-package mil.army.dcgs.azide.service;
+/**package mil.army.dcgs.azide.service;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 import java.util.Optional;
-import mil.army.dcgs.azide.config.ProvidedMessagesConfig;
+import mil.army.dcgs.azide.config.PriorityMessageConfig;
 import mil.army.dcgs.azide.entities.model.ProvidedMessage;
 
 @Slf4j
@@ -46,4 +46,4 @@ public class ProvidedMessageRepository implements PanacheRepository<ProvidedMess
         this.initted = true;
     }
 
-}
+}*/

@@ -68,7 +68,7 @@ public class PriorityMessageEndpoints extends RestInterface {
             .orElseThrow(NotFoundException::new);
 
         message.setTitle(newPriorityMessageJson.get("title").asText());
-        message.setPriority(newPriorityMessageJson.get("priotiry").asText());
+        message.setPriority(newPriorityMessageJson.get("priority").asText());
         message.setDate(newPriorityMessageJson.get("date").asText());
         message.setContent(newPriorityMessageJson.get("content").asText());
 
