@@ -26,7 +26,7 @@ public class PriorityMessageEndpoints extends RestInterface {
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public @NotNull List<PriorityMessage> getAllMessages() {
-        List<PriorityMessage> output = PriorityMessage.listAll();
+        List<PriorityMessage> output = priorityMessageRepository.listAll();
 
         return output;
     }
