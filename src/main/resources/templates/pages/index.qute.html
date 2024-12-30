@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en_us">
-<<<<<<< HEAD
-<head>
+    <head>
         <meta charset="UTF-8">
         <title>DCGSA - Azide</title>
         <link href="/res/lib/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
@@ -24,51 +23,33 @@
                 <img src="/res/media/dcgsalogo.png" alt="DCGSA Logo" width="65" height="30">
 
                 <!-- Right: Dropdown Menu -->
-                 <a href="/app/viewer" style="color:#ffffff;">Login to Azide</a>
+                    <a href="/app/viewer" style="color:#ffffff;">Login to Azide</a>
             </div>
         </div>
-        <div class="content container-fluid min-vh-100 d-flex flex-column" style="">
-            <main id="mainContent">
-                <div class="row mt-5">
-                    <div class="col">
-                        <h2>
-                            Your messages:
-                        </h2>
-                        <table width="100%" class="table table-hover table-bordered table-clickable table-striped table-dark">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <td>Title</td>
-                                    <td>Priority</td>
-                                    <td>Date</td>
-                                </tr>
-                            </thead>
-                            {#for curProvidedMessage in providedMessages}
-                            <tr class="message-list">
-                                <td>{curProvidedMessage.getTitle()}</td>
-                                <td>{curProvidedMessage.getPriority()}</td>
-                                <td>{curProvidedMessage.getDate()}</td>
-                                <td hidden>{curProvidedMessage.getContent()}</td>
-                            </tr>
-                            {/for}
-                        </table>
+        <div class="content">
+            <h1 class="mb-4">Daily Messages</h1>
 
-                    </div>
-                </div>
+            <div id="message-table" class="table-responsive mb-4">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Title</th>
+                            <th>Priority</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- dynamnic content goes here -->
+                    </tbody>
+                </table>
+            </div>
 
-                <div class="row mt-5">
-                    <div class="col" data-bs-theme="dark">
-                        <h2>
-                            Content:
-                        </h2>
-
-                    </div>
-                </div>
-                <div class="row">
-                    <textarea readonly id="messageContent"></textarea>
-                </div>
-            </main>
+            <div id="message-content" class="border rounded p-3">
+                <h5>Message</h5>
+                <p id="content-display">Select a message to view its content.</p>
+            </div>
         </div>
-
+    
         <!-- Footer -->
         <footer class="text-white text-center fixed-bottom" style="background-color: {classificationBanner.getColor()};font-size:0.75rem">
             {classificationBanner.getClassification()}
@@ -80,12 +61,46 @@
         <script src="/res/lib/htmx/extensions/json-enc/2.0.1/json-enc.js"></script>
         <script src="/res/lib/split-grid-js/1.0.11/split-grid.js"></script>
         <script>
-            const tableRows = document.querySelectorAll(".table-clickable tbody tr");
-            for (const tableRow of tableRows) {
-              tableRow.addEventListener("click", function () {
-                  document.getElementById('messageContent').value = tableRow.cells[3].innerHTML;
-              });
+            const apiBaseUrl = "/api/messages";
+            const tableBody = document.querySelector('#message-table tbody');
+            const contentDisplay = document.getElementById('content-display');
+
+            // Fetch all messages and populate the table
+            async function fetchMessages() {
+                const response = await fetch(apiBaseUrl);
+                const messages = await response.json();
+                tableBody.innerHTML = "";
+                priorityMessages.forEach(message => {
+                    const row = createTableRow(message);
+                    tableBody.appendChild(row);
+                });
             }
+
+
+            // Create a table row
+            function createTableRow(priorityMessage) {
+                const row = document.createElement('tr');
+                row.dataset.id = priorityMessage.id;
+                row.dataset.message = JSON.stringify(priorityMessage);
+                row.innerHTML = `
+                    <td>priorityMessage.title</td>
+                    <td>priorityMessage.priority</td>
+                    <td>priorityMessage.date</td>
+                `;
+                return row;
+            }
+
+            // Display message content on row click
+            tableBody.addEventListener('click', (event) => {
+                const row = event.target.closest('tr');
+                if (row) {
+                    const message = JSON.parse(row.dataset.message);
+                    contentDisplay.textContent = message.content;
+                }
+            });
+
+            // Initialize
+            fetchMessages();
         </script>
     </body>
 </html>

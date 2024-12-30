@@ -1,4 +1,4 @@
-package net.gjs.azide.service;
+package mil.army.dcgs.azide.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,9 +7,9 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import net.datafaker.Faker;
-import net.gjs.azide.entities.model.CustomSite;
-import net.gjs.azide.entities.model.Person;
-import net.gjs.azide.service.PersonRepository;
+import mil.army.dcgs.azide.entities.model.CustomSite;
+import mil.army.dcgs.azide.entities.model.Person;
+import mil.army.dcgs.azide.service.PersonRepository;
 import org.junit.jupiter.api.Test;
 
 import java.net.URI;

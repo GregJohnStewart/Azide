@@ -10,94 +10,156 @@
 
     </style>
 </head>
-<body class="min-vh-100 vstack">
+    <body class="min-vh-100 vstack">
+        <div class="container-fluid min-vh-100 d-flex flex-column">
+            <main id="content">
+                <h1 class="mb-4">Message Editor</h1>
 
-<div class="container-fluid min-vh-100 d-flex flex-column" style="">
-    <main id="content">
-        <div class="row">
-            <div class="col">
-                <h1 class="h3">
-                    Provided Sites:
-                </h1>
-                <div id="providedLinksCarousel" class="carousel card-carousel">
-                    <div class="carousel-inner">
-                        {#for curProvidedSite in providedSites}
-                            <div class="carousel-item {curProvidedSite.count==0 ? " active" : ""}">
-                                    {#include components/siteLink/siteLink.qute.html providedSite=curProvidedSite /}
-                            </div>
-                        {/for}
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#providedLinksCarousel"
-                            data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#providedLinksCarousel"
-                            data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+                <div id="message-table" class="table-responsive mb-4">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Message Title</th>
+                                <th>Priority</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dynamic content goes here -->
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-        </div>
-        {#if !user.getCustomSites().isEmpty()}
-        <div class="row">
-            <div class="col">
-                <h1 class="h3">
-                    Your Sites:
-                </h1>
-                <div id="userLinksCarousel" class="carousel card-carousel">
-                    <div class="carousel-inner">
-                        {#for curCustomSite in user.getCustomSites()}
-                            <div class="carousel-item {curCustomSite.count==0 ? " active" : ""}">
-                                    {#include components/siteLink/siteLink.qute.html providedSite=curCustomSite /}
-                            </div>
-                        {/for}
+
+                <form id="message-form">
+                    <div class="mb-3">
+                        <label for="message-title" class="form-label">Message Title</label>
+                        <input type="text" class="form-control" id="message-title" required>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#userLinksCarousel"
-                            data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#userLinksCarousel"
-                            data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        {/if}
-        <div class="row">
-            <div class="col text-center">
-                <form class="customNavigationForm">
-                    <div class="input-group input-group-lg">
-                        <input type="url" class="form-control" placeholder="Url" aria-label="Url to navigate to."
-                               name="navigationUrl">
-                        <button class="btn btn-outline-success" type="button" title="Go to URL">
-                            <i class="bi bi-box-arrow-right"></i>
-                        </button>
+                    <div class="mb-3">
+                        <label for="message-priority" class="form-label">Priority</label>
+                        <select class="form-select" id="message-priority" required>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
                     </div>
+                    <div class="mb-3">
+                        <label for="message-date" class="form-label">Date</label>
+                        <input type="date" class="form-control" id="message-date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-content" class="form-label">Message Content</label>
+                        <textarea class="form-control" id="message-content" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Message</button>
+                    <button type="button" class="btn btn-secondary" id="clear-form">Clear Form</button>
+                    <button type="button" class="btn btn-danger" id="delete-message">Delete Selected</button>
                 </form>
-            </div>
+            </main>
         </div>
-    </main>
-</div>
 
-<script src="/res/lib/jquery/3.7.1/jquery.min.js.js"></script>
-<script src="/res/lib/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-<script src="/res/lib/htmx/2.0.2/htmx.min.js"></script>
-<script src="/res/lib/htmx/extensions/json-enc/2.0.1/json-enc.js"></script>
-<script src="/res/js/cardCarousel.js"></script>
-<script>
-    $(".customNavigationForm").on("submit", function (e) {
-        e.preventDefault();
-        let form = $(this);
-        let navUrl = form.find('input[name="navigationUrl"]').val();
-        console.log("Navigating to : ", navUrl);
-        window.location.href = navUrl;
-    });
+        <script src="/res/lib/jquery/3.7.1/jquery.min.js.js"></script>
+        <script src="/res/lib/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+        <script src="/res/lib/htmx/2.0.2/htmx.min.js"></script>
+        <script src="/res/lib/htmx/extensions/json-enc/2.0.1/json-enc.js"></script>
+        <script src="/res/js/cardCarousel.js"></script>
+        <script>
+            const apiBaseUrl = "/api/messages";
+            const form = document.getElementById('message-form');
+            const tableBody = document.querySelector('#message-table tbody');
+            const clearFormButton = document.getElementById('clear-form');
+            const deleteMessageButton = document.getElementById('delete-message');
+            let editingRow = null;
 
-</script>
-</body>
+            // Fetch all messages and populate the table
+            async function fetchMessages() {
+                const response = await fetch(apiBaseUrl);
+                const messages = await response.json();
+                tableBody.innerHTML = "";
+                messages.forEach(message => {
+                    const row = createTableRow(message);
+                    tableBody.appendChild(row);
+                });
+            }
+
+            // Create a table row
+            function createTableRow(message) {
+                const row = document.createElement('tr');
+                row.dataset.id = message.id;
+                row.dataset.message = JSON.stringify(message);
+                row.innerHTML = `
+                    <td>message.title</td>
+                    <td>message.priority</td>
+                    <td>message.date</td>
+                `;
+                return row;
+            }
+
+            // Save or update a message
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                const message = {
+                    title: document.getElementById('message-title').value,
+                    priority: document.getElementById('message-priority').value,
+                    date: document.getElementById('message-date').value,
+                    content: document.getElementById('message-content').value,
+                };
+
+                if (editingRow) {
+                    const id = editingRow.dataset.id;
+                    await fetch(`${apiBaseUrl}/${id}`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(message),
+                    });
+                } else {
+                    await fetch(apiBaseUrl, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(message),
+                    });
+                }
+
+                fetchMessages();
+                form.reset();
+                editingRow = null;
+            });
+
+            // Delete a message
+            deleteMessageButton.addEventListener('click', async () => {
+                if (editingRow) {
+                    const id = editingRow.dataset.id;
+                    await fetch(`apiBaseUrl/${id}`, { method: "DELETE" });
+                    fetchMessages();
+                    form.reset();
+                    editingRow = null;
+                } else {
+                    alert('No message selected to delete.');
+                }
+            });
+
+            // Clear form
+            clearFormButton.addEventListener('click', () => {
+                form.reset();
+                editingRow = null;
+            });
+
+            // Populate form on row click
+            tableBody.addEventListener('click', (event) => {
+                const row = event.target.closest('tr');
+                if (row) {
+                    const message = JSON.parse(row.dataset.message);
+                    document.getElementById('message-title').value = message.title;
+                    document.getElementById('message-priority').value = message.priority;
+                    document.getElementById('message-date').value = message.date;
+                    document.getElementById('message-content').value = message.content;
+                    editingRow = row;
+                }
+            });
+
+            // Initialize
+            fetchMessages();
+        </script>
+    </body>
 </html>

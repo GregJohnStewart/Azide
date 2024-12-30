@@ -1,7 +1,7 @@
 /* Main Content */
 .content {
     position: absolute;
-    top: 36px; /* Space below header and sub-header */
+    top: 56px; /* Space below header and sub-header */
     bottom: 18px; /* Space above footer */
     left: 0;
     right: 0;
@@ -26,4 +26,29 @@ textarea {
 textarea#messageContent {
     background: darkslategray;
     color: white;
+}
+
+#message-table {
+    max-height: 150px;
+    overflow-y: auto;
+    display: block;
+    position: relative;
+}
+
+#message-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f8f9fa;
+    z-index: 1;
+}
+
+#message-content {
+    border: 1px solid #ddd;
+    padding: 10px;
+    height: 150px;
+    overflow-y: auto;
+}
+
+tr:hover {
+    cursor: pointer;
 }
