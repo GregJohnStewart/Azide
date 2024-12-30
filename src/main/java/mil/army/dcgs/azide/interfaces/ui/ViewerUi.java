@@ -36,7 +36,7 @@ public class ViewerUi extends UiInterface {
     @Produces(MediaType.TEXT_HTML)
     @Transactional
     public TemplateInstance getViewer() {
-        return this.getDefaultPageSetup()
+        return this.getDefaultAuthPageSetup()
             .data("priorityMessages", priorityMessageRepository.findAll().list())
             .data("classificationBanner", classificationRepository.findAll().list().getFirst());
     }

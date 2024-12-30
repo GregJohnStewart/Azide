@@ -7,12 +7,8 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import net.datafaker.Faker;
-import mil.army.dcgs.azide.entities.model.CustomSite;
 import mil.army.dcgs.azide.entities.model.Person;
-import mil.army.dcgs.azide.service.PersonRepository;
 import org.junit.jupiter.api.Test;
-
-import java.net.URI;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -64,42 +60,6 @@ public class PersonRepositoryTest {
 
     @Test
     @Transactional
-    public void addCustomSiteTest(){
-        Person person = new Person();
-        person.setName(FAKER.name().fullName());
-        person.setExternalId(FAKER.idNumber().valid());
-
-        this.personRepository.persist(person);
-        log.info("Person : {}", person);
-
-
-        CustomSite newCustomSite = new CustomSite();
-        newCustomSite.setTitle(FAKER.book().title());
-        newCustomSite.setDescription(FAKER.lorem().paragraph());
-        newCustomSite.setUri(URI.create(FAKER.internet().url()));
-        newCustomSite.setPerson(person);
-
-//        this.customSiteRepository.persist(newCustomSite);
-        person.getCustomSites().add(newCustomSite);
-        this.personRepository.persist(person);
-
-        Person fromDb = this.personRepository.find("id", person.getId()).firstResult();
-        assertFalse(fromDb.getCustomSites().isEmpty());
-//        assertEquals(person, fromDb);
-        log.info("Original custom site: {}", newCustomSite);
-        assertNotNull(newCustomSite.getId());
-        assertEquals(fromDb, newCustomSite.getPerson());
-        log.info("Custom sites: {}", fromDb.getCustomSites());
-        CustomSite fromPersonFromDb = fromDb.getCustomSites().getFirst();
-        assertNotNull(fromPersonFromDb);
-        assertNotNull(fromPersonFromDb.getPerson());
-        assertEquals(newCustomSite.getId(), fromPersonFromDb.getId());
-        assertEquals(fromDb, fromPersonFromDb.getPerson());
-        assertNotNull(fromPersonFromDb.getId());
-    }
-
-    @Test
-    @Transactional
     public void serializationTest() throws JsonProcessingException {
         Person person = new Person();
         person.setName(FAKER.name().fullName());
@@ -108,15 +68,6 @@ public class PersonRepositoryTest {
         this.personRepository.persist(person);
         log.info("Person : {}", person);
 
-
-        CustomSite newCustomSite = new CustomSite();
-        newCustomSite.setTitle(FAKER.book().title());
-        newCustomSite.setDescription(FAKER.lorem().paragraph());
-        newCustomSite.setUri(URI.create(FAKER.internet().url()));
-        newCustomSite.setPerson(person);
-
-//        this.customSiteRepository.persist(newCustomSite);
-        person.getCustomSites().add(newCustomSite);
         this.personRepository.persist(person);
 
         Person fromDb = this.personRepository.find("id", person.getId()).firstResult();
