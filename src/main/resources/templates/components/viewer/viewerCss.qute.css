@@ -14,10 +14,6 @@ textarea {
     height: 200px;
 }
 
-.message-list:hover {
-    color: var(--white);
-    background: var(--darkblue); 
-}
 
 .table-clickable tbody tr {
     cursor: pointer;

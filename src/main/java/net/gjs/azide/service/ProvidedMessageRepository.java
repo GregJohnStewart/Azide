@@ -6,7 +6,6 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Optional;
 import net.gjs.azide.config.ProvidedMessagesConfig;
 import net.gjs.azide.entities.model.ProvidedMessage;
 
