@@ -1,5 +1,3 @@
-
-
 quarkus:
   datasource:
     db-kind: postgresql
@@ -39,9 +37,6 @@ classificationBanner:
       - title: Red Hat
         description: It's neat
         uri: https://redhat.com
-  classificationBanner: 
-    classification: CUSTOM CLASSIFICATION
-    color: "#007a33"
   providedMessages:
     messages:
       - title: This is the title
