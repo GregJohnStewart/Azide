@@ -1,73 +1,15 @@
-<!DOCTYPE html>
-<html lang="en_us">
-    <head>
-        <meta charset="UTF-8">
-        <title>DCGSA - Azide</title>
-        <link href="/res/lib/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="/res/lib/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
-        <link rel="stylesheet" href="/res/lib/jsgrid/1.5.3/jsgrid.min.css">
-        <link rel="stylesheet" href="/res/lib/jsgrid/1.5.3/jsgrid-theme.min.css">
-        <style>
-            {#include components/viewer/viewerCss.qute.css /}
-        </style>
-    </head>
-    <body class="min-vh-100 vstack">
-        <!-- Header -->
-        <header class="text-white text-center fixed-top" style="background-color:{classificationBanner.getColor()};font-size:0.75rem">
-            {classificationBanner.getClassification()}
-        </header>
-        <!-- Sub-header -->
-        <div class="bg-secondary text-white fixed-top py-2" style="top: 18px">
-            <div class="container-fluid d-flex justify-content-between align-items-center">
-                <!-- Left: Image -->
-                <img src="/res/media/dcgsalogo.png" alt="DCGSA Logo" width="65" height="30">
+{#include base.qute.html}
 
-                <!-- Right: Dropdown Menu -->
-                    <a href="/app/viewer" style="color:#ffffff;">Login to Azide</a>
-            </div>
-        </div>
-        <div class="content">
-            <h1 class="mb-4">Daily Messages</h1>
+{#title}DCGSA - AZIDE{/title}
 
-            <div id="message-table" class="table-responsive mb-4">
-                <table class="table table-hover">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Message Title</th>
-                            <th>Priority</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {#for message in priorityMessages}
-                        <tr>
-                            <td>{message.title}</td>
-                            <td>{message.priority}</td>
-                            <td>{message.date}</td>
-                        </tr>
-                        {/for}
-                    </tbody>
-                </table>
-            </div>
+{#subheader}
+	{#include subheader-noauth.qute.html}{/}
+{/subheader}
 
-            <div id="message-content" class="border rounded p-3">
-                <h5>Message</h5>
-                <p id="content-display"></p>
-            </div>
-        </div>
-    
-        <!-- Footer -->
-        <footer class="text-white text-center fixed-bottom" style="background-color: {classificationBanner.getColor()};font-size:0.75rem">
-            {classificationBanner.getClassification()}
-        </footer>
+{#contents}
+	{#include apps/prioritymsg-viewer.qute.html}{/}
+{/contents}
 
-        <script src="/res/lib/jquery/3.7.1/jquery.min.js.js"></script>
-        <script src="/res/lib/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-        <script src="/res/lib/htmx/2.0.2/htmx.min.js"></script>
-        <script src="/res/lib/htmx/extensions/json-enc/2.0.1/json-enc.js"></script>
-        <script src="/res/js/indexPane.js"></script>
-<!--
-        <script src="/res/js/index.js"></script>
-    -->
-    </body>
-</html>
+{#scripts}
+	<script src="/res/js/index-scripts.js"></script>
+{/scripts}

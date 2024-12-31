@@ -1,6 +1,7 @@
 const apiBaseUrl = "/api/app/messages";
 const tableBody = document.querySelector('#message-table tbody');
-const contentDisplay = document.getElementById('content-display');
+//const contentDisplay = document.getElementById('content-display');
+const contentDisplay = document.getElementById('message-content');
 
 // Fetch all messages and populate the table
 async function fetchMessages() {

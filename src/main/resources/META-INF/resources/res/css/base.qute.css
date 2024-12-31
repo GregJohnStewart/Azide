@@ -41,8 +41,9 @@ textarea#messageContent {
 #message-content {
     border: 1px solid #ddd;
     padding: 10px;
-    height: 150px;
+    height: 70%;
     overflow-y: auto;
+    white-space: pre-wrap;
 }
 
 tr:hover {

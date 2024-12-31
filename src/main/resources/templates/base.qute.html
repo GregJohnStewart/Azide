@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="/res/lib/bootstrap/5.3.3/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/res/lib/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+		<link rel="stylesheet" href="/res/lib/jsgrid/1.5.3/jsgrid.min.css">
+		<link rel="stylesheet" href="/res/lib/jsgrid/1.5.3/jsgrid-theme.min.css">
+		<link rel="stylesheet" href="/res/css/base.qute.css">
+
+		<title>{#insert title}Default Title{/}</title>
+	</head>
+	<body>
+		<!-- Header -->
+		<header class="text-white text-center fixed-top" style="background-color:{classificationBanner.getColor()};font-size:0.75rem">
+			{classificationBanner.getClassification()}
+		</header>
+		
+		{#insert subheader}No subheader!{/}
+
+		<div class="content">
+		  {#insert contents}No contents!{/}
+		</div>
+
+		<!-- Footer -->
+		<footer class="text-white text-center fixed-bottom" style="background-color: {classificationBanner.getColor()};font-size:0.75rem">
+			{classificationBanner.getClassification()}
+		</footer>
+		
+		<script src="/res/lib/jquery/3.7.1/jquery.min.js.js"></script>
+		<script src="/res/lib/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+		<script src="/res/lib/htmx/2.0.2/htmx.min.js"></script>
+		<script src="/res/lib/htmx/extensions/json-enc/2.0.1/json-enc.js"></script>
+
+		{#insert scripts}{/}
+	</body>
+</html>
