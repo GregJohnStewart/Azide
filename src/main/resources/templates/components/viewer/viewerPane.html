@@ -26,7 +26,7 @@
                         </thead>
                         <tbody>
                             {#for message in priorityMessages}
-                            <tr>
+                            <tr id="{message.id}" message-content="{message.content}">
                                 <td>{message.title}</td>
                                 <td>{message.priority}</td>
                                 <td>{message.date}</td>

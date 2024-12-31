@@ -48,7 +48,6 @@ public class PriorityMessageEndpoints extends RestInterface {
         log.debug("New priority message (pre persist): {}", newMessage);
 
         this.getPriorityMessageRepository().persist(newMessage);
-
         log.debug("Created new priority message!");
         return newMessage;
     }

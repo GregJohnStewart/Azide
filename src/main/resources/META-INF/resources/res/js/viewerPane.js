@@ -11,11 +11,11 @@ let editingRow = null;
 async function fetchMessages() {
     const response = await fetch(apiBaseUrl);
     const messages = await response.json();
-    tableBody.innerHTML = "";
+    /**tableBody.innerHTML = "";
     messages.forEach(message => {
         const row = createTableRow(message);
         tableBody.appendChild(row);
-    });
+    });*/
 }
 
 // Create a table row
@@ -23,7 +23,7 @@ function createTableRow(message) {
     const row = document.createElement('tr');
     row.dataset.id = message.id;
     row.dataset.message = JSON.stringify(message);
-    const rowString = '<td>'+message.title+'</td><td>'+message.priority+'</td><td>'+message.date+'</td>';
+    const rowString = '<td>'+message.title+'createTableRow'+'</td><td>'+message.priority+'</td><td>'+message.date+'</td>';
     row.innerHTML = rowString;
     return row;
 }
@@ -54,8 +54,8 @@ form.addEventListener('submit', async (event) => {
             body: JSON.stringify(message),
         });
     }
-
-    fetchMessages();
+    location.reload();    
+    //fetchMessages();
     form.reset();
     editingRow = null;
 });
@@ -84,13 +84,13 @@ tableBody.addEventListener('click', (event) => {
     const row = event.target.closest('tr');
     if (row) {
         const message = JSON.parse(row.dataset.message);
-        document.getElementById('message-title').value = message.title;
-        document.getElementById('message-priority').value = message.priority;
-        document.getElementById('message-date').value = message.date;
+        document.getElementById('message-title').value = row.cells[0].innerHTML;
+        document.getElementById('message-priority').value = row.cells[1].innerHTML;
+        document.getElementById('message-date').value = row.cells[2].innerHTML;
         document.getElementById('message-content').value = message.content;
         editingRow = row;
     }
 });
 
 // Initialize
-fetchMessages();
+//fetchMessages();
