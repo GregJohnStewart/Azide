@@ -40,7 +40,7 @@ form.addEventListener('submit', async (event) => {
     };
 
     if (editingRow) {
-        const id = editingRow.dataset.id;
+        const id = editingRow.id;
         const fetchUrl = apiBaseUrl+"/"+id;
         await fetch(fetchUrl, {
             method: "PUT",
