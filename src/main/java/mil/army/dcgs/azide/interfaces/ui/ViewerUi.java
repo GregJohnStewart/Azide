@@ -19,11 +19,11 @@ import mil.army.dcgs.azide.service.PriorityMessageRepository;
 public class ViewerUi extends UiInterface {
 
     @Getter
-    @Location("pages/viewerPage")
+    @Location("pages/appviewer")
     Template pageTemplate;
 
     @Getter
-    @Location("components/viewer/viewerPane")
+    @Location("apps/prioritymsg-editor")
     Template paneTemplate;
 
     @Inject
