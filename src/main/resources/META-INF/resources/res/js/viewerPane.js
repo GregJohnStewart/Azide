@@ -63,9 +63,10 @@ form.addEventListener('submit', async (event) => {
 // Delete a message
 deleteMessageButton.addEventListener('click', async () => {
     if (editingRow) {
-        const id = editingRow.dataset.id;
+        const id = editingRow.id;
         await fetch(apiBaseUrl+"/"+id, { method: "DELETE" });
-        fetchMessages();
+        location.reload();   
+        //fetchMessages();
         form.reset();
         editingRow = null;
     } else {
@@ -83,11 +84,10 @@ clearFormButton.addEventListener('click', () => {
 tableBody.addEventListener('click', (event) => {
     const row = event.target.closest('tr');
     if (row) {
-        const message = JSON.parse(row.dataset.message);
         document.getElementById('message-title').value = row.cells[0].innerHTML;
         document.getElementById('message-priority').value = row.cells[1].innerHTML;
         document.getElementById('message-date').value = row.cells[2].innerHTML;
-        document.getElementById('message-content').value = message.content;
+        document.getElementById('message-content').value = row.getAttribute('message-content');;
         editingRow = row;
     }
 });
