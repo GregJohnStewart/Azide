@@ -64,3 +64,62 @@ tr:hover {
     padding: 0px 5px !important;
     font-size: 12px !important;
 }
+
+div.scrollmenu {
+  background-color: #333;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+div.scrollmenu a {
+  display: inline-block;
+  text-align: center;
+  
+  text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+  background-color: #777;
+}
+
+div.scrollmenu div { 
+    display: inline-block; 
+    min-width: 100px; 
+    margin: 10px; 
+    background-color: #f0f0f0; 
+    text-align: center; 
+    border: 1px solid #ccc;
+}
+
+div.scrollmenu .clickable-area { 
+    text-align: center; 
+    display: inline-block; 
+    margin: 0px; 
+    text-decoration: none; 
+    color: black; 
+    position: relative; 
+} 
+
+div.scrollmenu .clickable-area img { 
+    width: 100px; /* Size of the icon image */ 
+    height: 100px; /* Size of the icon image */ 
+    display: block; 
+    margin: 0 auto; 
+} 
+
+
+div.scrollmenu .corner-button { 
+    position: absolute; 
+    top: 0; 
+    right: 0; /* Position the button in the upper right corner */ 
+    width: 30px;
+    height: 30px; 
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */ 
+    color: white; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    text-decoration: none; 
+    font-size: 16px; 
+    border: none; cursor: pointer;
+}
