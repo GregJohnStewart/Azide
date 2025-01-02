@@ -1,99 +1,63 @@
 <!-- Sub-header -->
 <div class="bg-secondary text-white fixed-top py-2" style="top: 18px">
-		<div class="row">
-			<!-- Left side content -->
-			<div class="col-6 d-flex justify-content-start">
-				<img src="/res/media/dcgsalogo.png" alt="DCGSA Logo" width="65" height="30">
+    <div class="row">
+        <!-- Left side content -->
+        <div class="col-6 d-flex justify-content-start">
+            <img src="/res/media/dcgsalogo.png" alt="DCGSA Logo" width="65" height="30">
 
-				<!-- App List Dropdown Menu -->
-				<div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" aria-expanded="false" onclick="toggleAppBar()">
-						Select App
-					</button>
-                                        
-					<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-						<li> 
-                                                   
-                                                </li>
-						
-					</ul>
-				</div>
-                                
-			</div>
+            <!-- App List Dropdown Menu -->
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" aria-expanded="false" onclick="toggleAppBar()">
+                    Select App
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                    <li></li>
+                </ul>
+            </div>
+        </div>
 
-			<div class="col-6 d-flex justify-content-end">
-				<!-- Right: Dropdown Menu -->
-				<div class="dropdown">
-					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-						{user.getName()}
-					</button>
-					<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-						<li><a class="dropdown-item" href="#profile">Profile</a></li>
-						<li><a class="dropdown-item" href="/">Logout</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-                <div id="myDiv" class="scrollmenu" style="display:none">
-                    
-                    <div class="clickable-area">
-                        <a href="#App1" class="clickable-area"> 
-                            <img src="https://cdn2.vectorstock.com/i/1000x1000/63/56/pergola-gazebo-icon-simple-style-vector-32756356.jpg" alt="Icon Image"> <p>App1</p> 
-                            <button class="corner-button" onclick="window.open('#App1', '_blank')">&nearr;</button>
-                        </a> 
-                    </div>
-                    <div class="clickable-area">
-                        <a href="#App2" class="clickable-area"> 
-                            <img src="https://static.vecteezy.com/system/resources/previews/019/974/748/original/gazebo-icon-design-free-vector.jpg" alt="Icon Image"> <p>App2</p> 
-                            <button class="corner-button" onclick="window.open('#App2', '_blank')">&nearr;</button>
-                        </a>    
-                    </div>
-                    <div class="clickable-area">
-                        <a href="#App3" class="clickable-area"> 
-                            <img src="https://static.vecteezy.com/system/resources/previews/023/621/996/original/gazebo-icon-design-free-vector.jpg" alt="Icon Image"> <p>App3</p> 
-                            <button class="corner-button" onclick="window.open('#App3', '_blank')">&nearr;</button>
-                        </a>    
-                    </div>
-                    <div class="clickable-area">
-                        <a href="#App4" class="clickable-area"> 
-                            <img src="https://c8.alamy.com/comp/2CFCB1P/gazebo-icon-vector-illustration-2CFCB1P.jpg" alt="Icon Image"> <p>App4</p> 
-                            <button class="corner-button" onclick="window.open('#App4', '_blank')">&nearr;</button>
-                        </a>    
-                    </div>
-                    <div class="clickable-area">
-                        <a href="#App5" class="clickable-area"> 
-                            <img src="https://cdn2.vectorstock.com/i/1000x1000/63/56/pergola-gazebo-icon-simple-style-vector-32756356.jpg" alt="Icon Image"> <p>App5</p> 
-                            <button class="corner-button" onclick="window.open('#App5', '_blank')">&nearr;</button>
-                        </a> 
-                    </div>
-                    <div class="clickable-area">
-                        <a href="#App6" class="clickable-area"> 
-                            <img src="https://static.vecteezy.com/system/resources/previews/019/974/748/original/gazebo-icon-design-free-vector.jpg" alt="Icon Image"> <p>App6</p> 
-                            <button class="corner-button" onclick="window.open('#App6', '_blank')">&nearr;</button>
-                        </a>    
-                    </div>
-                    <div class="clickable-area">
-                        <a href="#App7" class="clickable-area"> 
-                            <img src="https://static.vecteezy.com/system/resources/previews/023/621/996/original/gazebo-icon-design-free-vector.jpg" alt="Icon Image"> <p>App7</p> 
-                            <button class="corner-button" onclick="window.open('#App7', '_blank')">&nearr;</button>
-                        </a>    
-                    </div>
-                    <div class="clickable-area">
-                        <a href="#App8" class="clickable-area"> 
-                            <img src="https://c8.alamy.com/comp/2CFCB1P/gazebo-icon-vector-illustration-2CFCB1P.jpg" alt="Icon Image"> <p>App8</p> 
-                            <button class="corner-button" onclick="window.open('#App8', '_blank')">&nearr;</button>
-                        </a>    
-                    </div>
-                    
-                </div> 
-    <script> 
-        function toggleAppBar() { 
-            var div = document.getElementById("myDiv"); 
-            if (div.style.display === "none") { 
-                div.style.display = "block"; 
-            } else { 
-                div.style.display = "none"; 
-            } 
-        }
-    </script>
+        <div class="col-6 d-flex justify-content-end">
+            <!-- Right: Dropdown Menu -->
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    {user.getName()}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="#profile">Profile</a></li>
+                    <li><a class="dropdown-item" href="/">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="appselector" class="scrollmenu" style="display:none">
+        <div class="clickable-app m-0">
+            <img src="https://cdn2.vectorstock.com/i/1000x1000/63/56/pergola-gazebo-icon-simple-style-vector-32756356.jpg" alt="Icon Image" onclick="loadApp('#App1');toggleAppBar();"> <p>App1</p> 
+            <button class="corner-button" onclick="window.open('#App1', '_blank');toggleAppBar();">&nearr;</button> 
+        </div>
+        <div class="clickable-app m-0">
+            <img src="https://static.vecteezy.com/system/resources/previews/023/621/996/original/gazebo-icon-design-free-vector.jpg" alt="Icon Image" onclick="loadApp('#App2');toggleAppBar();"> <p>App2</p> 
+            <button class="corner-button" onclick="window.open('#App2', '_blank');toggleAppBar();">&nearr;</button> 
+        </div>
+        <div class="clickable-app m-0">
+            <img src="https://c8.alamy.com/comp/2CFCB1P/gazebo-icon-vector-illustration-2CFCB1P.jpg" alt="Icon Image" onclick="loadApp('#App3');toggleAppBar();"> <p>App3</p> 
+            <button class="corner-button" onclick="window.open('#App3', '_blank');toggleAppBar();">&nearr;</button> 
+        </div>
+        <div class="clickable-app m-0">
+            <img src="https://cdn2.vectorstock.com/i/1000x1000/63/56/pergola-gazebo-icon-simple-style-vector-32756356.jpg" alt="Icon Image" onclick="loadApp('#App4');toggleAppBar();"> <p>App4</p>
+            <button class="corner-button" onclick="window.open('#App4', '_blank');toggleAppBar();">&nearr;</button> 
+        </div>
+        <div class="clickable-app m-0">
+            <img src="https://static.vecteezy.com/system/resources/previews/023/621/996/original/gazebo-icon-design-free-vector.jpg" alt="Icon Image" onclick="loadApp('#App5');toggleAppBar();"> <p>App5</p> 
+            <button class="corner-button" onclick="window.open('#App5', '_blank');toggleAppBar();">&nearr;</button> 
+        </div>
+        <div class="clickable-app m-0">
+            <img src="https://c8.alamy.com/comp/2CFCB1P/gazebo-icon-vector-illustration-2CFCB1P.jpg" alt="Icon Image" onclick="loadApp('#App6');toggleAppBar();"> <p>App6</p> 
+            <button class="corner-button" onclick="window.open('#App6', '_blank');toggleAppBar();">&nearr;</button> 
+        </div>
+        <div class="clickable-app m-0">
+            <img src="https://cdn2.vectorstock.com/i/1000x1000/63/56/pergola-gazebo-icon-simple-style-vector-32756356.jpg" alt="Icon Image" onclick="loadApp('#App7');toggleAppBar();"> <p>App7</p> 
+            <button class="corner-button" onclick="window.open('#App7', '_blank');toggleAppBar();">&nearr;</button> 
+        </div>
+    </div> 
+    <script src="/res/js/subheader-scripts.js"></script>
 </div>
