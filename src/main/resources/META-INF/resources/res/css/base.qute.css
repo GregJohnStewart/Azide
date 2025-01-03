@@ -91,24 +91,35 @@ div.scrollmenu div {
     border: 1px solid #ccc;
 }
 
-div.scrollmenu .clickable-area { 
+.clickable-app {
+    position: relative;
+    display: inline-block;
     text-align: center; 
     display: inline-block; 
     margin: 0px; 
     text-decoration: none; 
     color: black; 
     position: relative; 
-} 
+}
 
-div.scrollmenu .clickable-area img { 
+.clickable-app img { 
     width: 100px; /* Size of the icon image */ 
     height: 100px; /* Size of the icon image */ 
     display: block; 
     margin: 0 auto; 
+    cursor: pointer;
 } 
 
+.clickable-app img.overlay {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
 
-div.scrollmenu .corner-button { 
+.clickable-app .corner-button { 
     position: absolute; 
     top: 0; 
     right: 0; /* Position the button in the upper right corner */ 
@@ -123,4 +134,8 @@ div.scrollmenu .corner-button {
     font-size: 16px; 
     border: none; cursor: pointer;
     z-index: 1; /* Ensure the button is on top of the image */
+}
+
+.clickable-app .corner-button:hover {
+    background-color: rgba(0, 0, 0, 0.5);
 }
