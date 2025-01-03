@@ -6,13 +6,15 @@ import jakarta.ws.rs.core.SecurityContext;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import mil.army.dcgs.azide.entities.model.Person;
-import mil.army.dcgs.azide.service.PersonRepository;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
+import mil.army.dcgs.azide.entities.model.Person;
 import mil.army.dcgs.azide.entities.model.ClassificationBanner;
+
+import mil.army.dcgs.azide.service.PersonRepository;
 import mil.army.dcgs.azide.service.ClassificationRepository;
 import mil.army.dcgs.azide.service.PriorityMessageRepository;
+import mil.army.dcgs.azide.service.ApplicationInfoRepository;
 
 @Slf4j
 public abstract class RestInterface {
@@ -34,6 +36,10 @@ public abstract class RestInterface {
     @Getter(AccessLevel.PROTECTED)
     @Inject
     PriorityMessageRepository priorityMessageRepository;
+
+    @Getter(AccessLevel.PROTECTED)
+    @Inject
+    ApplicationInfoRepository applicationInfoRepository;
 
     @Getter(AccessLevel.PRIVATE)
     Person user = null;
