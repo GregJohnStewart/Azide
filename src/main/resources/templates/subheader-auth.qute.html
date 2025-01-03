@@ -32,34 +32,12 @@
             <input id="filterInput" type="text" class="filter-box" placeholder="Filter..." onkeyup="filterApps()">
         </div>
         <div id="appselector" class="scrollmenu" >
-            <div id="App1" class="clickable-app m-0">
-                <img src="/res/media/gazebo-1.jpg" alt="Icon Image" onclick="loadApp('#App1');toggleAppBar();"> <p>App1</p> 
-                <button class="corner-button" onclick="window.open('#App1', '_blank');toggleAppBar();">&nearr;</button> 
+            {#for application in applicationInfo}
+            <div id={application.name} class="clickable-app m-0">
+                <img src={application.image} alt="Icon Image" onclick="loadApp(`{application.location}`);toggleAppBar();"> <p>{application.name}</p>
+                <button class="corner-button" onclick="window.open(`{application.location}`, '_blank');toggleAppBar();">&nearr;</button>
             </div>
-            <div id="App2" class="clickable-app m-0">
-                <img src="/res/media/gazebo-2.jpg" alt="Icon Image" onclick="loadApp('#App2');toggleAppBar();"> <p>App2</p> 
-                <button class="corner-button" onclick="window.open('#App2', '_blank');toggleAppBar();">&nearr;</button> 
-            </div>
-            <div id="App3" class="clickable-app m-0">
-                <img src="/res/media/gazebo-3.jpg" alt="Icon Image" onclick="loadApp('#App3');toggleAppBar();"> <p>App3</p> 
-                <button class="corner-button" onclick="window.open('#App3', '_blank');toggleAppBar();">&nearr;</button> 
-            </div>
-            <div id="App4" class="clickable-app m-0">
-                <img src="/res/media/gazebo-1.jpg" alt="Icon Image" onclick="loadApp('#App4');toggleAppBar();"> <p>App4</p>
-                <button class="corner-button" onclick="window.open('#App4', '_blank');toggleAppBar();">&nearr;</button> 
-            </div>
-            <div id="App5" class="clickable-app m-0">
-                <img src="/res/media/gazebo-2.jpg" alt="Icon Image" onclick="loadApp('#App5');toggleAppBar();"> <p>App5</p> 
-                <button class="corner-button" onclick="window.open('#App5', '_blank');toggleAppBar();">&nearr;</button> 
-            </div>
-            <div id="App6" class="clickable-app m-0">
-                <img src="/res/media/gazebo-3.jpg" alt="Icon Image" onclick="loadApp('#App6');toggleAppBar();"> <p>App6</p> 
-                <button class="corner-button" onclick="window.open('#App6', '_blank');toggleAppBar();">&nearr;</button> 
-            </div>
-            <div id="App7" class="clickable-app m-0">
-                <img src="/res/media/gazebo-1.jpg" alt="Icon Image" onclick="loadApp('#App7');toggleAppBar();"> <p>App7</p> 
-                <button class="corner-button" onclick="window.open('#App7', '_blank');toggleAppBar();">&nearr;</button> 
-            </div>
+			{/for}
         </div> 
     </div>
     <script src="/res/js/subheader-scripts.js"></script>
