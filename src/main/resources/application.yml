@@ -23,3 +23,14 @@ classificationBanner:
     hibernate-orm:
       database:
         generation: drop-and-create
+  applicationInfo:
+    applications:
+      - name: App 1
+        location: "#App1"
+        image: /res/media/gazebo-1.jpg
+      - name: App 2
+        location: "#App2"
+        image: /res/media/gazebo-1.jpg
+      - name: App 3
+        location: "#App3"
+        image: /res/media/gazebo-1.jpg
