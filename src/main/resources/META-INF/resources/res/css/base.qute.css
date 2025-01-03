@@ -68,34 +68,34 @@ tr:hover {
 
 div.scrollmenu {
   background-color: #333;
-  overflow: auto;
+  overflow-x: scroll;
   white-space: nowrap;
 }
 
-div.scrollmenu a {
+/*div.scrollmenu a {
   display: inline-block;
   text-align: center;
   text-decoration: none;
-}
+}*/
 
-div.scrollmenu a:hover {
+div.scrollmenu img:hover {
   background-color: #777;
 }
 
 div.scrollmenu div { 
     display: inline-block; 
-    min-width: 100px; 
-    margin: 10px; 
+    min-width: 100px;
+    max-width: 100px;
     background-color: #f0f0f0; 
     text-align: center; 
     border: 1px solid #ccc;
 }
 
 .clickable-app {
+    width: 100px; /* Size of the icon image */ 
     position: relative;
     display: inline-block;
     text-align: center; 
-    display: inline-block; 
     margin: 0px; 
     text-decoration: none; 
     color: black; 
