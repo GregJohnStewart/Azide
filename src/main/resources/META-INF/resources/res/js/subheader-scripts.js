@@ -20,7 +20,7 @@ function filterApps() {
     divs.forEach(function(div) { 
         console.log(div.id);
         if (div.id.toLowerCase().includes(input)) { 
-            div.style.display = 'block'; 
+            div.style.display = 'inline-block';
         } else { 
             div.style.display = 'none'; 
         } 
