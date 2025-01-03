@@ -66,26 +66,20 @@ tr:hover {
     font-size: 12px !important;
 }
 
-div.scrollmenu {
-  background-color: #333;
-  overflow-x: scroll;
-  white-space: nowrap;
+#appselector {
+    margin: 3px; 
+    background-color: #333;
 }
 
-/*div.scrollmenu a {
-  display: inline-block;
-  text-align: center;
-  text-decoration: none;
-}*/
-
-div.scrollmenu img:hover {
-  background-color: #777;
+div.scrollmenu {
+  overflow: auto;
+  white-space: nowrap;
 }
 
 div.scrollmenu div { 
     display: inline-block; 
-    min-width: 100px;
-    max-width: 100px;
+    min-width: 110px;
+    max-width: 110px;
     background-color: #f0f0f0; 
     text-align: center; 
     border: 1px solid #ccc;
@@ -110,6 +104,10 @@ div.scrollmenu div {
     cursor: pointer;
 } 
 
+div.scrollmenu img:hover {
+  border: 1px solid #ccc;
+}
+
 .clickable-app img.overlay {
     position: absolute;
     top: 5px;
@@ -132,7 +130,8 @@ div.scrollmenu div {
     justify-content: center; 
     text-decoration: none; 
     font-size: 16px; 
-    border: none; cursor: pointer;
+    border: none; 
+    cursor: pointer;
     z-index: 1; /* Ensure the button is on top of the image */
 }
 

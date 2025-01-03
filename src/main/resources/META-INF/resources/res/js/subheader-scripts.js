@@ -27,13 +27,3 @@ function filterApps() {
     });; 
 
 }
-
-function refreshCSS() { 
-    // Select all stylesheets 
-    let stylesheets = document.querySelectorAll('link[rel="stylesheet"]'); 
-    // Iterate over the stylesheets and update the href attribute to force a reload 
-    stylesheets.forEach(function(stylesheet) { 
-        let href = stylesheet.getAttribute('href'); 
-        stylesheet.setAttribute('href', href + '?v=' + new Date().getTime()); 
-    }); 
-}
