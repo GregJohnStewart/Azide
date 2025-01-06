@@ -52,8 +52,6 @@ public class ViewerUi extends UiInterface {
     @Transactional
     public TemplateInstance getPane() {
         return this.getDefaultAuthPageSetup(this.getPaneTemplate())
-            .data("priorityMessages", priorityMessageRepository.findAll().list())
-            .data("applicationInfo", applicationInfoRepository.findAll().list())
-            .data("classificationBanner", classificationRepository.findAll().list().getFirst());
+            .data("priorityMessages", priorityMessageRepository.findAll().list());
     }
 }

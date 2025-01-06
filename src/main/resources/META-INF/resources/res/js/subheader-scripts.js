@@ -11,6 +11,16 @@ function loadApp(appId) {
     window.location.href = appId;
 }
 
+function closeApp() {
+    //document.getElementById("appframe").src = "";
+    // or
+    var iframe = document.getElementById("appframe");
+    var html = "";
+
+    iframe.contentWindow.document.open();
+    iframe.contentWindow.document.write(html);
+    iframe.contentWindow.document.close();
+}
 
 function filterApps() { 
     let input = document.getElementById('filterInput').value.toLowerCase(); 
@@ -24,8 +34,7 @@ function filterApps() {
         } else { 
             div.style.display = 'none'; 
         } 
-    });; 
-
+    });
 }
 
 function refreshCSS() { 
