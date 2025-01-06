@@ -1,3 +1,7 @@
+<!--
+This is the index html page that loads prior to login/authentication of the user.
+This page should show basic information such as the daily messages for the users.
+-->
 {#include base.qute.html}
 
 {#title}DCGSA - AZIDE{/title}
@@ -7,9 +11,8 @@
 {/subheader}
 
 {#contents}
-	{#include apps/prioritymsg-viewer.qute.html}{/}
+	{#include index-iframe.qute.html}{/}
 {/contents}
 
 {#scripts}
-	<script src="/res/js/index-scripts.js"></script>
 {/scripts}

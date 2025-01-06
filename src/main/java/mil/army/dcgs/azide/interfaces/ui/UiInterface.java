@@ -9,7 +9,7 @@ public abstract class UiInterface extends RestInterface {
     protected abstract Template getPageTemplate();
 
     protected TemplateInstance getDefaultPageSetup(Template template){
-        return template.data("", "");
+        return template.instance();
     }
 
     protected TemplateInstance getDefaultPageSetup(){

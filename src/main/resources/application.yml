@@ -25,12 +25,12 @@ classificationBanner:
         generation: drop-and-create
   applicationInfo:
     applications:
-      - name: App 1
-        location: "http://yahoo.com"
+      - name: Msg Viewer
+        location: "/app/viewer/message-viewer"
         image: /res/media/gazebo-1.jpg
-      - name: App 2
+      - name: Msg Editor
         location: "/app/viewer/message-editor"
         image: /res/media/gazebo-2.jpg
-      - name: App 3
+      - name: Google
         location: "https://www.google.com"
         image: /res/media/gazebo-3.jpg

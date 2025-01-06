@@ -23,6 +23,10 @@ public class IndexUi extends UiInterface {
     @Location("pages/index")
     Template pageTemplate;
     
+    @Getter
+    @Location("apps/prioritymsg-viewer")
+    Template messageViewerTemplate;
+
     @Inject
     ClassificationRepository classificationRepository;
     
@@ -38,4 +42,12 @@ public class IndexUi extends UiInterface {
             .data("classificationBanner", classificationRepository.findAll().list().getFirst());
     }
 
+    @GET
+    @Path("/message-viewer")
+    @Produces(MediaType.TEXT_HTML)
+    @Transactional
+    public TemplateInstance msgViewerPane() {
+        return this.getDefaultPageSetup(this.getMessageViewerTemplate())
+            .data("priorityMessages", priorityMessageRepository.findAll().list());
+    }
 }

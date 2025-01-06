@@ -30,6 +30,10 @@ public class ViewerUi extends UiInterface {
     @Getter
     @Location("apps/prioritymsg-editor")
     Template messageEditorTemplate;
+
+    @Getter
+    @Location("apps/prioritymsg-viewer")
+    Template messageViewerTemplate;
     
     @Inject
     ClassificationRepository classificationRepository;
@@ -57,6 +61,16 @@ public class ViewerUi extends UiInterface {
     @Transactional
     public TemplateInstance msgEditorPane() {
         return this.getDefaultAuthPageSetup(this.getMessageEditorTemplate())
+            .data("priorityMessages", priorityMessageRepository.findAll().list())
+            .data("selectedApp", applicationInfoRepository.findAll().list().getFirst());
+    }
+
+    @GET
+    @Path("/message-viewer")
+    @Produces(MediaType.TEXT_HTML)
+    @Transactional
+    public TemplateInstance msgViewerPane() {
+        return this.getDefaultAuthPageSetup(this.getMessageViewerTemplate())
             .data("priorityMessages", priorityMessageRepository.findAll().list())
             .data("selectedApp", applicationInfoRepository.findAll().list().getFirst());
     }
