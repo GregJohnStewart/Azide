@@ -26,11 +26,11 @@ classificationBanner:
   applicationInfo:
     applications:
       - name: App 1
-        location: "#App1"
+        location: "http://yahoo.com"
         image: /res/media/gazebo-1.jpg
       - name: App 2
-        location: "#App2"
-        image: /res/media/gazebo-1.jpg
+        location: "/app/viewer/message-editor"
+        image: /res/media/gazebo-2.jpg
       - name: App 3
-        location: "#App3"
-        image: /res/media/gazebo-1.jpg
+        location: "https://www.google.com"
+        image: /res/media/gazebo-3.jpg

@@ -34,8 +34,8 @@
         <div id="appselector" class="scrollmenu" >
             {#for application in applicationInfo}
             <div id={application.name} class="clickable-app m-0">
-                <img src={application.image} alt="Icon Image" onclick="loadApp(`{application.location}`);toggleAppBar();"> <p>{application.name}</p>
-                <button class="corner-button" onclick="window.open(`{application.location}`, '_blank');toggleAppBar();">&nearr;</button>
+                <img src={application.image} alt="Icon Image" onclick="loadApp(`/app/viewer/pane/{application.id}`);toggleAppBar();"> <p>{application.name}</p>
+                <button class="corner-button" onclick="window.open(`/app/viewer/pane/{application.id}`, '_blank');toggleAppBar();">&nearr;</button>
             </div>
 			{/for}
         </div> 
