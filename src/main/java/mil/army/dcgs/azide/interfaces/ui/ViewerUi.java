@@ -73,5 +73,6 @@ public class ViewerUi extends UiInterface {
             .data("applicationInfo", applicationInfoRepository.findAll().list())
             .data("classificationBanner", classificationRepository.findAll().list().getFirst())
             .data("selectedApp", applicationInfoRepository.find("id", UUID.fromString(selectedApp)).firstResult());
+
     }
 }
