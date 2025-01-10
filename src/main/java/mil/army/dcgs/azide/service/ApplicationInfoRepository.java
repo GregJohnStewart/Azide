@@ -5,7 +5,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.extern.slf4j.Slf4j;
-import java.util.Optional;
+import java.util.List;
 
 import mil.army.dcgs.azide.config.ApplicationInfoConfig;
 
@@ -21,6 +21,30 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
     ApplicationInfoConfig applicationInfoConfig;
 
     private boolean initted = false;
+
+    public String getApplicationId(String appName) {
+        List<ApplicationInfo> apps = findAll().list();
+
+        for(ApplicationInfo app : apps) {
+            if(app.getName().equalsIgnoreCase(appName)) {
+                return app.getId().toString();
+            }
+        }
+
+        return null;
+    }
+
+    public String getApplicationLocation(String appName) {
+        List<ApplicationInfo> apps = findAll().list();
+
+        for(ApplicationInfo app : apps) {
+            if(app.getName().equalsIgnoreCase(appName)) {
+                return app.getLocation();
+            }
+        }
+
+        return null;
+    }
 
     public void populate() {
         if(this.initted){
@@ -39,6 +63,7 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
                         .name(application.name())
                         .location(application.location())
                         .image(application.image())
+                        .showInAppBar(application.showInAppBar())
                         .build()
                 );
 //            }

@@ -29,7 +29,7 @@ public class LifecycleHandler {
             StartupEvent ev
     ) {
         this.classificationRepository.populate();
-        this.priorityMessageRepository.populate();
+//        this.priorityMessageRepository.populate();
         this.applicationInfoRepository.populate();
     }
 }

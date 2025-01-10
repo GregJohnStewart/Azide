@@ -1,26 +1,60 @@
-<h1 class="mb-4">Daily Messages</h1>
+<!DOCTYPE html>
+<html lang="en_us">
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="/res/lib/bootstrap/5.3.3/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/res/lib/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+		<link rel="stylesheet" href="/res/css/base.css">
+		<style>
+		</style>
+	</head>
+    <body class="min-vh-100 vstack">
+        <div class="container-fluid min-vh-100 d-flex flex-column">
+            <main id="content">
+				<div class="row">
+					<div class="col-6 d-flex justify-content-start">
+						<h3 class="mb-4">Daily Messages</h3>
+					</div>
+					{#if user}
+					<div class="col-6 d-flex justify-content-end">
+						<button class="btn" onclick="editMessages(`{applicationInfoRepository.getApplicationLocation('Msg Editor')}`)">Edit</button>
+					</div>
+					{/if}
+				</div>
 
-<div id="message-table" class="table-responsive mb-4">
-	<table class="table table-hover">
-		<thead class="table-light">
-			<tr>
-				<th>Message Title</th>
-				<th>Priority</th>
-				<th>Date</th>
-			</tr>
-		</thead>
-		<tbody>
-			{#for message in priorityMessages}
-			<tr>
-				<td>{message.title}</td>
-				<td>{message.priority}</td>
-				<td>{message.date}</td>
-			</tr>
-			{/for}
-		</tbody>
-	</table>
-</div>
+	
 
-<h5>Message</h5>
-<div id="message-content" class="border rounded p-3">
-</div>
+				<div id="message-table" class="table-responsive mb-4">
+					<table class="table table-hover">
+						<thead class="table-light">
+							<tr>
+								<th>Message Title</th>
+								<th>Priority</th>
+								<th>Date</th>
+							</tr>
+						</thead>
+						<tbody>
+							{#for message in priorityMessages}
+							<tr>
+								<td>{message.title}</td>
+								<td>{message.priority}</td>
+								<td>{message.date}</td>
+							</tr>
+							{/for}
+						</tbody>
+					</table>
+				</div>
+
+				<h5>Message</h5>
+				<div id="message-content" class="border rounded p-3">
+				</div>
+            </main>
+        </div>
+
+        <script src="/res/lib/jquery/3.7.1/jquery.min.js.js"></script>
+        <script src="/res/lib/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+        <script src="/res/lib/htmx/2.0.2/htmx.min.js"></script>
+        <script src="/res/lib/htmx/extensions/json-enc/2.0.1/json-enc.js"></script>
+		<script src="/res/js/prioritymsg-viewer-scripts.js"></script>
+    </body>
+</html>

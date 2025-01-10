@@ -25,12 +25,15 @@ classificationBanner:
         generation: drop-and-create
   applicationInfo:
     applications:
-      - name: Message Viewer
-        location: "https://stackoverflow.com/"
+      - name: Msg Viewer
+        location: "/app/viewer/message-viewer"
         image: /res/media/gazebo-1.jpg
-      - name: Message Editor
+        showInAppBar: true
+      - name: Msg Editor
         location: "/app/viewer/message-editor"
-        image: /res/media/gazebo-2.jpg
-      - name: App 3
+        image: /res/media/gazebo-1.jpg
+        showInAppBar: false
+      - name: Google
         location: "https://www.google.com"
         image: /res/media/gazebo-3.jpg
+        showInAppBar: true
