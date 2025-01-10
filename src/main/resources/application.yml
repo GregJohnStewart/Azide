@@ -7,6 +7,9 @@ quarkus:
   oidc:
     client-id: azide
     application-type: web-app
+    logout:
+      path: /logout
+      post-logout-path: /
   http:
     auth:
       permission:
