@@ -33,5 +33,17 @@ tableBody.addEventListener('click', (event) => {
     }
 });
 
+function editMessages(applocation) {
+    // load the message editor page
+//    window.location.href = appId;
+    var outer = window.parent;
+    var iframe = outer.document.getElementById("appframe");
+//    var html = "";
+    iframe.src = applocation;
+//    iframe.contentWindow.document.open();
+//    iframe.contentWindow.document.write(html);
+//    iframe.contentWindow.document.close();
+}
+
 // Initialize
 fetchMessages();

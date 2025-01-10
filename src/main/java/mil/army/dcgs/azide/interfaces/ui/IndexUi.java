@@ -14,6 +14,7 @@ import lombok.Getter;
 
 import mil.army.dcgs.azide.service.ClassificationRepository;
 import mil.army.dcgs.azide.service.PriorityMessageRepository;
+import mil.army.dcgs.azide.service.ApplicationInfoRepository;
 
 @RequestScoped
 @Path("/")
@@ -32,6 +33,9 @@ public class IndexUi extends UiInterface {
     
     @Inject
     PriorityMessageRepository priorityMessageRepository;
+    
+    @Inject
+    ApplicationInfoRepository applicationInfoRepository;
 
     @GET
     @Produces(MediaType.TEXT_HTML)
@@ -48,6 +52,7 @@ public class IndexUi extends UiInterface {
     @Transactional
     public TemplateInstance msgViewerPane() {
         return this.getDefaultPageSetup(this.getMessageViewerTemplate())
+            .data("applicationInfoRepository", applicationInfoRepository)
             .data("priorityMessages", priorityMessageRepository.findAll().list());
     }
 }

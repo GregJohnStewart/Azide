@@ -31,6 +31,10 @@ public class ApplicationInfo extends PanacheEntityBase {
     @NotNull
     @Basic(optional=false)
     private String image;
+    
+    @NotNull
+    @Basic(optional=false)
+    private boolean showInAppBar;
 
     @Version
     LocalDateTime lastUpdated;

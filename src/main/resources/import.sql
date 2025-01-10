@@ -4,6 +4,7 @@
 -- insert into myentity (id, field) values(2, 'field-2');
 -- insert into myentity (id, field) values(3, 'field-3');
 -- alter sequence myentity_seq restart with 4;
-insert into PriorityMessage (id, title, priority, date, content) values ('73cf2011-eaed-4b87-be45-1ddf7fea14ee', 'Message 1', '1', '12/29/2024', 'Message 1 content');
-insert into PriorityMessage (id, title, priority, date, content) values ('cf369a8c-76ab-4507-aea5-79fa7250dd78' , 'Message 2', '2', '12/30/2024', 'Message 2 content');
-ALTER SEQUENCE PriorityMessage_SEQ RESTART WITH 3;
+insert into PriorityMessage (id, title, priority, date, content) values (gen_random_uuid(), 'Message 1', '1', '2025-01-05', 'Message 1 content');
+insert into PriorityMessage (id, title, priority, date, content) values (gen_random_uuid(), 'Message 2', '1', '2025-01-06', 'Message 2 content');
+insert into PriorityMessage (id, title, priority, date, content) values (gen_random_uuid(), 'Message 3', '2', '2025-01-07', 'Message 3 content');
+insert into PriorityMessage (id, title, priority, date, content) values (gen_random_uuid(), 'Message 4', '1', '2025-01-08', 'Message 4 content');

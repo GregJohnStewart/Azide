@@ -50,6 +50,7 @@ public class ViewerUi extends UiInterface {
     public TemplateInstance getViewer() {
         return this.getDefaultAuthPageSetup()
             .data("priorityMessages", priorityMessageRepository.findAll().list())
+            .data("applicationInfoRepository", applicationInfoRepository)
             .data("applicationInfo", applicationInfoRepository.findAll().list())
             .data("classificationBanner", classificationRepository.findAll().list().getFirst())
             .data("selectedApp", applicationInfoRepository.findAll().list().getFirst());
@@ -61,6 +62,7 @@ public class ViewerUi extends UiInterface {
     @Transactional
     public TemplateInstance msgEditorPane() {
         return this.getDefaultAuthPageSetup(this.getMessageEditorTemplate())
+            .data("applicationInfoRepository", applicationInfoRepository)
             .data("priorityMessages", priorityMessageRepository.findAll().list())
             .data("selectedApp", applicationInfoRepository.findAll().list().getFirst());
     }
@@ -71,6 +73,8 @@ public class ViewerUi extends UiInterface {
     @Transactional
     public TemplateInstance msgViewerPane() {
         return this.getDefaultAuthPageSetup(this.getMessageViewerTemplate())
+            .data("applicationInfoRepository", applicationInfoRepository)
+            .data("applicationInfo", applicationInfoRepository.findAll().list())
             .data("priorityMessages", priorityMessageRepository.findAll().list())
             .data("selectedApp", applicationInfoRepository.findAll().list().getFirst());
     }

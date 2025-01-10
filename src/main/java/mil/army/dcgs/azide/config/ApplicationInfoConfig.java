@@ -13,5 +13,6 @@ public interface ApplicationInfoConfig {
         String name();
         String location();
         String image();
+        boolean showInAppBar();
     }
 }
