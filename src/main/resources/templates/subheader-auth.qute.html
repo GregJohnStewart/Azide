@@ -29,7 +29,14 @@
             </div>
         </div>
     </div>
-
+     
+    <div id="popup" class="popup" style="display: none;"> <p id="popupMessage"></p> 
+        <input type="checkbox" id="dontAskAgain" /> Don't ask again<br><br> 
+        <div class="buttons"> 
+            <button class="ok" onclick="handleOk()">OK</button> 
+            <button class="cancel" onclick="handleCancel()">Cancel</button> 
+        </div>
+    </div>
     <div id="appselector" style="display:none">
         <div id="appselectorfilter">
             <input id="filterInput" type="text" class="filter-box" placeholder="Filter..." onkeyup="filterApps()">
@@ -38,7 +45,7 @@
             {#for application in applicationInfo}
                 {#if application.showInAppBar}
                     <div id={application.name} class="clickable-app m-0">
-                        <img src={application.image} alt="Icon Image" onclick="loadApp(`/app/viewer/pane/{application.id}`);toggleAppBar();"> <p>{application.name}</p>
+                        <img src={application.image} alt="Icon Image" onclick="appSelected(`{application.name}`, `/app/viewer/pane/{application.id}`);"> <p>{application.name}</p>
                         <button class="corner-button" onclick="window.open(`/app/viewer/pane/{application.id}`, '_blank');toggleAppBar();">&nearr;</button>
                     </div>
                 {/if}

@@ -85,8 +85,6 @@ public class ViewerUi extends UiInterface {
     @Transactional
     public TemplateInstance getApp(@PathParam("id") String selectedApp) {
         
-        log.info("APPLICATIONID: {}", selectedApp);
-        log.info("APPLICATIONLOCATION: {}", applicationInfoRepository.find("id", UUID.fromString(selectedApp)).firstResult().getLocation());
         return this.getDefaultAuthPageSetup()
             .data("applicationInfo", applicationInfoRepository.findAll().list())
             .data("classificationBanner", classificationRepository.findAll().list().getFirst())
