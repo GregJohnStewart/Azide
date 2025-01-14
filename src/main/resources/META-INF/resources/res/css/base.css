@@ -1,3 +1,13 @@
+body {
+	background-image: url('/res/media/helmet-background.jpg');
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
 /* Main Content */
 .content {
     position: absolute;
@@ -9,19 +19,35 @@
     overflow: hidden;
 }
 
-textarea {
-    overflow-y: scroll;
-    height: 200px;
+.table-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
 }
 
+table {
+	width: 80%;
+	max-width: 800px;
+	border-collapse: collapse;
+	background: rgba(255, 255, 255, 0.7); /* Semi-transparent white */
+	padding: 20px;
+	border-radius: 10px;
+}
+
+th, td {
+	padding: 10px;
+	border: 1px solid #333;
+	text-align: center;
+}
+
+th {
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+}
 
 .table-clickable tbody tr {
     cursor: pointer;
-}
-
-textarea#messageContent {
-    background: darkslategray;
-    color: white;
 }
 
 #message-table {
@@ -48,6 +74,16 @@ textarea#messageContent {
 
 tr:hover {
     cursor: pointer;
+}
+
+textarea {
+    overflow-y: scroll;
+    height: 200px;
+}
+
+textarea#messageContent {
+    background: darkslategray;
+    color: white;
 }
 
 .btn {

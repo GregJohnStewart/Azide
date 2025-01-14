@@ -24,24 +24,21 @@
 
 	
 
-				<div id="message-table" class="table-responsive mb-4">
-					<table class="table table-hover">
-						<thead class="table-light">
-							<tr>
-								<th>Message Title</th>
-								<th>Priority</th>
-								<th>Date</th>
-							</tr>
-						</thead>
-						<tbody>
-							{#for message in priorityMessages}
-							<tr>
-								<td>{message.title}</td>
-								<td>{message.priority}</td>
-								<td>{message.date}</td>
-							</tr>
-							{/for}
-						</tbody>
+<!--				<div id="message-table" class="table-responsive mb-4"> -->
+				<div id="message-table" class="table-container">
+					<table>
+						<tr>
+							<th>Message Title</th>
+							<th>Priority</th>
+							<th>Date</th>
+						</tr>
+						{#for message in priorityMessages}
+						<tr>
+							<td>{message.title}</td>
+							<td>{message.priority}</td>
+							<td>{message.date}</td>
+						</tr>
+						{/for}
 					</table>
 				</div>
 
