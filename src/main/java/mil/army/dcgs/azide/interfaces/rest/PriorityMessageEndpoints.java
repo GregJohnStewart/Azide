@@ -13,6 +13,7 @@ import mil.army.dcgs.azide.service.PriorityMessageRepository;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.Optional;
 
 @Slf4j
 @RequestScoped
@@ -82,7 +83,7 @@ public class PriorityMessageEndpoints extends RestInterface {
     @Transactional
     public @NotNull PriorityMessage deleteMessage(@NotNull @PathParam("id") UUID id) {
         log.info("Deleting a priority message: {}", id);
-
+		
         PriorityMessage message = this.priorityMessageRepository.find("id", id).firstResultOptional()
             .orElseThrow(NotFoundException::new);
 

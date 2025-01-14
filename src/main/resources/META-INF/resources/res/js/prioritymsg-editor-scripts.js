@@ -64,10 +64,11 @@ form.addEventListener('submit', async (event) => {
 deleteMessageButton.addEventListener('click', async () => {
     if (editingRow) {
         const id = editingRow.id;
+		
         await fetch(apiBaseUrl+"/"+id, { method: "DELETE" });
         location.reload();   
-        //fetchMessages();
         form.reset();
+		
         editingRow = null;
     } else {
         alert('No message selected to delete.');
