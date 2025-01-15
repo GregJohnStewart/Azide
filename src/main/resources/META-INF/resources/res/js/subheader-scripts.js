@@ -16,14 +16,8 @@ function loadApp(appId) {
 }
 
 function closeApp() {
-    //document.getElementById("appframe").src = "";
-    // or
     var iframe = document.getElementById("appframe");
-    var html = "";
-    iframe.src = "";
-    iframe.contentWindow.document.open();
-    iframe.contentWindow.document.write(html);
-    iframe.contentWindow.document.close();
+    iframe.src = "/app/viewer/no-app";
 }
 
 function filterApps() { 
