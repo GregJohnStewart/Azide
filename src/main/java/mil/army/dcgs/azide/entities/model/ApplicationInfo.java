@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -23,6 +24,9 @@ public class ApplicationInfo extends PanacheEntityBase {
     @NotNull
     @Basic(optional=false)
     private String name;
+    
+    @Basic(optional=true)
+    private String description;
 
     @NotNull
     @Basic(optional=false)
@@ -38,4 +42,6 @@ public class ApplicationInfo extends PanacheEntityBase {
 
     @Version
     LocalDateTime lastUpdated;
+    
+    // TODO: Add small_icon, groups, description.
 }

@@ -32,6 +32,7 @@ classificationBanner:
         location: "/app/viewer/message-viewer"
         image: /res/media/gazebo-1.jpg
         showInAppBar: true
+        description: "This is the Message Viewer"
       - name: Msg Editor
         location: "/app/viewer/message-editor"
         image: /res/media/gazebo-1.jpg

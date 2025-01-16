@@ -16,8 +16,6 @@ function loadApp(appId) {
 }
 
 function closeApp() {
-    //document.getElementById("appframe").src = "";
-    // or
     var iframe = document.getElementById("appframe");
     var html = "";
     iframe.src = "";
@@ -68,3 +66,32 @@ function handleOk() {
 function handleCancel() { 
     hidePopup(); 
 } 
+
+const hoverImages = document.getElementsByClassName('AppImage'); 
+const hoverText = document.getElementsByClassName('hover-text'); 
+let hoverTimeout; 
+
+for (let i = 0; i < hoverImages.length; i++){
+    hoverImages[i].addEventListener('mousemove', (event) => { 
+        var parentOffset = $(this).offset(); 
+        //const x = event.clientX + window.pageXOffset;
+        //const y = event.clientY + window.pageYOffset; 
+        var relX = event.pageX - parentOffset.left;
+        var relY = event.pageY - parentOffset.top;
+        hoverText[i].style.left = (relX+event.clientX) + 'px'; 
+        hoverText[i].style.top = (relY+event.clientY) + 'px'; 
+        //hoverText[i].style.display = 'none';
+    }); 
+
+
+    hoverImages[i].addEventListener('mouseenter', () => { 
+        hoverTimeout = setTimeout(() => { 
+            hoverText[i].style.display = 'block';
+        }, 750); // 750 milliseconds delay 
+    }); 
+
+    hoverImages[i].addEventListener('mouseleave', () => { 
+        clearTimeout(hoverTimeout); 
+        hoverText[i].style.display = 'none'; 
+    });
+}
