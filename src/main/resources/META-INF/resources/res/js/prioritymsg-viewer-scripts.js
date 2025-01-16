@@ -1,27 +1,21 @@
 const apiBaseUrl = "/api/app/messages";
 const tableBody = document.querySelector('#message-table tbody');
-//const contentDisplay = document.getElementById('content-display');
 const contentDisplay = document.getElementById('message-content');
 
 
-// Display message content on row click
+// Display message content on row click.
 tableBody.addEventListener('click', (event) => {
     const row = event.target.closest('tr');
     if (row) {
-        const message = JSON.parse(row.dataset.message);
-        contentDisplay.textContent = message.content;
+        document.getElementById('message-content').value = row.getAttribute('message-content');
+        editingRow = row;
     }
 });
 
-function editMessages(application) {
-    // load the message editor page
-//    window.location.href = appId;
+
+// Open the message editor in the iframe.
+function editMessages(applocation) {
     var outer = window.parent;
     var iframe = outer.document.getElementById("appframe");
-//    var html = "";
-    iframe.src = application;
-//    iframe.contentWindow.document.open();
-//    iframe.contentWindow.document.write(html);
-//    iframe.contentWindow.document.close();
+    iframe.src = applocation;
 }
-
