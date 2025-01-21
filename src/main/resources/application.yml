@@ -19,6 +19,9 @@ quarkus:
 classificationBanner: 
   classification: UNCLASSIFIED - FOR TESTING PURPOSES ONLY
   color: "#007a33"
+applicationInfo:
+  applications:
+
 "%dev":
   quarkus:
     log:
@@ -29,15 +32,8 @@ classificationBanner:
   applicationInfo:
     applications:
       - name: Msg Viewer
+        reference: msgs
         location: "/app/viewer/message-viewer"
         image: /res/media/gazebo-1.jpg
         showInAppBar: true
         description: "This is the Message Viewer"
-      - name: Msg Editor
-        location: "/app/viewer/message-editor"
-        image: /res/media/gazebo-1.jpg
-        showInAppBar: false
-      - name: Google
-        location: "https://www.google.com"
-        image: /res/media/gazebo-3.jpg
-        showInAppBar: true

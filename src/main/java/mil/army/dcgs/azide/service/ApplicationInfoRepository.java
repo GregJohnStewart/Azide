@@ -5,7 +5,10 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.extern.slf4j.Slf4j;
+
+import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import mil.army.dcgs.azide.config.ApplicationInfoConfig;
 
@@ -25,8 +28,8 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
     public String getApplicationId(String appName) {
         List<ApplicationInfo> apps = findAll().list();
 
-        for(ApplicationInfo app : apps) {
-            if(app.getName().equalsIgnoreCase(appName)) {
+        for (ApplicationInfo app : apps) {
+            if (app.getName().equalsIgnoreCase(appName)) {
                 return app.getId().toString();
             }
         }
@@ -34,68 +37,60 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
         return null;
     }
 
-    public String getApplicationLocation(String appName) {
+    public URI getApplicationLocation(String appName) {
         List<ApplicationInfo> apps = findAll().list();
 
-        for(ApplicationInfo app : apps) {
-            if(app.getName().equalsIgnoreCase(appName)) {
+        for (ApplicationInfo app : apps) {
+            if (app.getName().equalsIgnoreCase(appName)) {
                 return app.getLocation();
             }
         }
 
         return null;
     }
-    
-//    public String getDescription(String appdescription) {
-//        List<ApplicationInfo> apps = findAll().list();
-//
-//        for(ApplicationInfo app : apps) {
-//            if(app.getDescription().isPresent()) {
-//                if(app.getDescription().get().equalsIgnoreCase(appdescription)) {
-//                    return app.getDescription().get();
-//                }
-//            }
-//        }
-//
-//        return null;
-//    }
+
+    public Optional<ApplicationInfo> getDefaultApp() {
+        return this.find("defaultApp", true).firstResultOptional();
+    }
+
+    public Optional<ApplicationInfo> getSplashApp() {
+        return this.find("splashApp", true).firstResultOptional();
+    }
 
     public void populate() {
-        if(this.initted){
+        if (this.initted) {
             return;
         }
 
-        log.info("Populating applications.");
+        log.info("Populating applications from config.");
+        for (ApplicationInfoConfig.Application applicationFromConfig : this.applicationInfoConfig.applications()) {
+            log.debug("Application from config: {}", applicationFromConfig.name());
 
-        for (ApplicationInfoConfig.Application application : this.applicationInfoConfig.applications()) {
-            // Optional<ApplicationInfo> fromDb = this.find("name", application.name()).firstResultOptional();
-            // if (fromDb.isEmpty()) {
-                log.debug("Adding new application: {}", application.name());
-                if(application.description().isPresent()) {
-                    this.persist(
+            Optional<ApplicationInfo> existing = this.find("reference", applicationFromConfig.reference()).singleResultOptional();
+            ApplicationInfo newAppInfo = ApplicationInfo.builder()
+                    .name(applicationFromConfig.name())
+                    .reference(applicationFromConfig.reference())
+                    .description(applicationFromConfig.description().orElse(null))
+                    .location(applicationFromConfig.location())
+                    .image(applicationFromConfig.image())
+                    .showInAppBar(applicationFromConfig.showInAppBar())
+                    .defaultApp(applicationFromConfig.defaultApp())
+                    .splashApp(applicationFromConfig.splashApp())
+                    .splashEndpoint(applicationFromConfig.splashEndpoint().orElse(null))
+                    .build()
+                    ;
 
-                        ApplicationInfo.builder()
-                            .name(application.name())
-                            .description(application.description().get())
-                            .location(application.location())
-                            .image(application.image())
-                            .showInAppBar(application.showInAppBar())
-                            .build()                
-                    );
-                } else {
-                    this.persist(
-
-                        ApplicationInfo.builder()
-                            .name(application.name())
-                            .location(application.location())
-                            .image(application.image())
-                            .showInAppBar(application.showInAppBar())
-                            .build()                
-                    );
-                }
-//            }
+            if(existing.isPresent()) {
+                ApplicationInfo existingApp = existing.get();
+                log.info("Application already exists: {}", existingApp.getName());
+                //TODO:: update, if necessary
+            } else {
+                log.info("Creating new application: {}", newAppInfo.getName());
+                this.persist(newAppInfo);
+                log.debug("Created new application: {}", newAppInfo);
+            }
         }
-        this.initted = true;    
+        this.initted = true;
     }
 
 }
