@@ -45,6 +45,20 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
 
         return null;
     }
+    
+//    public String getDescription(String appdescription) {
+//        List<ApplicationInfo> apps = findAll().list();
+//
+//        for(ApplicationInfo app : apps) {
+//            if(app.getDescription().isPresent()) {
+//                if(app.getDescription().get().equalsIgnoreCase(appdescription)) {
+//                    return app.getDescription().get();
+//                }
+//            }
+//        }
+//
+//        return null;
+//    }
 
     public void populate() {
         if(this.initted){
@@ -55,17 +69,30 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
 
         for (ApplicationInfoConfig.Application application : this.applicationInfoConfig.applications()) {
             // Optional<ApplicationInfo> fromDb = this.find("name", application.name()).firstResultOptional();
-
             // if (fromDb.isEmpty()) {
                 log.debug("Adding new application: {}", application.name());
-                this.persist(
-                    ApplicationInfo.builder()
-                        .name(application.name())
-                        .location(application.location())
-                        .image(application.image())
-                        .showInAppBar(application.showInAppBar())
-                        .build()
-                );
+                if(application.description().isPresent()) {
+                    this.persist(
+
+                        ApplicationInfo.builder()
+                            .name(application.name())
+                            .description(application.description().get())
+                            .location(application.location())
+                            .image(application.image())
+                            .showInAppBar(application.showInAppBar())
+                            .build()                
+                    );
+                } else {
+                    this.persist(
+
+                        ApplicationInfo.builder()
+                            .name(application.name())
+                            .location(application.location())
+                            .image(application.image())
+                            .showInAppBar(application.showInAppBar())
+                            .build()                
+                    );
+                }
 //            }
         }
         this.initted = true;    

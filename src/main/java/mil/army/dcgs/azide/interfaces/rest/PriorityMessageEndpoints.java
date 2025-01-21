@@ -13,7 +13,6 @@ import mil.army.dcgs.azide.service.PriorityMessageRepository;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.Optional;
 
 @Slf4j
 @RequestScoped

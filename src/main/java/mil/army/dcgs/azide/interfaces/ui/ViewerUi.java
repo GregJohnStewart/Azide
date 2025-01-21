@@ -34,6 +34,10 @@ public class ViewerUi extends UiInterface {
     @Getter
     @Location("apps/prioritymsg-viewer")
     Template messageViewerTemplate;
+
+    @Getter
+    @Location("apps/no-app")
+    Template noAppTemplate;
     
     @Inject
     ClassificationRepository classificationRepository;
@@ -54,8 +58,20 @@ public class ViewerUi extends UiInterface {
             .data("applicationInfo", applicationInfoRepository.findAll().list())
             .data("classificationBanner", classificationRepository.findAll().list().getFirst())
             .data("selectedApp", applicationInfoRepository.findAll().list().getFirst());
-        }
+    }
 
+    @GET
+    @Path("/no-app")
+    @Produces(MediaType.TEXT_HTML)
+    @Transactional
+    public TemplateInstance noAppPane() {
+        return this.getDefaultAuthPageSetup(this.getNoAppTemplate())
+            .data("applicationInfoRepository", applicationInfoRepository)
+            .data("applicationInfo", applicationInfoRepository.findAll().list())
+            .data("priorityMessages", priorityMessageRepository.findAll().list())
+            .data("selectedApp", applicationInfoRepository.findAll().list().getFirst());
+    }
+    
     @GET
     @Path("/message-editor")
     @Produces(MediaType.TEXT_HTML)
