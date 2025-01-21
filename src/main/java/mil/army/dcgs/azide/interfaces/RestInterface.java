@@ -9,10 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import mil.army.dcgs.azide.entities.model.Person;
-import mil.army.dcgs.azide.entities.model.ClassificationBanner;
 
 import mil.army.dcgs.azide.service.PersonRepository;
-import mil.army.dcgs.azide.service.ClassificationRepository;
 import mil.army.dcgs.azide.service.PriorityMessageRepository;
 import mil.army.dcgs.azide.service.ApplicationInfoRepository;
 
@@ -29,9 +27,6 @@ public abstract class RestInterface {
     @Getter(AccessLevel.PROTECTED)
     @Context
     SecurityContext securityContext;
-    
-    @Getter(AccessLevel.PRIVATE)
-    ClassificationRepository classificationRepository;
 
     @Getter(AccessLevel.PROTECTED)
     @Inject
@@ -50,11 +45,6 @@ public abstract class RestInterface {
         }
 
         return this.getUser();
-    }
-    
-    protected ClassificationBanner getClassificationBanner(){
-        
-        return this.getClassificationRepository().findAll().list().getFirst();
     }
 
     protected boolean hasAccessToken(){

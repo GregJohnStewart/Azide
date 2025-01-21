@@ -15,7 +15,6 @@ import java.util.UUID;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import mil.army.dcgs.azide.service.ApplicationInfoRepository;
-import mil.army.dcgs.azide.service.ClassificationRepository;
 import mil.army.dcgs.azide.service.PriorityMessageRepository;
 
 @Slf4j
@@ -40,9 +39,6 @@ public class ViewerUi extends UiInterface {
     Template noAppTemplate;
     
     @Inject
-    ClassificationRepository classificationRepository;
-    
-    @Inject
     PriorityMessageRepository priorityMessageRepository;
 
     @Inject
@@ -56,7 +52,6 @@ public class ViewerUi extends UiInterface {
             .data("priorityMessages", priorityMessageRepository.findAll().list())
             .data("applicationInfoRepository", applicationInfoRepository)
             .data("applicationInfo", applicationInfoRepository.findAll().list())
-            .data("classificationBanner", classificationRepository.findAll().list().getFirst())
             .data("selectedApp", applicationInfoRepository.findAll().list().getFirst());
     }
 
@@ -103,7 +98,6 @@ public class ViewerUi extends UiInterface {
         
         return this.getDefaultAuthPageSetup()
             .data("applicationInfo", applicationInfoRepository.findAll().list())
-            .data("classificationBanner", classificationRepository.findAll().list().getFirst())
             .data("selectedApp", applicationInfoRepository.find("id", UUID.fromString(selectedApp)).firstResult());
 
     }

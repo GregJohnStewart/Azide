@@ -12,7 +12,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import lombok.Getter;
 
-import mil.army.dcgs.azide.service.ClassificationRepository;
 import mil.army.dcgs.azide.service.PriorityMessageRepository;
 import mil.army.dcgs.azide.service.ApplicationInfoRepository;
 
@@ -27,9 +26,6 @@ public class IndexUi extends UiInterface {
     @Getter
     @Location("apps/prioritymsg-viewer")
     Template messageViewerTemplate;
-
-    @Inject
-    ClassificationRepository classificationRepository;
     
     @Inject
     PriorityMessageRepository priorityMessageRepository;
@@ -42,8 +38,7 @@ public class IndexUi extends UiInterface {
     @Transactional
     public TemplateInstance get() {
         return this.getDefaultPageSetup()
-            .data("priorityMessages", priorityMessageRepository.findAll().list())
-            .data("classificationBanner", classificationRepository.findAll().list().getFirst());
+            .data("priorityMessages", priorityMessageRepository.findAll().list());
     }
 
     @GET
