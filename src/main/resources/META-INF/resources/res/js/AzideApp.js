@@ -1,14 +1,9 @@
-/**
- * These classes define the methodology of communicating between browsing contexts of different apps hosted at the same hostname.
- *
- *
- */
-
 
 /**
  */
 class AzideApp {
     #iwc;
+    #windowName = "";
 
     /**
      * @param {string|null} appName (optional, but recommended) the name of this app.
@@ -22,6 +17,31 @@ class AzideApp {
             appName: appName,
             network: network
         }));
+
+        let azideWindow = window.parent.azideWin;
+        console.debug("Azide Window: ", azideWindow);
+
+        if(azideWindow == null) {
+            console.info("Azide Window not found.");
+        } else {
+            this.#windowName = azideWindow.getName();
+            console.info("Parent window channel name: ", this.#windowName);
+        }
+    }
+
+    haveWindow(){
+        return this.#windowName != null;
+    }
+
+    assertHaveWindow(){
+        if(!this.haveWindow()){
+            throw "This page does not have a window."
+        }
+    }
+
+    getWindowChannel(){
+        this.assertHaveWindow();
+        return this.#iwc.getChannel(this.#windowName);
     }
 
 }

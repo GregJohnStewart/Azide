@@ -244,7 +244,7 @@ class IwcChannels {
     }
 
     removeFromOthers(appName, windowId) {
-        if(windowId in this.getOtherChannels()) {
+        if (windowId in this.getOtherChannels()) {
             console.log("Removing channel ", windowId);
             let otherWindowChannel = this.getOtherChannels()[windowId];
             delete this.getOtherChannels()[windowId];
@@ -256,8 +256,8 @@ class IwcChannels {
         if (
             appName != null &&
             !Object.keys(this.getOtherChannels()).some(function (k) {
-            return ~k.indexOf(otherWindowKeyPrepend);
-        }) &&
+                return ~k.indexOf(otherWindowKeyPrepend);
+            }) &&
             appName in this.getOtherChannels()
         ) {
             console.log("No other windows exist in this app. Removing other app.");
@@ -296,7 +296,7 @@ class IwcChannels {
     }
 
     static #formatThisWindowChannelName(config) {
-        if(config.hasAppName()){
+        if (config.hasAppName()) {
             return config.getChannelNetwork() + config.getNameSeparator() + config.getAppName() + config.getNameSeparator() + config.getWindowId();
         } else {
             return config.getChannelNetwork() + config.getNameSeparator() + config.getWindowId();
@@ -345,15 +345,15 @@ class IwcChannels {
         return this.#others;
     }
 
-    getOtherChannel(key){
+    getOtherChannel(key) {
         return this.getOtherChannels()[key];
     }
 
-    getOtherWindowChannel(windowId){
+    getOtherWindowChannel(windowId) {
         return this.getOtherChannel(windowId);
     }
 
-    getOtherAppChannel(appName){
+    getOtherAppChannel(appName) {
         return this.getOtherChannel(appName);
     }
 }
@@ -387,7 +387,9 @@ class Iwc {
 
         this.registerHandler(this.getChannels().getRoleCallChannel(), this.#roleCallChannelHandler.bind(this));
 
-        window.addEventListener('unload', () => {this.close();});
+        window.addEventListener('unload', () => {
+            this.close();
+        });
 
         this.sendMessage(this.#channels.getRoleCallChannel(), IwcMessage.create(this.getConfig(), Iwc.#roleCallIntentCall));
 
@@ -424,7 +426,7 @@ class Iwc {
      * @param {BroadcastChannel} channel
      * @param {function} handler
      */
-    registerHandler(channel, handler){
+    registerHandler(channel, handler) {
         channel.onmessage = (event) => this.#msgReceived(event, handler);
     }
 
@@ -470,7 +472,7 @@ class Iwc {
      * @param {IwcMessage} received The message we are responding to.
      * @param {IwcMessage} message The message we are sending in response.
      */
-    respondToMessage(received, message){
+    respondToMessage(received, message) {
         this.sendMessage(
             this.getChannels().getOtherWindowChannel(received.getWindowId()),
             message
@@ -491,6 +493,14 @@ class Iwc {
         return this.#channels;
     }
 
+    getChannel(name) {
+        return this.getChannels()[name];
+    }
+
+    getThisChannelName() {
+        return this.getChannels().getThisWindowChannel().name;
+    }
+
     /**
      * Closes out this Iwc Object.
      *
@@ -500,5 +510,11 @@ class Iwc {
         console.log("Closing IWC object.");
         this.sendMessage(this.#channels.getRoleCallChannel(), IwcMessage.create(this.getConfig(), Iwc.#roleCallIntentExit));
         //TODO:: determine if this is adequate, or if we need to do anything else, clean-wise to clear dead windows
+    }
+}
+
+class IwcConstants {
+    intents = {
+        launchApp: "LAUNCH_APP"
     }
 }

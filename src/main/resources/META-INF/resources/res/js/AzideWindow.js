@@ -19,14 +19,37 @@ class AzideWindow {
      * @param nameSeparator The character used to separate channel names. Recommend not changing.
      */
     constructor({
-                    appName = "azideApp",
+                    appName = "azideWindow",
                     network = "iwc"
                 }) {
         this.#iwc = new Iwc(new IwcConfig({
             appName: appName,
             network: network
         }));
+
+        //TODO:: load list of available apps
+
+        this.#iwc.registerHandler(
+            this.#iwc.getChannels().getThisWindowChannel(),
+            this.#thisWindowMessageHandler.bind(this)
+        );
     }
 
-    //TODO:: determine how to make only one window open new app window on request
+    #thisWindowMessageHandler(message) {
+        switch (message.getIntent()) {
+            case IwcConstants.intents.launchApp:
+                this.launchApp(message.getMessage());
+                break;
+            default:
+                console.warn("Got message with intent that the window doesn't support: ", message);
+        }
+    }
+
+    launchApp(launching){
+        //TODO:: launch app
+    }
+
+    getName(){
+        return this.#iwc.getThisChannelName();
+    }
 }
