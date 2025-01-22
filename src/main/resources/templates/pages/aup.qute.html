@@ -11,9 +11,22 @@
 {/subheader}
 
 {#contents}
-	{#include aup-content.qute.html}{/}
+	<body>
+		<div class="container">
+			<h1>Acceptable Use Policy</h1>
+			<p>Welcome to our Acceptable Use Policy (AUP) page. By using our service, you agree to the following terms...</p>
+			<div class="buttons">
+				<a href="/app/viewer" class="btn btn-primary" id="aupAcceptButton">OK</a>
+				<a href="/logout" class="btn btn-warning">Cancel</a>
+			</div>
+		</div>
+	</body>
 {/contents}
 
 {#scripts}
-        <script> window.onload = function() { document.getElementById('ok').focus(); } </script>
+        <script>
+        window.onload = function() {
+			document.getElementById('aupAcceptButton').focus();
+		}
+        </script>
 {/scripts}

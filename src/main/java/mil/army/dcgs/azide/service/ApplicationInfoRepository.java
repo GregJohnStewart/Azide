@@ -19,6 +19,8 @@ import mil.army.dcgs.azide.entities.model.ApplicationInfo;
 @Named("ApplicationInfoRepository")
 @ApplicationScoped
 public class ApplicationInfoRepository implements PanacheRepository<ApplicationInfo> {
+    
+    private static final URI DEFAULT_URI = URI.create("/app/viewer/no-app");
 
     @Inject
     ApplicationInfoConfig applicationInfoConfig;
@@ -92,5 +94,21 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
         }
         this.initted = true;
     }
-
+    
+    public URI getAppLocation(Optional<ApplicationInfo> app){
+        URI output = DEFAULT_URI;
+        if(app.isPresent()) {
+            output = app.get().getLocation();
+        }
+        log.debug("URI for app: {}", output);
+        return output;
+    }
+    
+    public URI getAppLocationFromId(Optional<String> appId){
+        if(appId.isPresent()) {
+            return getAppLocation(this.find("id", appId).firstResultOptional());
+        }
+        log.info("No app id given.");
+        return DEFAULT_URI;
+    }
 }

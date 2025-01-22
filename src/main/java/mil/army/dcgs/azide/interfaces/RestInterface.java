@@ -11,8 +11,6 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 import mil.army.dcgs.azide.entities.model.Person;
 
 import mil.army.dcgs.azide.service.PersonRepository;
-import mil.army.dcgs.azide.service.PriorityMessageRepository;
-import mil.army.dcgs.azide.service.ApplicationInfoRepository;
 
 @Slf4j
 public abstract class RestInterface {
@@ -27,14 +25,6 @@ public abstract class RestInterface {
     @Getter(AccessLevel.PROTECTED)
     @Context
     SecurityContext securityContext;
-
-    @Getter(AccessLevel.PROTECTED)
-    @Inject
-    PriorityMessageRepository priorityMessageRepository;
-
-    @Getter(AccessLevel.PROTECTED)
-    @Inject
-    ApplicationInfoRepository applicationInfoRepository;
 
     @Getter(AccessLevel.PRIVATE)
     Person user = null;
