@@ -43,5 +43,5 @@ public class ApplicationInfo extends PanacheEntityBase {
     @Version
     LocalDateTime lastUpdated;
     
-    // TODO: Add small_icon, groups, description.
+    // TODO: Add small_icon, groups.
 }

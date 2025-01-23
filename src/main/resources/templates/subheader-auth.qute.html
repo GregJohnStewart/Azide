@@ -45,9 +45,7 @@
             {#for application in applicationInfo}
                 {#if application.showInAppBar}
                     <div id={application.name} class="clickable-app m-0">
-                        {#if application.description}
-                        <p class="hover-text" id="hoverText" style="display:none">{application.description}</p>
-                        {/if}
+                        <p class="hover-text" id="hoverText" style="display:none">{#if application.description}{application.description}{/if}</p>                  
                         <img src={application.image} class="AppImage" alt="Icon Image" onclick="appSelected(`{application.name}`, `/app/viewer/pane/{application.id}`);"> <p>{application.name}</p>
                         <button class="corner-button" onclick="window.open(`/app/viewer/pane/{application.id}`, '_blank');toggleAppBar();">&nearr;</button>
                     </div>
