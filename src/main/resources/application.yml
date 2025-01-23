@@ -13,8 +13,8 @@ quarkus:
   http:
     auth:
       permission:
-        authenticated:
-          paths: /app/*
+        logout:
+          paths: ${quarkus.oidc.logout.path}
           policy: authenticated
 classificationBanner: 
   classification: UNCLASSIFIED - FOR TESTING PURPOSES ONLY

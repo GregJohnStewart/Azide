@@ -3,6 +3,8 @@ package mil.army.dcgs.azide.interfaces.ui;
 import io.quarkus.qute.Location;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
+import io.quarkus.security.Authenticated;
+import jakarta.annotation.security.PermitAll;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -19,15 +21,12 @@ import mil.army.dcgs.azide.service.ApplicationInfoRepository;
 @Slf4j
 @RequestScoped
 @Path("/app/viewer")
+@Authenticated
 public class ViewerUi extends UiInterface {
 
     @Getter
     @Location("pages/appviewer")
     Template pageTemplate;
-
-    @Getter
-    @Location("apps/no-app")
-    Template noAppTemplate;
 
     @Inject
     ApplicationInfoRepository applicationInfoRepository;
@@ -51,24 +50,12 @@ public class ViewerUi extends UiInterface {
     }
 
     @GET
-    @Path("/no-app")
-    @Produces(MediaType.TEXT_HTML)
-    @Transactional
-    public TemplateInstance noAppPane() {
-        return this.getDefaultAuthPageSetup(this.getNoAppTemplate())
-            .data("applicationInfoRepository", this.applicationInfoRepository);
-    }
-    
-
-    @GET
     @Path("/pane/{id}")
     @Produces(MediaType.TEXT_HTML)
     @Transactional
     public TemplateInstance getApp(@PathParam("id") String selectedApp) {
-        
         return this.getDefaultAuthPageSetup()
             .data("applicationInfo", applicationInfoRepository.findAll().list())
             .data("selectedApp", applicationInfoRepository.find("id", UUID.fromString(selectedApp)).firstResult());
-
     }
 }
