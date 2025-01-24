@@ -14,8 +14,8 @@
 	</head>
 	<body>
 		<!-- Header -->
-		<header class="text-white text-center fixed-top" style="background-color:{classificationBanner.getColor()};font-size:0.75rem">
-			{classificationBanner.getClassification()}
+		<header class="text-white text-center fixed-top" style="background-color:{classificationBanner.color()};font-size:0.75rem">
+			{classificationBanner.classification()}
 		</header>
 		
 		{#insert subheader}No subheader!{/}
@@ -25,8 +25,8 @@
 		</div>
 
 		<!-- Footer -->
-		<footer class="text-white text-center fixed-bottom" style="background-color: {classificationBanner.getColor()};font-size:0.75rem">
-			{classificationBanner.getClassification()}
+		<footer class="text-white text-center fixed-bottom" style="background-color: {classificationBanner.color()};font-size:0.75rem">
+			{classificationBanner.classification()}
 		</footer>
 		
 		<script src="/res/lib/jquery/3.7.1/jquery.min.js.js"></script>
