@@ -12,7 +12,7 @@ import java.nio.file.Path;
 @Slf4j
 public class PlaywrightSetup implements Closeable {
 	
-	public static final Path RECORDINGS_DIR = Path.of("build/test-results/" + ConfigProvider.getConfig().getValue("quarkus.profile", String.class) + "/ui/");
+	public static final Path RECORDINGS_DIR = Path.of("target/test-results/" + ConfigProvider.getConfig().getValue("quarkus.profile", String.class) + "/ui/");
 	private static PlaywrightSetup INSTANCE = null;
 	
 	public static synchronized PlaywrightSetup getInstance() {
@@ -38,7 +38,7 @@ public class PlaywrightSetup implements Closeable {
 			throw e;
 		}
 		//TODO:: choose browser based on config
-		this.browser = playwright.firefox().launch();
+		this.browser = this.playwright.firefox().launch();
 		
 		log.info("DONE setting up playwright.");
 	}

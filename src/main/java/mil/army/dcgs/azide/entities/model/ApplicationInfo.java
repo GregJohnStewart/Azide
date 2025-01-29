@@ -33,6 +33,7 @@ public class ApplicationInfo extends PanacheEntityBase {
     @Column(unique=true)
     private String reference;
     
+    @Builder.Default
     @Basic(optional=true)
     private String description = null;
 

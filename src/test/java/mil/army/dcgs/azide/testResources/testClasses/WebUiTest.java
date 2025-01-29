@@ -7,6 +7,7 @@ import com.microsoft.playwright.Page;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import mil.army.dcgs.azide.testResources.testUser.TestUser;
+import mil.army.dcgs.azide.testResources.testUser.TestUserService;
 import mil.army.dcgs.azide.testResources.ui.PlaywrightSetup;
 import mil.army.dcgs.azide.testResources.ui.utilities.NavUtils;
 import org.junit.jupiter.api.AfterEach;
@@ -22,7 +23,7 @@ import java.nio.file.Path;
 
 @Slf4j
 @Tag("ui")
-public class WebUiTest {
+public class WebUiTest extends RunningServerTest {
 	
 	private static Path getCurTestDir(TestInfo testInfo) {
 		log.debug("Display name: {}", testInfo.getDisplayName());
@@ -46,6 +47,9 @@ public class WebUiTest {
 	
 	@Getter
 	private Path curTestUiResultDir;
+	
+	@Getter
+	private TestUserService testUserService = TestUserService.getInstance();
 	
 	@BeforeEach
 	public void beforeEachUi(TestInfo testInfo) {
