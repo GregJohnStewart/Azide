@@ -1,8 +1,6 @@
 package mil.army.dcgs.azide.testResources.testClasses;
 
 import io.quarkus.test.common.http.TestHTTPResource;
-import io.restassured.http.ContentType;
-import io.restassured.http.Header;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import mil.army.dcgs.azide.testResources.testUser.TestUserService;
@@ -13,8 +11,6 @@ import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import java.net.URL;
-
-import static io.restassured.RestAssured.given;
 
 @Slf4j
 @Execution(ExecutionMode.SAME_THREAD)
