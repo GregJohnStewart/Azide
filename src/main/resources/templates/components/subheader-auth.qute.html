@@ -1,59 +1,61 @@
 <!-- Sub-header -->
 <div class="bg-secondary text-white fixed-top py-2" style="top: 18px">
-    <div class="row">
-        <!-- Left side content -->
-        <div class="col-6 d-flex justify-content-start">
-            <img src="/res/media/dcgsalogo.png" alt="DCGSA Logo" width="65" height="30">
-
-            <!-- App List Dropdown Menu -->
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" aria-expanded="false" onclick="toggleAppBar()">
-                    Select App
-                </button>
-            </div>
-            <div>
-                <button class="btn btn-danger" onclick="closeApp()">Close App</button>
-            </div>
-        </div>
-
-        <div class="col-6 d-flex justify-content-end">
-            <!-- Right: Dropdown Menu -->
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    {user.getName()}
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="#profile">Profile</a></li>
-                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-     
-    <div id="popup" class="popup" style="display: none;"> <p id="popupMessage"></p> 
-        <input type="checkbox" id="dontAskAgain" /> Don't ask again<br><br> 
-        <div class="buttons"> 
-            <button class="ok" onclick="handleOk()">OK</button> 
-            <button class="cancel" onclick="handleCancel()">Cancel</button> 
-        </div>
-    </div>
-    <div id="appselector" style="display:none">
-        <div id="appselectorfilter">
-            <input id="filterInput" type="text" class="filter-box" placeholder="Filter..." onkeyup="filterApps()">
-        </div>
-        <div id="appselector" class="scrollmenu" >
-            {#for application in applicationInfo}
-                {#if application.showInAppBar}
-                    <div id={application.name} class="clickable-app m-0">
-                        {#if application.description}
-                        <p class="hover-text" id="hoverText" style="display:none">{application.description}</p>
-                        {/if}
-                        <img src={application.image} class="AppImage" alt="Icon Image" onclick="appSelected(`{application.name}`, `/app/viewer/pane/{application.id}`);"> <p>{application.name}</p>
-                        <button class="corner-button" onclick="window.open(`/app/viewer/pane/{application.id}`, '_blank');toggleAppBar();">&nearr;</button>
-                    </div>
-                {/if}
-            {/for}
-        </div> 
-    </div>
-    <script src="/META-INF/resources/res/js/subheader-scripts.js"></script>
+	<div class="row">
+		<!-- Left side content -->
+		<div class="col-6 d-flex justify-content-start">
+			<img src="/res/media/dcgsalogo.png" alt="DCGSA Logo" id="navLogo">
+			
+			<!-- App List Dropdown Menu -->
+			<div class="dropdown">
+				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" aria-expanded="false" onclick="toggleAppBar()">
+					Select App
+				</button>
+			</div>
+			<div>
+				<button class="btn btn-danger" onclick="closeApp()">Close App</button>
+			</div>
+		</div>
+		
+		<div class="col-6 d-flex justify-content-end">
+			<!-- Right: Dropdown Menu -->
+			<div class="dropdown">
+				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+					{user.getName()}
+				</button>
+				<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+					<li><a class="dropdown-item" href="#profile">Profile</a></li>
+					<li><a class="dropdown-item" href="/logout">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div id="popup" class="popup" style="display: none;"><p id="popupMessage"></p>
+		<input type="checkbox" id="dontAskAgain"/> Don't ask again<br><br>
+		<div class="buttons">
+			<button class="ok" onclick="handleOk()">OK</button>
+			<button class="cancel" onclick="handleCancel()">Cancel</button>
+		</div>
+	</div>
+	<div id="appselector" style="display:none">
+		<div id="appselectorfilter">
+			<input id="filterInput" type="text" class="filter-box" placeholder="Filter..." onkeyup="filterApps()">
+		</div>
+		<div id="appselector" class="scrollmenu">
+			{#for application in applicationInfo}
+			{#if application.showInAppBar}
+			<div id={application.name} class="clickable-app m-0
+			">
+			{#if application.description}
+				<p class="hover-text" id="hoverText" style="display:none">{application.description}</p>
+			{/if}
+			<img src={application.image} class="AppImage" alt="Icon Image" onclick="appSelected(`{application.name}`, `/app/viewer/pane/{application.id}`);">
+			<p>{application.name}</p>
+			<button class="corner-button" onclick="window.open(`/app/viewer/pane/{application.id}`, '_blank');toggleAppBar();">&nearr;</button>
+		</div>
+		{/if}
+		{/for}
+	</div>
+</div>
+<script src="/META-INF/resources/res/js/subheader-scripts.js"></script>
 </div>
