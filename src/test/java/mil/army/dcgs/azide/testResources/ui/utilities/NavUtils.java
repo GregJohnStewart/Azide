@@ -13,19 +13,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Slf4j
 public class NavUtils {
 	
-	private static URI index = null;
-	public static URI getIndex() {
-		if(index == null) {
-			index = URI.create(
-				"http://" +
-				"localhost" +
-				":" +
-				ConfigProvider.getConfig().getValue("quarkus.http.port", String.class) +
-				"/"
-			);
+	private static URI INDEX = null;
+	public static void init(URI index) {
+		if (INDEX == null) {
+			INDEX = index;
 		}
+	}
+	public static URI getIndex() {
 		
-		return index;
+		return INDEX;
 	}
 	
 	@FunctionalInterface

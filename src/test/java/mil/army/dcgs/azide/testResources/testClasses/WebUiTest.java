@@ -2,13 +2,16 @@ package mil.army.dcgs.azide.testResources.testClasses;
 
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
-import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import mil.army.dcgs.azide.testResources.testUser.TestUser;
 import mil.army.dcgs.azide.testResources.testUser.TestUserService;
 import mil.army.dcgs.azide.testResources.ui.PlaywrightSetup;
+import mil.army.dcgs.azide.testResources.ui.assertions.MainAssertions;
+import mil.army.dcgs.azide.testResources.ui.pages.AupPage;
+import mil.army.dcgs.azide.testResources.ui.pages.IndexPage;
+import mil.army.dcgs.azide.testResources.ui.pages.KeycloakUi;
 import mil.army.dcgs.azide.testResources.ui.utilities.NavUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 
 @Slf4j
@@ -52,7 +56,8 @@ public class WebUiTest extends RunningServerTest {
 	private TestUserService testUserService = TestUserService.getInstance();
 	
 	@BeforeEach
-	public void beforeEachUi(TestInfo testInfo) {
+	public void beforeEachUi(TestInfo testInfo) throws URISyntaxException {
+		NavUtils.init(this.getIndex().toURI());
 		this.curTestUiResultDir = getCurTestDir(testInfo);
 		Browser.NewContextOptions newContextOptions = new Browser.NewContextOptions()
 														  .setRecordVideoDir(this.curTestUiResultDir)
@@ -93,28 +98,30 @@ public class WebUiTest extends RunningServerTest {
 	protected Page getLoggedInPage(TestUser user, String page) {
 		Page output = this.getContext().newPage();
 		
-		NavUtils.navigateToEndpoint(output, page);
+		NavUtils.navigateToEndpoint(output, "/");
+		
+		output.locator(IndexPage.LOGIN_LINK).click();
+		
+		MainAssertions.assertDoneProcessing(output);
 		
 		if (output.title().contains("Sign in")) {
-			log.info("Need to log in user.");
+			KeycloakUi.loginUser(user, output);
 			
-			Locator locator = output.locator("#password");
-			locator.fill(user.getPassword());
-			locator = output.locator("#username");
-			locator.fill(user.getName());
+			output.locator(AupPage.AUP_ACCEPT_BUTTON).click();
 			
-			output.locator("#kc-login").click();
-			output.waitForLoadState();
-			
-			if (!output.locator("#navLogo").isVisible()) {
-				throw new IllegalStateException("Not logged in.");
-			}
-			log.info("Logged in user: " + user);
+			MainAssertions.assertDoneProcessing(output);
 		} else {
 			log.info("Was already logged in?");
 		}
 		
+		if(page != null){
+			NavUtils.navigateToEndpoint(output, page);
+		}
+		
 		return output;
 	}
-
+	
+	protected Page getLoggedInPage(TestUser user){
+		return this.getLoggedInPage(user, null);
+	}
 }
