@@ -1,0 +1,25 @@
+==================================================================
+Azide (Framework)
+==================================================================
+Pull data from current database to build list of apps
+Cross app communications (Impl & Test)
+How to wrap/include cross app communications in DCGSA apps
+Is there anything in the framework that needs to be stored in a db?
+  If so create a postgres db with persistence
+
+
+==================================================================
+Priority Messages (App)
+==================================================================
+App needs to be 
+
+
+==================================================================
+Priority Messages (DB)
+==================================================================
+Create a postgres db with persistent capabilities
+Should this just be a standard postgres container?
+How to do this with podman desktop?
+
+
+
