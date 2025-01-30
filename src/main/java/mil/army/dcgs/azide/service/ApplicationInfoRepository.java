@@ -74,7 +74,7 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
                     .reference(applicationFromConfig.reference())
                     .description(applicationFromConfig.description().orElse(null))
                     .location(applicationFromConfig.location())
-                    .image(applicationFromConfig.image())
+                    .image(applicationFromConfig.image().orElse(null))
                     .showInAppBar(applicationFromConfig.showInAppBar())
                     .defaultApp(applicationFromConfig.defaultApp())
                     .splashApp(applicationFromConfig.splashApp())
