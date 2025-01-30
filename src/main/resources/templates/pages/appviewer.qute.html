@@ -1,18 +1,23 @@
 {#include base.qute.html}
 
 {#css}
-        <link rel="stylesheet" href="/res/css/subheader.css">
+        <link rel="stylesheet" href="/META-INF/resources/res/css/subheader.css">
 {/css}
 
 {#title}DCGSA - AZIDE{/title}
 
 {#subheader}
-	{#include subheader-auth.qute.html}{/}
+	{#include components/subheader-auth}{/}
 {/subheader}
 
 {#contents}
-	{#include appviewer-iframe.qute.html}{/}
+	{#include components/appviewer-iframe appLocation=appLocation }{/}
 {/contents}
 
 {#scripts}
+    <script src="/res/js/iwc.js"></script>
+    <script src="/res/js/AzideWindow.js"></script>
+    <script>
+        var azideWin = new AzideWindow({ });
+    </script>
 {/scripts}
