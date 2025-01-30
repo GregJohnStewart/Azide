@@ -58,6 +58,10 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
     public Optional<ApplicationInfo> getSplashApp() {
         return this.find("splashApp", true).firstResultOptional();
     }
+    
+    public List<ApplicationInfo> getAppBarApps(){
+        return this.find("showInAppBar", true).list();
+    }
 
     public void populate() {
         if (this.initted) {
@@ -99,6 +103,11 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
         URI output = DEFAULT_URI;
         if(app.isPresent()) {
             output = app.get().getLocation();
+        } else {
+            Optional<ApplicationInfo> defaultApp = this.find("defaultApp", true).firstResultOptional();
+            if(defaultApp.isPresent()) {
+                output = defaultApp.get().getLocation();
+            }
         }
         log.debug("URI for app: {}", output);
         return output;
@@ -109,6 +118,7 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
             return getAppLocation(this.find("id", appId).firstResultOptional());
         }
         log.info("No app id given.");
+        
         return DEFAULT_URI;
     }
 }

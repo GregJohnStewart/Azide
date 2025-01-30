@@ -33,6 +33,7 @@ public class ViewerUi extends UiInterface {
 
     @QueryParam("appId")
     Optional<String> appId;
+    
 	@Inject
 	Application application;
     
@@ -41,21 +42,7 @@ public class ViewerUi extends UiInterface {
     @Transactional
     public TemplateInstance getViewer() {
         return this.getDefaultAuthPageSetup()
-            .data("applicationInfoRepository", applicationInfoRepository)
-            .data("applicationInfo", applicationInfoRepository.findAll().list())
-            .data(
-                "appLocation",
-                applicationInfoRepository.getAppLocationFromId(appId)
+            .data("appLocation", this.applicationInfoRepository.getAppLocationFromId(appId)
             );
-    }
-
-    @GET
-    @Path("/pane/{id}")
-    @Produces(MediaType.TEXT_HTML)
-    @Transactional
-    public TemplateInstance getApp(@PathParam("id") String selectedApp) {
-        return this.getDefaultAuthPageSetup()
-            .data("applicationInfo", applicationInfoRepository.findAll().list())
-            .data("selectedApp", applicationInfoRepository.find("id", UUID.fromString(selectedApp)).firstResult());
     }
 }

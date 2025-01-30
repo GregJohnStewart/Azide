@@ -1,0 +1,89 @@
+
+#appSelectBar {
+	margin: 3px;
+	background-color: #333;
+	display:none;
+}
+
+
+div.appSelectCard {
+	width: 125px;
+	display:inline-block;
+}
+
+img.appSelectImage{
+	max-width: 100%;
+	max-height: 100px;
+}
+
+
+div#appSelectAppsDisplay {
+	overflow: auto;
+	white-space: nowrap;
+}
+
+
+
+
+/*div.scrollmenu div {*/
+/*	display: inline-block;*/
+/*	min-width: 110px;*/
+/*	max-width: 110px;*/
+/*	background-color: #f0f0f0;*/
+/*	text-align: center;*/
+/*	border: 1px solid #ccc;*/
+/*}*/
+
+/*.clickable-app {*/
+/*	width: 100px; !* Size of the icon image *!*/
+/*	position: relative;*/
+/*	display: inline-block;*/
+/*	text-align: center;*/
+/*	margin: 0px;*/
+/*	text-decoration: none;*/
+/*	color: black;*/
+/*	position: relative;*/
+/*}*/
+
+/*.clickable-app img {*/
+/*	width: 100px; !* Size of the icon image *!*/
+/*	height: 100px; !* Size of the icon image *!*/
+/*	display: block;*/
+/*	margin: 0 auto;*/
+/*	cursor: pointer;*/
+/*}*/
+
+/*div.scrollmenu img:hover {*/
+/*	border: 1px solid #ccc;*/
+/*}*/
+
+/*.clickable-app img.overlay {*/
+/*	position: absolute;*/
+/*	top: 5px;*/
+/*	right: 5px;*/
+/*	width: 30px;*/
+/*	height: 30px;*/
+/*	cursor: pointer;*/
+/*}*/
+
+/*.clickable-app .corner-button {*/
+/*	position: absolute;*/
+/*	top: 0;*/
+/*	right: 0; !* Position the button in the upper right corner *!*/
+/*	width: 30px;*/
+/*	height: 30px;*/
+/*	background-color: rgba(0, 0, 0, 0.25); !* Semi-transparent background *!*/
+/*	color: white;*/
+/*	display: flex;*/
+/*	align-items: center;*/
+/*	justify-content: center;*/
+/*	text-decoration: none;*/
+/*	font-size: 16px;*/
+/*	border: none;*/
+/*	cursor: pointer;*/
+/*	z-index: 1; !* Ensure the button is on top of the image *!*/
+/*}*/
+
+/*.clickable-app .corner-button:hover {*/
+/*	background-color: rgba(0, 0, 0, 0.5);*/
+/*}*/

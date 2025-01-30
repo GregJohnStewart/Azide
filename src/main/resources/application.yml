@@ -31,9 +31,93 @@ applicationInfo:
         generation: drop-and-create
   applicationInfo:
     applications:
-      - name: Msg Viewer
-        reference: msgs
-        location: "/app/viewer/message-viewer"
-        image: /res/media/gazebo-1.jpg
+      - name: Test Image 1
+        reference: testImage1
+        location: "/res/media/dcgsalogo.png"
+        image: "/res/media/dcgsalogo.png"
         showInAppBar: true
-        description: "This is the Message Viewer"
+        description: "Test image as an app."
+      - name: Test Image 2
+        reference: testImage2
+        location: "/res/media/dcgsalogo.png"
+        image: "/res/media/dcgsalogo.png"
+        showInAppBar: true
+        description: "Test image as an app."
+      - name: Test Image3
+        reference: testImage3
+        location: "/res/media/dcgsalogo.png"
+        image: "/res/media/dcgsalogo.png"
+        showInAppBar: true
+        description: "Test image as an app."
+      - name: Test Image4
+        reference: testImage4
+        location: "/res/media/dcgsalogo.png"
+        image: "/res/media/dcgsalogo.png"
+        showInAppBar: true
+        description: "Test image as an app."
+      - name: Test Image5
+        reference: testImage5
+        location: "/res/media/dcgsalogo.png"
+        image: "/res/media/dcgsalogo.png"
+        showInAppBar: true
+        description: "Test image as an app."
+      - name: Test Image6
+        reference: testImage6
+        location: "/res/media/dcgsalogo.png"
+        image: "/res/media/dcgsalogo.png"
+        showInAppBar: true
+        description: "Test image as an app."
+      - name: Test Image7
+        reference: testImage7
+        location: "/res/media/dcgsalogo.png"
+        image: "/res/media/dcgsalogo.png"
+        showInAppBar: true
+        description: "Test image as an app."
+      - name: Test Image8
+        reference: testImage8
+        location: "/res/media/dcgsalogo.png"
+        image: "/res/media/dcgsalogo.png"
+        showInAppBar: true
+        description: "Test image as an app."
+      - name: Test Image9
+        reference: testImage9
+        location: "/res/media/dcgsalogo.png"
+        image: "/res/media/dcgsalogo.png"
+        showInAppBar: true
+        description: "Test image as an app."
+      - name: Test Image10
+        reference: testImage10
+        location: "/res/media/dcgsalogo.png"
+        image: "/res/media/dcgsalogo.png"
+        showInAppBar: true
+        description: "Test image as an app."
+      - name: Test Image11
+        reference: testImage11
+        location: "/res/media/dcgsalogo.png"
+        image: "/res/media/dcgsalogo.png"
+        showInAppBar: true
+        description: "Test image as an app."
+      - name: Test Image12
+        reference: testImage12
+        location: "/res/media/dcgsalogo.png"
+        image: "/res/media/dcgsalogo.png"
+        showInAppBar: true
+        description: "Test image as an app."
+      - name: Test Image13
+        reference: testImage13
+        location: "/res/media/dcgsalogo.png"
+        image: "/res/media/dcgsalogo.png"
+        showInAppBar: true
+        description: "Test image as an app."
+      - name: Test Image14
+        reference: testImage14
+        location: "/res/media/dcgsalogo.png"
+        image: "/res/media/dcgsalogo.png"
+        showInAppBar: true
+        description: "Test image as an app."
+      - name: Test Image15
+        reference: testImage15
+        location: "/res/media/dcgsalogo.png"
+        image: "/res/media/dcgsalogo.png"
+        showInAppBar: true
+        description: "Test image as an app."
