@@ -14,10 +14,12 @@
 			<button class="btn btn-danger btn-sm ms-1" onclick="closeApp()">
 				{#icons/closeApp /} Close App
 			</button>
+			<h1 class="h6 ms-3 mt-auto mb-auto" id="navBarAppNameLabel">
+				{app.name}
+			</h1>
 		</div>
 		
 		<div class="col-6 d-flex justify-content-end">
-			<!-- Right: Dropdown Menu -->
 			<div class="dropdown">
 				<button class="btn btn-secondary btn-sm me-1 dropdown-toggle" type="button" id="userMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
 					{#icons/user /} {user.getName()}
@@ -33,7 +35,7 @@
 		<div id="appSelectBarFilterContainer">
 			<input id="appSelectBarFilterInput" type="text" class="form-control form-control-sm" placeholder="Filter..." aria-label="Filter" onkeyup="filterApps()">
 		</div>
-		<div id="appSelectAppsDisplay" class="mt-1 pb-2">
+		<div id="appSelectAppsDisplay" class="mt-1 pb-3">
 			{#for application in cdi:ApplicationInfoRepository.getAppBarApps()}
 				<div class="card appSelectCard me-1" id="appSelectCard-{application.id}">
 					<img src="{application.image}" class="card-img-top appSelectImage" alt="{application.name}">

@@ -21,7 +21,11 @@ import mil.army.dcgs.azide.entities.model.ApplicationInfo;
 public class ApplicationInfoRepository implements PanacheRepository<ApplicationInfo> {
     
     private static final URI DEFAULT_URI = URI.create("/app/viewer/no-app");
-
+    private static final ApplicationInfo DEFAULT_APP = ApplicationInfo.builder()
+                                                           .name("")
+                                                           .location(DEFAULT_URI)
+                                                           .build();
+    
     @Inject
     ApplicationInfoConfig applicationInfoConfig;
 
@@ -54,9 +58,13 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
     public Optional<ApplicationInfo> getDefaultApp() {
         return this.find("defaultApp", true).firstResultOptional();
     }
-
+    
     public Optional<ApplicationInfo> getSplashApp() {
         return this.find("splashApp", true).firstResultOptional();
+    }
+    
+    public ApplicationInfo getSplashAppOrDefault() {
+        return this.appOrDefault(this.getSplashApp());
     }
     
     public List<ApplicationInfo> getAppBarApps(){
@@ -99,26 +107,16 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
         this.initted = true;
     }
     
-    public URI getAppLocation(Optional<ApplicationInfo> app){
-        URI output = DEFAULT_URI;
-        if(app.isPresent()) {
-            output = app.get().getLocation();
-        } else {
-            Optional<ApplicationInfo> defaultApp = this.find("defaultApp", true).firstResultOptional();
-            if(defaultApp.isPresent()) {
-                output = defaultApp.get().getLocation();
-            }
-        }
-        log.debug("URI for app: {}", output);
-        return output;
+    public ApplicationInfo appOrDefault(Optional<ApplicationInfo> app) {
+        return app.orElse(DEFAULT_APP);
     }
     
-    public URI getAppLocationFromId(Optional<String> appId){
+    public ApplicationInfo getAppFromId(Optional<String> appId){
         if(appId.isPresent()) {
-            return getAppLocation(this.find("id", appId).firstResultOptional());
+            return this.appOrDefault(this.find("id", appId).firstResultOptional());
         }
         log.info("No app id given.");
         
-        return DEFAULT_URI;
+        return DEFAULT_APP;
     }
 }

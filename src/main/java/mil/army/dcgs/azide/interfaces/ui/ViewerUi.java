@@ -42,7 +42,6 @@ public class ViewerUi extends UiInterface {
     @Transactional
     public TemplateInstance getViewer() {
         return this.getDefaultAuthPageSetup()
-            .data("appLocation", this.applicationInfoRepository.getAppLocationFromId(appId)
-            );
+            .data("app", this.applicationInfoRepository.getAppFromId(appId));
     }
 }
