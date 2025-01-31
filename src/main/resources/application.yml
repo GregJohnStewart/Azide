@@ -32,6 +32,7 @@ classificationBanner:
         reference: msgs
         description: "This is the Message Viewer"
         location: "http://localhost:8081/messages"
+        image: "/res/media/gazebo-1.jpg"
         showInAppBar: true
         defaultApp: true
         splashApp: true
