@@ -6,6 +6,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import mil.army.dcgs.azide.testResources.testClasses.WebServerTest;
 import net.datafaker.Faker;
 import mil.army.dcgs.azide.entities.model.Person;
 import org.junit.jupiter.api.Test;
@@ -14,8 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @QuarkusTest
-public class PersonRepositoryTest {
-    private static final Faker FAKER = new Faker();
+public class PersonRepositoryTest extends WebServerTest {
 
     @Inject
     PersonRepository personRepository;

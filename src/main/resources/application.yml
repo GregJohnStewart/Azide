@@ -33,7 +33,16 @@ applicationInfo:
     applications:
       - name: Msg Viewer
         reference: msgs
-        location: "/app/viewer/message-viewer"
+        location: "http://localhost:8081/app/viewer/messageManage"
         image: /res/media/gazebo-1.jpg
         showInAppBar: true
         description: "This is the Message Viewer"
+        splashApp: true
+        defaultApp: true
+        splashEndpoint: "http://localhost:8081/app/viewer/messageManage"
+      - name: google
+        reference: googles
+        location: "https://www.google.com"
+        image: /res/media/gazebo-1.jpg
+        showInAppBar: true
+        description: "This is the googles"

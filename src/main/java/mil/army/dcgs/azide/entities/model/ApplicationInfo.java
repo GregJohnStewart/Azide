@@ -33,6 +33,7 @@ public class ApplicationInfo extends PanacheEntityBase {
     @Column(unique=true)
     private String reference;
     
+    @Builder.Default
     @Basic(optional=true)
     private String description = null;
 
@@ -40,9 +41,9 @@ public class ApplicationInfo extends PanacheEntityBase {
     @Basic(optional=false)
     private URI location;
     
-    @NotNull
-    @Basic(optional=false)
-    private URI image;
+    @Builder.Default
+    @Basic(optional=true)
+    private URI image = null;
     
     @NotNull
     @Basic(optional=false)

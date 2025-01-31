@@ -22,7 +22,7 @@ public interface ApplicationInfoConfig {
 
         URI location();
 
-        URI image();
+        Optional<URI> image();
 
         @WithDefault("false")
         boolean showInAppBar();
