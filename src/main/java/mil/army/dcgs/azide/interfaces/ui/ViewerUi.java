@@ -56,6 +56,10 @@ public class ViewerUi extends UiInterface {
     public TemplateInstance getApp(@PathParam("id") String selectedApp) {
         return this.getDefaultAuthPageSetup()
             .data("applicationInfo", applicationInfoRepository.findAll().list())
-            .data("selectedApp", applicationInfoRepository.find("id", UUID.fromString(selectedApp)).firstResult());
+            .data("selectedApp", applicationInfoRepository.find("id", UUID.fromString(selectedApp)).firstResult())
+            .data(
+                "appLocation",
+                applicationInfoRepository.getAppLocationFromId(appId)
+            );
     }
 }

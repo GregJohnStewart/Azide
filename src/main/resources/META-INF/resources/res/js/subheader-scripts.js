@@ -69,14 +69,11 @@ let hoverTimeout;
 
 for (let i = 0; i < hoverImages.length; i++){
     hoverImages[i].addEventListener('mousemove', (event) => { 
-        var parentOffset = $(this).offset(); 
-        //const x = event.clientX + window.pageXOffset;
-        //const y = event.clientY + window.pageYOffset; 
+        var parentOffset = $(this).offsetParent();
         var relX = event.pageX - parentOffset.left;
         var relY = event.pageY - parentOffset.top;
-        hoverText[i].style.left = (relX+event.clientX) + 'px'; 
-        hoverText[i].style.top = (relY+event.clientY) + 'px'; 
-        //hoverText[i].style.display = 'none';
+        hoverText[i].style.left = (relX) + 'px'; 
+        hoverText[i].style.top = (relY) + 'px'; 
     }); 
 
 
