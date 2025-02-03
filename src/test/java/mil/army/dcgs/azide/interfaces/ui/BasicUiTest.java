@@ -126,7 +126,6 @@ public class BasicUiTest extends WebUiTest {
 		page.locator(AppViewerPage.APPS_BUTTON).click();
 		
 		assertTrue(page.locator(AppViewerPage.APPS_SELECT_BAR).isVisible());
-		
-		//TODO:: assert no apps visible
+		assertTrue(page.locator(AppViewerPage.APPS_FILTER_INPUT).isVisible());
 	}
 }

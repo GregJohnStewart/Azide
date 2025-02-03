@@ -38,6 +38,7 @@ public class ViewerUi extends UiInterface {
     @Produces(MediaType.TEXT_HTML)
     @Transactional
     public TemplateInstance getViewer() {
+        //TODO:: update to show splash app if not have app from ref
         return this.getDefaultAuthPageSetup()
             .data("app", this.applicationInfoRepository.getAppFromRef(appRef));
     }

@@ -33,7 +33,7 @@ public class TestAppEndpoint {
 					</head>
 					<body>
 					
-					<h1>Test App {0}</h1>
+					<h1 id="appTitle">Test App {0}</h1>
 					
 					</body>
 					</html>
