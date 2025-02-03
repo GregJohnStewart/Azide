@@ -31,17 +31,14 @@ public class ViewerUi extends UiInterface {
     @Inject
     ApplicationInfoRepository applicationInfoRepository;
 
-    @QueryParam("appId")
-    Optional<String> appId;
-    
-	@Inject
-	Application application;
+    @QueryParam("appRef")
+    Optional<String> appRef;
     
     @GET
     @Produces(MediaType.TEXT_HTML)
     @Transactional
     public TemplateInstance getViewer() {
         return this.getDefaultAuthPageSetup()
-            .data("app", this.applicationInfoRepository.getAppFromId(appId));
+            .data("app", this.applicationInfoRepository.getAppFromRef(appRef));
     }
 }

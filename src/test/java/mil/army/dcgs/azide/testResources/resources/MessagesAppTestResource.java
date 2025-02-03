@@ -5,17 +5,21 @@ import io.smallrye.config.WithDefault;
 import lombok.extern.slf4j.Slf4j;
 import org.testcontainers.Testcontainers;
 import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.containers.startupcheck.StartupCheckStrategy;
+import org.testcontainers.containers.wait.strategy.Wait;
+
 
 import java.net.URI;
+import java.time.Duration;
 import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
 public class MessagesAppTestResource implements QuarkusTestResourceLifecycleManager {
 	private static final String MESSAGE_SERVICE_IMAGE ="dcgs/message-service:1.0.0-SNAPSHOT";
-	
+
 	GenericContainer<?> messagesAppContainer;
-	
+
 	@Override
 	public Map<String, String> start() {
 		int port = 8080;
@@ -26,13 +30,24 @@ public class MessagesAppTestResource implements QuarkusTestResourceLifecycleMana
 										.withEnv("priorityMessages.messages[0].title", "test Message")
 										.withEnv("priorityMessages.messages[0].priority", "1")
 										.withEnv("priorityMessages.messages[0].content", "test Message!")
-										;
+										.waitingFor(
+											Wait.forLogMessage("(.*)Listening on:(.*)", 1)
+										)
+										.waitingFor(
+											Wait.forHttp("/q/health")
+												.forStatusCode(200)
+										);
 		this.messagesAppContainer.start();
-		
+		try {
+			Thread.sleep(Duration.ofSeconds(10));
+		} catch(InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+
 		String url = "http://" + this.messagesAppContainer.getHost() + ":" + this.messagesAppContainer.getMappedPort(port);
-		
+
 		log.info("Messages app url: {}", url);
-		
+
 		return Map.of(
 			"applicationInfo.applications[0].name", "Message Service",
 			"applicationInfo.applications[0].reference", "message-service",
@@ -44,7 +59,7 @@ public class MessagesAppTestResource implements QuarkusTestResourceLifecycleMana
 			"applicationInfo.applications[0].splashEndpoint", url
 		);
 	}
-	
+
 	@Override
 	public void stop() {
 		if(this.messagesAppContainer != null) {

@@ -1,24 +1,26 @@
 package mil.army.dcgs.azide.interfaces.ui;
 
 import com.microsoft.playwright.Page;
+import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.test.junit.TestProfile;
-import mil.army.dcgs.azide.testResources.profiles.OneAppFilledProfile;
+import mil.army.dcgs.azide.testResources.resources.MessagesAppTestResource;
 import mil.army.dcgs.azide.testResources.testClasses.WebUiTest;
 import mil.army.dcgs.azide.testResources.testUser.TestUser;
 import mil.army.dcgs.azide.testResources.ui.assertions.MainAssertions;
 import mil.army.dcgs.azide.testResources.ui.pages.AllPages;
 import mil.army.dcgs.azide.testResources.ui.pages.AppViewerPage;
 import mil.army.dcgs.azide.testResources.ui.utilities.NavUtils;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+//@Disabled
 @QuarkusTest
-@TestProfile(OneAppFilledProfile.class)
-public class BasicUiWithAppTest extends WebUiTest {
+@QuarkusTestResource(value = MessagesAppTestResource.class, restrictToAnnotatedClass = true)
+public class BasicUiWithMessagesAppTest extends WebUiTest {
 	
 	@Test
 	public void testInitialScreen() {
@@ -27,6 +29,12 @@ public class BasicUiWithAppTest extends WebUiTest {
 		Page page = this.getContext().newPage();
 		
 		NavUtils.navigateToUrl(page, this.getIndex().toString());
+		
+		assertTrue(
+			page.frameLocator("#appframe")
+				.locator("#message-table")
+				.isVisible()
+		);
 	}
 	
 	@Test

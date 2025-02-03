@@ -32,6 +32,7 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
     private boolean initted = false;
 
     public String getApplicationId(String appName) {
+        
         List<ApplicationInfo> apps = findAll().list();
 
         for (ApplicationInfo app : apps) {
@@ -70,6 +71,14 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
     public List<ApplicationInfo> getAppBarApps(){
         return this.find("showInAppBar", true).list();
     }
+    
+    /**
+     * This is only required for a workaround for Qute not properly typing the resulting list
+     * @return
+     */
+    public List<ApplicationInfo> getAllApps(){
+        return this.findAll().list();
+    }
 
     public void populate() {
         if (this.initted) {
@@ -101,10 +110,11 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
             } else {
                 log.info("Creating new application: {}", newAppInfo.getName());
                 this.persist(newAppInfo);
-                log.debug("Created new application: {}", newAppInfo);
+                log.info("Created new application: {}", newAppInfo);
             }
         }
         this.initted = true;
+        log.info("Finished populating appInfo.");
     }
     
     public ApplicationInfo appOrDefault(Optional<ApplicationInfo> app) {
@@ -116,6 +126,15 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
             return this.appOrDefault(this.find("id", appId).firstResultOptional());
         }
         log.info("No app id given.");
+        
+        return DEFAULT_APP;
+    }
+    
+    public ApplicationInfo getAppFromRef(Optional<String> appRef){
+        if(appRef.isPresent()) {
+            return this.appOrDefault(this.find("reference", appRef).firstResultOptional());
+        }
+        log.info("No app id/reference given.");
         
         return DEFAULT_APP;
     }

@@ -2,6 +2,9 @@ package mil.army.dcgs.azide.interfaces.ui;
 
 import com.microsoft.playwright.Page;
 import io.quarkus.test.junit.QuarkusTest;
+import jakarta.inject.Inject;
+import lombok.extern.slf4j.Slf4j;
+import mil.army.dcgs.azide.service.ApplicationInfoRepository;
 import mil.army.dcgs.azide.testResources.testClasses.WebUiTest;
 import mil.army.dcgs.azide.testResources.testUser.TestUser;
 import mil.army.dcgs.azide.testResources.ui.assertions.MainAssertions;
@@ -14,19 +17,27 @@ import mil.army.dcgs.azide.testResources.ui.utilities.NavUtils;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Slf4j
 @QuarkusTest
 public class BasicUiTest extends WebUiTest {
 	
+	@Inject
+	ApplicationInfoRepository apps;
 	
 	@Test
 	public void testInitialScreen() {
+		log.info("Apps: {}", apps.getAllApps());
+		
 		TestUser user = this.getTestUserService().getUser();
 		
 		Page page = this.getContext().newPage();
 		
 		NavUtils.navigateToUrl(page, this.getIndex().toString());
+		
+		assertTrue(page.frameLocator("#appframe").locator("#noApp").isVisible());
 	}
 	
 	@Test
@@ -82,6 +93,8 @@ public class BasicUiTest extends WebUiTest {
 		
 		page.locator(AllPages.NAV_LOGO);
 		page.locator(AppViewerPage.USER_MENU_BUTTON);
+		
+		//assert default, non-app screen
 	}
 	
 	@Test
@@ -100,5 +113,20 @@ public class BasicUiTest extends WebUiTest {
 			this.getIndex().toString(),
 			page.url().split("\\?")[0] //stripping possible state GET params after logging out
 		);
+	}
+	
+	@Test
+	public void testAppDropdown() {
+		TestUser user = this.getTestUserService().getUser();
+		
+		Page page = this.getLoggedInPage(user);
+		
+		assertFalse(page.locator(AppViewerPage.APPS_SELECT_BAR).isVisible());
+		
+		page.locator(AppViewerPage.APPS_BUTTON).click();
+		
+		assertTrue(page.locator(AppViewerPage.APPS_SELECT_BAR).isVisible());
+		
+		//TODO:: assert no apps visible
 	}
 }

@@ -7,7 +7,7 @@
 			
 			<!-- App List Dropdown Menu -->
 			<div class="dropdown ms-1">
-				<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" aria-expanded="false" onclick="AppSelectUi.toggleAppBar();">
+				<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="appsDropdownMenuButton" aria-expanded="false" onclick="AppSelectUi.toggleAppBar();">
 					{#icons/apps /} Apps
 				</button>
 			</div>
@@ -32,28 +32,40 @@
 		</div>
 	</div>
 	<div id="appSelectBar" class="p-1">
-		<div id="appSelectBarFilterContainer">
-			<input id="appSelectBarFilterInput" type="text" class="form-control form-control-sm" placeholder="Filter..." aria-label="Filter" onkeyup="filterApps()">
-		</div>
-		<div id="appSelectAppsDisplay" class="mt-1 pb-3">
-			{#for application in cdi:ApplicationInfoRepository.getAppBarApps()}
-				<div class="card appSelectCard me-1" id="appSelectCard-{application.id}">
-					<img src="{application.image}" class="card-img-top appSelectImage" alt="{application.name}">
-					<div class="card-body p-1 text-center">
-						<h2 class="card-title h6">{application.name}</h2>
-						<div class="d-grid gap-2">
-							<div class="btn-group" role="group" aria-label="Basic example" >
-								<a href="#" class="btn btn-outline-primary btn-sm" title="Open app in this window.">
-									{#icons/openAppHere /}
-								</a>
-								<button type="button" class="btn btn-sm btn-outline-primary" title="Open app in new window.">
-									{#icons/openAppNew /}
-								</button>
+		{#let barApps=cdi:ApplicationInfoRepository.getAppBarApps()}
+			<div id="appSelectBarFilterContainer">
+				<input id="appSelectBarFilterInput" type="text" class="form-control form-control-sm" placeholder="Filter..." aria-label="Filter" onkeyup="filterApps()" {#if barApps.isEmpty()}disabled{/if}>
+			</div>
+			<div id="appSelectAppsDisplay" class="mt-1 pb-3">
+				{#if barApps.isEmpty()}
+					<div class="alert alert-light" role="alert">
+						No Apps available.
+					</div>
+				{#else}
+					{#for application in barApps}
+					<div class="card appSelectCard me-1" id="appSelectCard-{application.id}">
+						{#if application.image is null}
+						
+						{#else}
+						<img src="{application.image}" class="card-img-top appSelectImage" alt="{application.name}">
+						{/if}
+						<div class="card-body p-1 text-center">
+							<h2 class="card-title h6">{application.name}</h2>
+							<div class="d-grid gap-2">
+								<div class="btn-group" role="group" aria-label="Basic example">
+									<a href="#" class="btn btn-outline-primary btn-sm" title="Open app in this window.">
+										{#icons/openAppHere /}
+									</a>
+									<button type="button" class="btn btn-sm btn-outline-primary" title="Open app in new window.">
+										{#icons/openAppNew /}
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			{/for}
-		</div>
+					{/for}
+				{/if}
+			</div>
+		{/let}
 	</div>
 </div>
