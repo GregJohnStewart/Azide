@@ -3,7 +3,7 @@
 {#title}DCGSA - AZIDE{/title}
 
 {#css}
-        <link rel="stylesheet" href="/res/css/aup.qute.css">
+	<link rel="stylesheet" href="/res/css/aup.qute.css">
 {/css}
 
 {#subheader}
@@ -11,16 +11,38 @@
 {/subheader}
 
 {#contents}
-	<body>
-		<div class="container" id="aupMessage">
-			<h1>Acceptable Use Policy</h1>
-			<p>Welcome to our Acceptable Use Policy (AUP) page. By using our service, you agree to the following terms...</p>
-			<div class="buttons">
-				<a href="/app/viewer" class="btn btn-primary" id="aupAcceptButton">OK</a>
-				<a href="/logout" class="btn btn-warning" id="aupDeclineButton">Decline</a>
+	<div class="container" id="aup-message-container">
+		<div class="row justify-content-center mt-auto mb-auto">
+			<div class="col-6 mt-2">
+				<div class="card text-center">
+					<div class="card-header">
+						<h1 class="card-title">
+							Acceptable Use Policy
+						</h1>
+					</div>
+					<div class="card-body">
+						<p class="card-text">
+							{config:['service.aupText']}
+						</p>
+					</div>
+					<div class="card-footer d-flex  justify-content-between">
+						<div class="d-inline-flex p-2">
+							<a href="/app/viewer" class="btn btn-success btn-lg" id="aupAcceptButton">
+								{#icons/accept /} Accept
+							</a>
+						</div>
+						<div class="d-inline-flex p-2">
+							<a href="/logout" class="btn btn-warning btn-lg" id="aupDeclineButton">
+								{#icons/decline /} Decline
+							</a>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-	</body>
+		<div class="buttons">
+		</div>
+	</div>
 {/contents}
 
 {#scripts}

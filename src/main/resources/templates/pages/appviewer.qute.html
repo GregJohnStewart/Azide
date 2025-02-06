@@ -1,7 +1,7 @@
 {#include base.qute.html}
 
 {#css}
-        <link rel="stylesheet" href="/META-INF/resources/res/css/subheader.css">
+        <link rel="stylesheet" href="/res/css/appSelectBar.css">
 {/css}
 
 {#title}DCGSA - AZIDE{/title}
@@ -11,10 +11,24 @@
 {/subheader}
 
 {#contents}
-	{#include components/appviewer-iframe appLocation=appLocation }{/}
+	{#include components/appviewer-iframe app=app }{/}
 {/contents}
 
 {#scripts}
+	<script>
+		let apps = {
+		{#for application in cdi:ApplicationInfoRepository.getAllApps()}
+			"{application.reference}": {
+				"id": "{application.id}",
+				"name": "{application.name}",
+				"ref": "{application.reference}",
+			},
+		{/for}
+		}
+	</script>
+
+
+    <script src="/res/js/AppSelectUi.js"></script>
     <script src="/res/js/iwc.js"></script>
     <script src="/res/js/AzideWindow.js"></script>
     <script>

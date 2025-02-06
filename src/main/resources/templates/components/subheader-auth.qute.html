@@ -3,59 +3,69 @@
 	<div class="row">
 		<!-- Left side content -->
 		<div class="col-6 d-flex justify-content-start">
-			<img src="/res/media/dcgsalogo.png" alt="DCGSA Logo" id="navLogo">
+			<img src="/res/media/dcgsalogo.png" alt="DCGSA Logo" id="navLogo" class="ms-1">
 			
 			<!-- App List Dropdown Menu -->
-			<div class="dropdown">
-				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" aria-expanded="false" onclick="toggleAppBar()">
-					Select App
+			<div class="dropdown ms-1">
+				<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="appsDropdownMenuButton" aria-expanded="false" onclick="AppSelectUi.toggleAppBar();">
+					{#icons/apps /} Apps
 				</button>
 			</div>
-			<div>
-				<button class="btn btn-danger" onclick="closeApp()">Close App</button>
-			</div>
+			<button class="btn btn-danger btn-sm ms-1" onclick="closeApp()">
+				{#icons/closeApp /} Close App
+			</button>
+			<h1 class="h6 ms-3 mt-auto mb-auto" id="navBarAppNameLabel">
+				{app.name}
+			</h1>
 		</div>
 		
 		<div class="col-6 d-flex justify-content-end">
-			<!-- Right: Dropdown Menu -->
 			<div class="dropdown">
-				<button class="btn btn-secondary dropdown-toggle" type="button" id="userMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-					{user.getName()}
+				<button class="btn btn-secondary btn-sm me-1 dropdown-toggle" type="button" id="userMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+					{#icons/user /} {user.getName()}
 				</button>
 				<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuButton">
-					<li><a class="dropdown-item" href="#profile">Profile</a></li>
-					<li><a class="dropdown-item" href="/logout" id="logoutButton" >Logout</a></li>
+					<li><a class="dropdown-item" href="#profile">{#icons/user /} Profile</a></li>
+					<li><a class="dropdown-item" href="/logout" id="logoutButton">{#icons/logout /} Logout</a></li>
 				</ul>
 			</div>
 		</div>
 	</div>
-	
-	<div id="popup" class="popup" style="display: none;"><p id="popupMessage"></p>
-		<input type="checkbox" id="dontAskAgain"/> Don't ask again<br><br>
-		<div class="buttons">
-			<button class="ok" onclick="handleOk()">OK</button>
-			<button class="cancel" onclick="handleCancel()">Cancel</button>
-		</div>
+	<div id="appSelectBar" class="p-1">
+		{#let barApps=cdi:ApplicationInfoRepository.getAppBarApps()}
+			<div id="appSelectBarFilterContainer">
+				<input id="appSelectBarFilterInput" type="text" class="form-control form-control-sm" placeholder="Filter..." aria-label="Filter" onkeyup="filterApps()" {#if barApps.isEmpty()}disabled{/if}>
+			</div>
+			<div id="appSelectAppsDisplay" class="mt-1 pb-3">
+				{#if barApps.isEmpty()}
+					<div class="alert alert-light" id="noAppsAvailableAlert" role="alert">
+						No Apps available.
+					</div>
+				{#else}
+					{#for application in barApps}
+					<div class="card appSelectCard me-1" id="appSelectCard-{application.id}">
+						{#if application.image is null}
+						
+						{#else}
+						<img src="{application.image}" class="card-img-top appSelectImage" alt="{application.name}">
+						{/if}
+						<div class="card-body p-1 text-center">
+							<h2 class="card-title h6">{application.name}</h2>
+							<div class="d-grid gap-2">
+								<div class="btn-group" role="group" aria-label="Basic example">
+									<a href="#" class="btn btn-outline-primary btn-sm" title="Open app in this window.">
+										{#icons/openAppHere /}
+									</a>
+									<button type="button" class="btn btn-sm btn-outline-primary" title="Open app in new window.">
+										{#icons/openAppNew /}
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					{/for}
+				{/if}
+			</div>
+		{/let}
 	</div>
-	<div id="appselector" style="display:none">
-		<div id="appselectorfilter">
-			<input id="filterInput" type="text" class="filter-box" placeholder="Filter..." onkeyup="filterApps()">
-		</div>
-		<div id="appselector" class="scrollmenu">
-			{#for application in applicationInfo}
-			{#if application.showInAppBar}
-			<div id={application.name} class="clickable-app m-0
-			">
-			{#if application.description}
-				<p class="hover-text" id="hoverText" style="display:none">{application.description}</p>
-			{/if}
-			<img src={application.image} class="AppImage" alt="Icon Image" onclick="appSelected(`{application.name}`, `/app/viewer/pane/{application.id}`);">
-			<p>{application.name}</p>
-			<button class="corner-button" onclick="window.open(`/app/viewer/pane/{application.id}`, '_blank');toggleAppBar();">&nearr;</button>
-		</div>
-		{/if}
-		{/for}
-	</div>
-</div>
-<script src="/META-INF/resources/res/js/subheader-scripts.js"></script>
 </div>
