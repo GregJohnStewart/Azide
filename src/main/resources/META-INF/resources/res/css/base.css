@@ -1,9 +1,5 @@
 /* Body of the page with background image */
 body {
-	background-image: url('/res/media/helmet-background.jpg');
-	background-size: cover;
-	background-position: center;
-	background-attachment: fixed;
 	font-family: Arial, sans-serif;
 	margin: 0;
 	padding: 0;
@@ -17,10 +13,9 @@ body {
 /* Main Content */
 .content {
     position: absolute;
-    top: 70px; /* Space below header and sub-header */
+    top: 65px; /* Space below header and sub-header */
     bottom: 18px; /* Space above footer */
     left: 0;
     right: 0;
-    background-color: #f4f4f4;
     overflow: hidden;
 }
