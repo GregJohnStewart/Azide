@@ -33,7 +33,7 @@ public class BasicUiTest extends WebUiTest {
 		
 		TestUser user = this.getTestUserService().getUser();
 		
-		Page page = this.getContext().newPage();
+		Page page = this.newPage();
 		
 		NavUtils.navigateToUrl(page, this.getIndex().toString());
 		
@@ -44,7 +44,7 @@ public class BasicUiTest extends WebUiTest {
 	public void testAUPScreenAccept() {
 		TestUser user = this.getTestUserService().getUser();
 		
-		Page page = this.getContext().newPage();
+		Page page = this.newPage();
 		
 		NavUtils.navigateToUrl(page, this.getIndex().toString());
 		
@@ -65,7 +65,7 @@ public class BasicUiTest extends WebUiTest {
 	public void testAUPScreenDecline() {
 		TestUser user = this.getTestUserService().getUser();
 		
-		Page page = this.getContext().newPage();
+		Page page = this.newPage();
 		
 		NavUtils.navigateToUrl(page, this.getIndex().toString());
 		

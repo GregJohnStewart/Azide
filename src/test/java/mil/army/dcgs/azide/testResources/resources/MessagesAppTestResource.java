@@ -38,11 +38,6 @@ public class MessagesAppTestResource implements QuarkusTestResourceLifecycleMana
 												.forStatusCode(200)
 										);
 		this.messagesAppContainer.start();
-		try {
-			Thread.sleep(Duration.ofSeconds(10));
-		} catch(InterruptedException e) {
-			throw new RuntimeException(e);
-		}
 
 		String url = "http://" + this.messagesAppContainer.getHost() + ":" + this.messagesAppContainer.getMappedPort(port);
 

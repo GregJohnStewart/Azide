@@ -16,21 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
-@TestProfile(AppFillingProfile.OneApp.class)
-public class UiWithOneAppTest extends WebUiTest {
-	
-	@Test
-	public void testInitialScreen() {
-		TestUser user = this.getTestUserService().getUser();
-		
-		Page page = this.newPage();
-		
-		NavUtils.navigateToUrl(page, this.getIndex().toString());
-		
-		Locator appTitle = page.frameLocator("#appframe").locator("#appTitle");
-		
-		assertTrue(appTitle.isVisible());
-	}
+@TestProfile(AppFillingProfile.OneIwcApp.class)
+public class IwcOneAppTest extends WebUiTest {
 	
 	@Test
 	public void testLoggedInScreen() {
@@ -46,20 +33,4 @@ public class UiWithOneAppTest extends WebUiTest {
 		assertTrue(appTitle.isVisible());
 	}
 	
-	@Test
-	public void testAppDropdown() {
-		TestUser user = this.getTestUserService().getUser();
-		
-		Page page = this.getLoggedInPage(user);
-		
-		assertFalse(page.locator(AppViewerPage.APPS_SELECT_BAR).isVisible());
-		
-		page.locator(AppViewerPage.APPS_BUTTON).click();
-		
-		assertTrue(page.locator(AppViewerPage.APPS_SELECT_BAR).isVisible());
-		assertFalse(page.locator(AppViewerPage.APPS_FILTER_INPUT).isDisabled());
-		assertFalse(page.locator(AppViewerPage.NO_APPS_AVAILABLE_ALERT).isVisible());
-		
-		
-	}
 }

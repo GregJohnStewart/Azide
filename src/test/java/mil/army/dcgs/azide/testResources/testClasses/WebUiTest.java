@@ -2,6 +2,7 @@ package mil.army.dcgs.azide.testResources.testClasses;
 
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
+import com.microsoft.playwright.ConsoleMessage;
 import com.microsoft.playwright.Page;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -24,10 +25,17 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 @Slf4j
 @Tag("ui")
 public class WebUiTest extends RunningServerTest {
+	
+	private Map<Integer, List<ConsoleMessage>> pageLogs = new HashMap<>();
 	
 	private static Path getCurTestDir(TestInfo testInfo) {
 		log.debug("Display name: {}", testInfo.getDisplayName());
@@ -73,9 +81,11 @@ public class WebUiTest extends RunningServerTest {
 		
 		for (int i = 0; i < this.getContext().pages().size(); i++) {
 			Page curPage = this.getContext().pages().get(i);
+			List<ConsoleMessage> console = this.pageLogs.get(curPage);
 			Path curPageFinalScreenshot = this.curTestUiResultDir.resolve("page-" + (i + 1) + "-final.png");
 			Path curPageHtmlFile = this.curTestUiResultDir.resolve("page-" + (i + 1) + "-final-code.html");
 			Path curPageInfoFile = this.curTestUiResultDir.resolve("page-" + (i + 1) + "-final-info.txt");
+			Path curPageConsoleFile = this.curTestUiResultDir.resolve("page-" + (i + 1) + "-console.log");
 			
 			curPage.screenshot(getScreenshotOptions().setPath(curPageFinalScreenshot));
 			try (OutputStream outputStream = new FileOutputStream(curPageHtmlFile.toFile())) {
@@ -90,13 +100,35 @@ public class WebUiTest extends RunningServerTest {
 				pw.println("Final url: " + curPage.url());
 				pw.println();
 			}
+//			try (
+//				OutputStream outputStream = new FileOutputStream(curPageConsoleFile.toFile());
+//				PrintWriter pw = new PrintWriter(outputStream);
+//			) {
+//				for (ConsoleMessage consoleMessage : console) {
+//					pw.println(consoleMessage.text());
+//				}
+//			}
+			
 		}
 		Thread.sleep(250);
 		this.context.close();
 	}
 	
-	protected Page getLoggedInPage(TestUser user, String page) {
+	public Page newPage(){
+		log.info("Getting new page in window.");
 		Page output = this.getContext().newPage();
+		int pageIndex = this.getContext().pages().indexOf(output);
+		
+		ArrayList<ConsoleMessage> messageList = new ArrayList<>();
+		this.pageLogs.put(pageIndex, messageList);
+		
+//		output.onConsoleMessage(messageList::add);
+		
+		return output;
+	}
+	
+	protected Page getLoggedInPage(TestUser user, String page) {
+		Page output = this.newPage();
 		
 		NavUtils.navigateToEndpoint(output, "/");
 		

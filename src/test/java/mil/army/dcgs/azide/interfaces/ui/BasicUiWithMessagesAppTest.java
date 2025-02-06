@@ -26,7 +26,7 @@ public class BasicUiWithMessagesAppTest extends WebUiTest {
 	public void testInitialScreen() {
 		TestUser user = this.getTestUserService().getUser();
 		
-		Page page = this.getContext().newPage();
+		Page page = this.newPage();
 		
 		NavUtils.navigateToUrl(page, this.getIndex().toString());
 		
