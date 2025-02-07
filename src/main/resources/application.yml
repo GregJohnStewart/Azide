@@ -29,6 +29,8 @@ applicationInfo:
   quarkus:
     oidc:
       auth-server-url: http://locahost:8085/realms/quarkus
+      credentials:
+        secret: "secret"
     log:
       level: DEBUG
     hibernate-orm:
@@ -48,15 +50,13 @@ applicationInfo:
       
       
       # Lots of applications
-      -
-        name: Test Image 1
+      - name: Test Image 1
         reference: testImage1
         location: "/res/media/dcgsalogo.png"
         image: "/res/media/dcgsalogo.png"
         showInAppBar: true
         description: "Test image as an app."
-      -
-        name: Test Image 2
+      - name: Test Image 2
         reference: testImage2
         location: "/res/media/dcgsalogo.png"
         image: "/res/media/dcgsalogo.png"
