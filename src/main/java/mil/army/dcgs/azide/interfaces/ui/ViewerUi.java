@@ -54,12 +54,10 @@ public class ViewerUi extends UiInterface {
     @Produces(MediaType.TEXT_HTML)
     @Transactional
     public TemplateInstance getApp(@PathParam("id") String selectedApp) {
+        log.debug("PaneId: {}", selectedApp);
         return this.getDefaultAuthPageSetup()
             .data("applicationInfo", applicationInfoRepository.findAll().list())
             .data("selectedApp", applicationInfoRepository.find("id", UUID.fromString(selectedApp)).firstResult())
-            .data(
-                "appLocation",
-                applicationInfoRepository.getAppLocationFromId(appId)
-            );
+            .data("appLocation", applicationInfoRepository.getAppLocationFromId(selectedApp));
     }
 }

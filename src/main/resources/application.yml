@@ -21,6 +21,8 @@ classificationBanner:
   color: "#007a33"
 "%dev":
   quarkus:
+    oidc:
+      auth-server-url: http://locahost:8085/realms/quarkus
     log:
       level: DEBUG
     hibernate-orm:
@@ -30,10 +32,16 @@ classificationBanner:
     applications:
       - name: Msg Viewer
         reference: msgs
-        description: "This is the Message Viewer"
         location: "http://localhost:8081/messages"
-        image: "/res/media/gazebo-1.jpg"
+        image: /res/media/gazebo-1.jpg
         showInAppBar: true
-        defaultApp: true
+        description: "This is the Message Viewer"
         splashApp: true
+        defaultApp: true
         splashEndpoint: "http://localhost:8081/messages"
+      - name: google
+        reference: googles
+        location: "https://www.google.com"
+        image: /res/media/gazebo-1.jpg
+        showInAppBar: true
+        description: "This is the googles"

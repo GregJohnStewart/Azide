@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import mil.army.dcgs.azide.config.ApplicationInfoConfig;
 
@@ -108,7 +109,16 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
         if(appId.isPresent()) {
             return getAppLocation(this.find("id", appId).firstResultOptional());
         }
-        log.info("No app id given.");
+        log.info("No app id given. " + appId);
+        return DEFAULT_URI;
+    }
+    
+    public URI getAppLocationFromId(String appId){
+        if(appId != null) {
+            log.info("app id. " + appId);
+            return getAppLocation(this.find("id", UUID.fromString(appId)).firstResultOptional());
+        }
+        log.info("No app id given. " + appId);
         return DEFAULT_URI;
     }
 }
