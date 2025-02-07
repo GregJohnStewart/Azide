@@ -27,10 +27,6 @@ applicationInfo:
 
 "%dev":
   quarkus:
-    oidc:
-      auth-server-url: http://locahost:8085/realms/quarkus
-      credentials:
-        secret: "secret"
     log:
       level: DEBUG
     hibernate-orm:
@@ -41,7 +37,7 @@ applicationInfo:
       auth-server-url: http://localhost:8085/realms/quarkus
       client-id: azide
       credentials:
-        secret: "**********"
+        secret: "secret"
   applicationInfo:
     applications:
       # Need to update/ run messages app after Azide runs, and get dev oidc resources
