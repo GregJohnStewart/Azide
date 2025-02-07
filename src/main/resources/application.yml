@@ -40,15 +40,15 @@ applicationInfo:
         secret: "secret"
   applicationInfo:
     applications:
-      # Need to update/ run messages app after Azide runs, and get dev oidc resources
-      #      - name: Messages App
-      #        reference: messages-app
-      #        location: http://localhost:8082
-      #        showInAppBar: true
-      #        description: "Messages App for showing messages."
-      #        defaultApp: true
-      #        splashApp: true
-      #        splashEndpoint: http://localhost:8082
+       #Need to update/ run messages app after Azide runs, and get dev oidc resources
+      - name: Messages App
+        reference: messages-app
+        location: http://localhost:8081
+        showInAppBar: true
+        description: "Messages App for showing messages."
+        defaultApp: true
+        splashApp: true
+        splashEndpoint: http://localhost:8081
       
       
       # Lots of applications
