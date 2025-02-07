@@ -69,28 +69,4 @@
 			</div>
 		{/let}
 	</div>
-<<<<<<< HEAD
-	<div id="appselector" style="display:none">
-		<div id="appselectorfilter">
-			<input id="filterInput" type="text" class="filter-box" placeholder="Filter..." onkeyup="filterApps()">
-		</div>
-		<div id="appselector" class="scrollmenu">
-			{#for application in applicationInfo}
-			{#if application.showInAppBar}
-			<div id={application.name} class="clickable-app m-0
-			">
-			{#if application.description}
-				<p class="hover-text" id="hoverText" style="display:none">{application.description}</p>
-			{/if}
-			<img src={application.image} class="AppImage" alt="Icon Image" onclick="appSelected(`{application.name}`, `/app/viewer/pane/{application.id}`);">
-			<p>{application.name}</p>
-			<button class="corner-button" onclick="window.open(`/app/viewer/pane/{application.id}`, '_blank');toggleAppBar();">&nearr;</button>
-		</div>
-		{/if}
-		{/for}
-	</div>
-</div>
-<script src="/res/js/subheader-scripts.js"></script>
-=======
->>>>>>> fffcef4e154126ef5d20ea191bbab885be0014cc
 </div>

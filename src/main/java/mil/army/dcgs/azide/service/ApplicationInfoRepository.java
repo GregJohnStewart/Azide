@@ -126,19 +126,6 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
         if(appId.isPresent()) {
             return this.appOrDefault(this.find("id", appId).firstResultOptional());
         }
-<<<<<<< HEAD
-        log.info("No app id given. " + appId);
-        return DEFAULT_URI;
-    }
-    
-    public URI getAppLocationFromId(String appId){
-        if(appId != null) {
-            log.info("app id. " + appId);
-            return getAppLocation(this.find("id", UUID.fromString(appId)).firstResultOptional());
-        }
-        log.info("No app id given. " + appId);
-        return DEFAULT_URI;
-=======
         log.info("No app id given.");
         
         return DEFAULT_APP;
@@ -151,6 +138,5 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
         log.info("No app id/reference given.");
         
         return DEFAULT_APP;
->>>>>>> fffcef4e154126ef5d20ea191bbab885be0014cc
     }
 }

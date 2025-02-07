@@ -19,15 +19,12 @@ quarkus:
 classificationBanner:
   classification: UNCLASSIFIED - FOR TESTING PURPOSES ONLY
   color: "#007a33"
-<<<<<<< HEAD
-=======
 service:
   aupText: >
     Welcome to our Acceptable Use Policy (AUP) page. By using our service, you agree to the following terms...
 applicationInfo:
   applications:
 
->>>>>>> fffcef4e154126ef5d20ea191bbab885be0014cc
 "%dev":
   quarkus:
     oidc:
@@ -39,23 +36,6 @@ applicationInfo:
         generation: drop-and-create
   applicationInfo:
     applications:
-<<<<<<< HEAD
-      - name: Msg Viewer
-        reference: msgs
-        location: "http://localhost:8081/messages"
-        image: /res/media/gazebo-1.jpg
-        showInAppBar: true
-        description: "This is the Message Viewer"
-        splashApp: true
-        defaultApp: true
-        splashEndpoint: "http://localhost:8081/messages"
-      - name: google
-        reference: googles
-        location: "https://www.google.com"
-        image: /res/media/gazebo-1.jpg
-        showInAppBar: true
-        description: "This is the googles"
-=======
       # Need to update/ run messages app after Azide runs, and get dev oidc resources
       #      - name: Messages App
       #        reference: messages-app
@@ -160,4 +140,3 @@ applicationInfo:
 #        image: "/res/media/dcgsalogo.png"
 #        showInAppBar: true
 #        description: "Test image as an app."
->>>>>>> fffcef4e154126ef5d20ea191bbab885be0014cc

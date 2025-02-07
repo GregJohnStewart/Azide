@@ -45,19 +45,4 @@ public class ViewerUi extends UiInterface {
                     this.applicationInfoRepository.getSplashAppOrDefault()
             );
     }
-<<<<<<< HEAD
-
-    @GET
-    @Path("/pane/{id}")
-    @Produces(MediaType.TEXT_HTML)
-    @Transactional
-    public TemplateInstance getApp(@PathParam("id") String selectedApp) {
-        log.debug("PaneId: {}", selectedApp);
-        return this.getDefaultAuthPageSetup()
-            .data("applicationInfo", applicationInfoRepository.findAll().list())
-            .data("selectedApp", applicationInfoRepository.find("id", UUID.fromString(selectedApp)).firstResult())
-            .data("appLocation", applicationInfoRepository.getAppLocationFromId(selectedApp));
-    }
-=======
->>>>>>> fffcef4e154126ef5d20ea191bbab885be0014cc
 }
