@@ -1,34 +1,35 @@
 package mil.army.dcgs.azide.interfaces.ui;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
-import mil.army.dcgs.azide.testResources.resources.MessagesAppTestResource;
+import io.quarkus.test.junit.TestProfile;
+import mil.army.dcgs.azide.testResources.profiles.AppFillingProfile;
 import mil.army.dcgs.azide.testResources.testClasses.WebUiTest;
 import mil.army.dcgs.azide.testResources.testUser.TestUser;
-import mil.army.dcgs.azide.testResources.ui.assertions.MainAssertions;
 import mil.army.dcgs.azide.testResources.ui.pages.AllPages;
 import mil.army.dcgs.azide.testResources.ui.pages.AppViewerPage;
-import mil.army.dcgs.azide.testResources.ui.pages.AupPage;
-import mil.army.dcgs.azide.testResources.ui.pages.IndexPage;
-import mil.army.dcgs.azide.testResources.ui.pages.KeycloakUi;
 import mil.army.dcgs.azide.testResources.ui.utilities.NavUtils;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
-@QuarkusTestResource(value = MessagesAppTestResource.class, restrictToAnnotatedClass = true)
-public class BasicUiWithAppTest extends WebUiTest {
+@TestProfile(AppFillingProfile.OneApp.class)
+public class UiWithOneAppTest extends WebUiTest {
 	
 	@Test
 	public void testInitialScreen() {
 		TestUser user = this.getTestUserService().getUser();
 		
-		Page page = this.getContext().newPage();
+		Page page = this.newPage();
 		
 		NavUtils.navigateToUrl(page, this.getIndex().toString());
+		
+		Locator appTitle = page.frameLocator("#appframe").locator("#appTitle");
+		
+		assertTrue(appTitle.isVisible());
 	}
 	
 	@Test
@@ -39,23 +40,26 @@ public class BasicUiWithAppTest extends WebUiTest {
 		
 		page.locator(AllPages.NAV_LOGO);
 		page.locator(AppViewerPage.USER_MENU_BUTTON);
+		
+		Locator appTitle = page.frameLocator("#appframe").locator("#appTitle");
+		
+		assertTrue(appTitle.isVisible());
 	}
 	
 	@Test
-	public void testLogOut() {
+	public void testAppDropdown() {
 		TestUser user = this.getTestUserService().getUser();
 		
 		Page page = this.getLoggedInPage(user);
 		
-		page.locator(AppViewerPage.USER_MENU_BUTTON).click();
+		assertFalse(page.locator(AppViewerPage.APPS_SELECT_BAR).isVisible());
 		
-		page.locator(AppViewerPage.USER_LOGOUT_BUTTON).click();
+		page.locator(AppViewerPage.APPS_BUTTON).click();
 		
-		MainAssertions.assertDoneProcessing(page);
+		assertTrue(page.locator(AppViewerPage.APPS_SELECT_BAR).isVisible());
+		assertFalse(page.locator(AppViewerPage.APPS_FILTER_INPUT).isDisabled());
+		assertFalse(page.locator(AppViewerPage.NO_APPS_AVAILABLE_ALERT).isVisible());
 		
-		assertEquals(
-			this.getIndex().toString(),
-			page.url().split("\\?")[0] //stripping possible state GET params after logging out
-		);
+		
 	}
 }

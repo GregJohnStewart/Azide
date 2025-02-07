@@ -11,7 +11,7 @@ This page should show basic information such as the daily messages for the users
 {/subheader}
 
 {#contents}
-	{#include components/appviewer-iframe appLocation=cdi:ApplicationInfoRepository.getAppLocation(splashApp) }{/}
+	{#include components/appviewer-iframe app=cdi:ApplicationInfoRepository.getSplashAppOrDefault() }{/}
 {/contents}
 
 {#scripts}

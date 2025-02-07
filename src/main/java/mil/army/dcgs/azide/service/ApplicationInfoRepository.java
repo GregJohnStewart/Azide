@@ -22,13 +22,18 @@ import mil.army.dcgs.azide.entities.model.ApplicationInfo;
 public class ApplicationInfoRepository implements PanacheRepository<ApplicationInfo> {
     
     private static final URI DEFAULT_URI = URI.create("/app/viewer/no-app");
-
+    private static final ApplicationInfo DEFAULT_APP = ApplicationInfo.builder()
+                                                           .name("")
+                                                           .location(DEFAULT_URI)
+                                                           .build();
+    
     @Inject
     ApplicationInfoConfig applicationInfoConfig;
 
     private boolean initted = false;
 
     public String getApplicationId(String appName) {
+        
         List<ApplicationInfo> apps = findAll().list();
 
         for (ApplicationInfo app : apps) {
@@ -55,9 +60,25 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
     public Optional<ApplicationInfo> getDefaultApp() {
         return this.find("defaultApp", true).firstResultOptional();
     }
-
+    
     public Optional<ApplicationInfo> getSplashApp() {
         return this.find("splashApp", true).firstResultOptional();
+    }
+    
+    public ApplicationInfo getSplashAppOrDefault() {
+        return this.appOrDefault(this.getSplashApp());
+    }
+    
+    public List<ApplicationInfo> getAppBarApps(){
+        return this.find("showInAppBar", true).list();
+    }
+    
+    /**
+     * This is only required for a workaround for Qute not properly typing the resulting list
+     * @return
+     */
+    public List<ApplicationInfo> getAllApps(){
+        return this.findAll().list();
     }
 
     public void populate() {
@@ -90,25 +111,22 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
             } else {
                 log.info("Creating new application: {}", newAppInfo.getName());
                 this.persist(newAppInfo);
-                log.debug("Created new application: {}", newAppInfo);
+                log.info("Created new application: {}", newAppInfo);
             }
         }
         this.initted = true;
+        log.info("Finished populating appInfo.");
     }
     
-    public URI getAppLocation(Optional<ApplicationInfo> app){
-        URI output = DEFAULT_URI;
-        if(app.isPresent()) {
-            output = app.get().getLocation();
-        }
-        log.debug("URI for app: {}", output);
-        return output;
+    public ApplicationInfo appOrDefault(Optional<ApplicationInfo> app) {
+        return app.orElse(DEFAULT_APP);
     }
     
-    public URI getAppLocationFromId(Optional<String> appId){
+    public ApplicationInfo getAppFromId(Optional<String> appId){
         if(appId.isPresent()) {
-            return getAppLocation(this.find("id", appId).firstResultOptional());
+            return this.appOrDefault(this.find("id", appId).firstResultOptional());
         }
+<<<<<<< HEAD
         log.info("No app id given. " + appId);
         return DEFAULT_URI;
     }
@@ -120,5 +138,19 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
         }
         log.info("No app id given. " + appId);
         return DEFAULT_URI;
+=======
+        log.info("No app id given.");
+        
+        return DEFAULT_APP;
+    }
+    
+    public ApplicationInfo getAppFromRef(Optional<String> appRef){
+        if(appRef.isPresent()) {
+            return this.appOrDefault(this.find("reference", appRef).firstResultOptional());
+        }
+        log.info("No app id/reference given.");
+        
+        return DEFAULT_APP;
+>>>>>>> fffcef4e154126ef5d20ea191bbab885be0014cc
     }
 }

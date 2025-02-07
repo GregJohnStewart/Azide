@@ -31,23 +31,21 @@ public class ViewerUi extends UiInterface {
     @Inject
     ApplicationInfoRepository applicationInfoRepository;
 
-    @QueryParam("appId")
-    Optional<String> appId;
-	@Inject
-	Application application;
+    @QueryParam("appRef")
+    Optional<String> appRef;
     
     @GET
     @Produces(MediaType.TEXT_HTML)
     @Transactional
     public TemplateInstance getViewer() {
         return this.getDefaultAuthPageSetup()
-            .data("applicationInfoRepository", applicationInfoRepository)
-            .data("applicationInfo", applicationInfoRepository.findAll().list())
-            .data(
-                "appLocation",
-                applicationInfoRepository.getAppLocationFromId(appId)
+            .data("app",
+                this.appRef.isPresent()?
+                this.applicationInfoRepository.getAppFromRef(appRef):
+                    this.applicationInfoRepository.getSplashAppOrDefault()
             );
     }
+<<<<<<< HEAD
 
     @GET
     @Path("/pane/{id}")
@@ -60,4 +58,6 @@ public class ViewerUi extends UiInterface {
             .data("selectedApp", applicationInfoRepository.find("id", UUID.fromString(selectedApp)).firstResult())
             .data("appLocation", applicationInfoRepository.getAppLocationFromId(selectedApp));
     }
+=======
+>>>>>>> fffcef4e154126ef5d20ea191bbab885be0014cc
 }
