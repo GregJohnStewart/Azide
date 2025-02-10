@@ -40,24 +40,12 @@ applicationInfo:
         secret: "secret"
   applicationInfo:
     applications:
-      # Need to update/ run messages app after Azide runs, and get dev oidc resources
-      #      - name: Messages App
-      #        reference: messages-app
-      #        location: http://localhost:8082
-      #        showInAppBar: true
-      #        description: "Messages App for showing messages."
-      #        defaultApp: true
-      #        splashApp: true
-      #        splashEndpoint: http://localhost:8082
-      
-      
-      # Lots of applications
-      - name: Messages App
-        reference: message-app
+      - name: Landing Page
+        reference: landpage
         location: http://localhost:8081
         showInAppBar: true
         image: "/res/media/dcgsalogo.png"
-        description: "Messages App for showing messages."
+        description: "Azide Landing Page."
         defaultApp: true
         splashApp: true
         splashEndpoint: http://localhost:8081
@@ -67,6 +55,7 @@ applicationInfo:
         image: "/res/media/dcgsalogo.png"
         showInAppBar: true
         description: "Test image as an app."
+        splashApp: false
 #      - name: Test Image3
 #        reference: testImage3
 #        location: "/res/media/dcgsalogo.png"
