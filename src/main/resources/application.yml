@@ -52,12 +52,15 @@ applicationInfo:
       
       
       # Lots of applications
-      - name: Test Image 1
-        reference: testImage1
-        location: "/res/media/dcgsalogo.png"
-        image: "/res/media/dcgsalogo.png"
+      - name: Messages App
+        reference: message-app
+        location: http://localhost:8081
         showInAppBar: true
-        description: "Test image as an app."
+        image: "/res/media/dcgsalogo.png"
+        description: "Messages App for showing messages."
+        defaultApp: true
+        splashApp: true
+        splashEndpoint: http://localhost:8081
       - name: Test Image 2
         reference: testImage2
         location: "/res/media/dcgsalogo.png"
