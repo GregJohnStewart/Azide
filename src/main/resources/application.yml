@@ -40,12 +40,13 @@ applicationInfo:
         secret: "secret"
   applicationInfo:
     applications:
+      # Lots of applications
       - name: Landing Page
-        reference: landpage
+        reference: landing-page
         location: http://localhost:8081
         showInAppBar: true
         image: "/res/media/dcgsalogo.png"
-        description: "Azide Landing Page."
+        description: "Landing Page"
         defaultApp: true
         splashApp: true
         splashEndpoint: http://localhost:8081
