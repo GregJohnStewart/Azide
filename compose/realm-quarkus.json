@@ -80,6 +80,15 @@
         "containerId": "04445e5f-cae8-4562-8ae2-512281430d18",
         "attributes": {}
       },
+	  {
+        "id": "51bbc0f6-574e-4fcf-8699-f72610dbe7b3",
+        "name": "dcgsa_admin",
+        "description": "",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "04445e5f-cae8-4562-8ae2-512281430d18",
+        "attributes": {}
+      },
       {
         "id": "c1a65e17-f6c2-4df3-9049-35b2a4e9b5d5",
         "name": "default-roles-quarkus",
@@ -527,7 +536,8 @@
           ]
       },
       "realmRoles": [
-        "default-roles-quarkus"
+        "default-roles-quarkus",
+		"dcgsa_admin"
       ]
     },
     {
@@ -548,7 +558,8 @@
           ]
       },
       "realmRoles": [
-        "default-roles-quarkus"
+        "default-roles-quarkus",
+		"dcgsa_admin"
       ]
     },
     {
@@ -569,7 +580,8 @@
           ]
       },
       "realmRoles": [
-        "default-roles-quarkus"
+        "default-roles-quarkus",
+		"dcgsa_admin"
       ]
     }
   ],
