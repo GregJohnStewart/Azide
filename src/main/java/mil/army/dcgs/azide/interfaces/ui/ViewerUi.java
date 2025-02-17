@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import mil.army.dcgs.azide.entities.model.ApplicationInfo;
 import mil.army.dcgs.azide.service.ApplicationInfoRepository;
 
 @Slf4j
@@ -38,11 +39,21 @@ public class ViewerUi extends UiInterface {
     @Produces(MediaType.TEXT_HTML)
     @Transactional
     public TemplateInstance getViewer() {
+        boolean defaultScreen = false;
+        ApplicationInfo appInfo;
+        
+        if(this.appRef.isPresent()){
+            appInfo = this.applicationInfoRepository.getAppFromRef(appRef);
+        } else {
+            appInfo = this.applicationInfoRepository.getSplashAppOrDefault();
+            defaultScreen = true;
+        }
+                                      ;
+        log.debug("Loading viewer with app info {}", appInfo);
+        
         return this.getDefaultAuthPageSetup()
-            .data("app",
-                this.appRef.isPresent()?
-                this.applicationInfoRepository.getAppFromRef(appRef):
-                    this.applicationInfoRepository.getSplashAppOrDefault()
-            );
+            .data("app", appInfo)
+            .data("defaultScreen", defaultScreen)
+            ;
     }
 }
