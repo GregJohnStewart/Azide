@@ -8,6 +8,7 @@ let AppSelectUi = {
 	filterInput: $("#appSelectBarFilterInput"),
 	appsDisplay: $("#appSelectAppsDisplay"),
 	appCards: $("#appSelectAppsDisplay .appSelectCard"),
+	clearFilterButton: $("#appSelectBarFilterClearInput"),
 
 	/**
 	 * Toggles the visibility of the app select bar.
@@ -54,6 +55,7 @@ let AppSelectUi = {
 		// console.debug("Searching through apps: ", this.appCards);
 
 		if(searchText !== ""){
+			this.clearFilterButton.prop("disabled", false);
 			this.appCards.each(function(){
 				let thisJq = $(this);
 				let curAppText = thisJq.attr("data-searchText");
@@ -66,7 +68,12 @@ let AppSelectUi = {
 				}
 			});
 		} else {
+			this.clearFilterButton.prop("disabled", true);
 			this.appCards.show();
 		}
+	},
+	clearFilter(){
+		this.filterInput.val("");
+		this.filterApps();
 	}
 }

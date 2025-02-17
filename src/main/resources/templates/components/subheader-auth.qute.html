@@ -36,7 +36,11 @@
 	<div id="appSelectBar" class="p-1">
 		{#let barApps=cdi:ApplicationInfoRepository.getAppBarApps()}
 			<div id="appSelectBarFilterContainer">
-				<input id="appSelectBarFilterInput" type="text" class="form-control form-control-sm" placeholder="Filter..." aria-label="Filter" oninput="AppSelectUi.filterApps();" {#if barApps.isEmpty()}disabled{/if}>
+				<div class="input-group input-group-sm">
+					<span class="input-group-text">{#icons/search /}</span>
+					<button class="btn btn-light" type="button" id="appSelectBarFilterClearInput" onclick="AppSelectUi.clearFilter();" disabled>{#icons/clearInput /}</button>
+					<input id="appSelectBarFilterInput" type="text" class="form-control form-control-sm" placeholder="Filter..." aria-label="Filter" oninput="AppSelectUi.filterApps();" {#if barApps.isEmpty()}disabled{/if}>
+				</div>
 			</div>
 			<div id="appSelectAppsDisplay" class="mt-1 pb-3">
 				{#if barApps.isEmpty()}
