@@ -4,10 +4,10 @@
         <link rel="stylesheet" href="/res/css/appSelectBar.css">
 {/css}
 
-{#title}DCGSA - AZIDE{/title}
+{#title}{#if !app.name.isBlank()}{app.name} - {/if}DCGSA - AZIDE{/title}
 
 {#subheader}
-	{#include components/subheader-auth}{/}
+	{#include components/subheader-auth curApp=app defaultScreen=defaultScreen}{/}
 {/subheader}
 
 {#contents}
@@ -26,12 +26,27 @@
 		{/for}
 		}
 	</script>
-
-
     <script src="/res/js/AppSelectUi.js"></script>
     <script src="/res/js/iwc.js"></script>
     <script src="/res/js/AzideWindow.js"></script>
     <script>
         var azideWin = new AzideWindow({ });
+		
+		function openApp(appRef, newWindow = false){
+			let params = new URLSearchParams();
+			params.set("appRef", appRef);
+			let newUri = "/app/viewer?" + params.toString();
+			
+			console.log("Navigating to new app: ", appRef, newUri)
+			if(newWindow){
+				window.open(
+					newUri,
+					'_blank',
+					'menubar=no,toolbar=no,location=no,status=no,resizable=yes,scrollbars=yes'
+				);
+			} else {
+				window.location.href = newUri;
+			}
+		}
     </script>
 {/scripts}

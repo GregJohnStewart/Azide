@@ -11,9 +11,11 @@
 					{#icons/apps /} Apps
 				</button>
 			</div>
-			<button class="btn btn-danger btn-sm ms-1" onclick="closeApp()">
+			{#if !defaultScreen}
+			<a href="/app/viewer" class="btn btn-danger btn-sm ms-1">
 				{#icons/closeApp /} Close App
-			</button>
+			</a>
+			{/if}
 			<h1 class="h6 ms-3 mt-auto mb-auto" id="navBarAppNameLabel">
 				{app.name}
 			</h1>
@@ -43,26 +45,34 @@
 					</div>
 				{#else}
 					{#for application in barApps}
-					<div class="card appSelectCard me-1" id="appSelectCard-{application.id}">
+					{#let isCurApp=(application.reference.equals(curApp.reference))}
+					<div class="card appSelectCard me-1 {#if isCurApp}appSelectCardSelected{/if}" id="appSelectCard-{application.id}">
 						{#if application.image is null}
-						
+						<!-- No image specified for app -->
 						{#else}
-						<img src="{application.image}" class="card-img-top appSelectImage" alt="{application.name}">
+						<img src="{application.image}" class="card-img-top appSelectImage" alt="{application.name} image">
 						{/if}
 						<div class="card-body p-1 text-center">
 							<h2 class="card-title h6">{application.name}</h2>
 							<div class="d-grid gap-2">
-								<div class="btn-group" role="group" aria-label="Basic example">
-									<a href="#" class="btn btn-outline-primary btn-sm" title="Open app in this window.">
-										{#icons/openAppHere /}
-									</a>
-									<button type="button" class="btn btn-sm btn-outline-primary" title="Open app in new window.">
+								<div class="btn-group" role="group" aria-label="{application.name} navigation buttons">
+									{#if isCurApp}
+										<button class="btn btn-outline-primary btn-sm" title="Start fresh in current window." onclick="openApp('{application.reference}');">
+											{#icons/refreshAppHere /}
+										</button>
+									{#else}
+										<button class="btn btn-outline-primary btn-sm" title="Open app in this window." onclick="openApp('{application.reference}');" {#if isCurApp}disabled{/if}>
+											{#icons/openAppHere /}
+										</button>
+									{/if}
+									<button type="button" class="btn btn-sm btn-outline-primary" title="Open app in new window." onclick="openApp('{application.reference}', true);">
 										{#icons/openAppNew /}
 									</button>
 								</div>
 							</div>
 						</div>
 					</div>
+					{/let}
 					{/for}
 				{/if}
 			</div>

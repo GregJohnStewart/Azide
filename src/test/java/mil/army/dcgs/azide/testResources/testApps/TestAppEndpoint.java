@@ -73,10 +73,15 @@ public class TestAppEndpoint {
 					<html>
 					<head>
 					<title>Test App {0}</title>
+					<style>
+						body '{'
+							background-color: white;
+						}
+					</style>
 					</head>
 					<body>
 					
-					<h1 id="appTitle">Test App {0}</h1>
+					<h1 id="appTitle">Test App <span id="appRef">{0}</span></h1>
 					
 					
 					{1}

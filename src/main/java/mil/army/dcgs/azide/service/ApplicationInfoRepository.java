@@ -132,9 +132,9 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
     
     public ApplicationInfo getAppFromRef(Optional<String> appRef){
         if(appRef.isPresent()) {
-            return this.appOrDefault(this.find("reference", appRef).firstResultOptional());
+            return this.appOrDefault(this.find("reference", appRef.get()).firstResultOptional());
         }
-        log.info("No app id/reference given.");
+        log.info("No app reference given.");
         
         return DEFAULT_APP;
     }
