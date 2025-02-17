@@ -31,22 +31,5 @@
     <script src="/res/js/AzideWindow.js"></script>
     <script>
         var azideWin = new AzideWindow({ });
-		
-		function openApp(appRef, newWindow = false){
-			let params = new URLSearchParams();
-			params.set("appRef", appRef);
-			let newUri = "/app/viewer?" + params.toString();
-			
-			console.log("Navigating to new app: ", appRef, newUri)
-			if(newWindow){
-				window.open(
-					newUri,
-					'_blank',
-					'menubar=no,toolbar=no,location=no,status=no,resizable=yes,scrollbars=yes'
-				);
-			} else {
-				window.location.href = newUri;
-			}
-		}
     </script>
 {/scripts}
