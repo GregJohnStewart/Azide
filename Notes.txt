@@ -1,0 +1,38 @@
+FIXES
+  App Dropdown
+    - When launching in another window the app bar does not get hidden
+
+TODO
+  Profile Page
+    Add a page to show currently logged in user profile
+      User information to include
+        username
+        list of favorite apps
+        button to clear favorites or remove individual favorite
+  Error Handling
+    If errors are encountered how to show those errors cleanly?
+    Individual apps report their own errors however they do it.
+    If authentication token expires...best way to show/handle this?
+      Currently just messy
+    Update keycloak to provide a longer client session.
+      What are the parameters that need to be changed to support say 18 (or something else) hours of being logged in?
+      What is the current session timeout for CAS?  Suggest matching this
+  CAS/AD Integration
+    How to connect Keycloak to DCGS AD
+    How to pass credentials to DCGS Apps (CAS in the DCGS apps) to allow them to authenticate their calls
+  PKI
+    Enable PKI authentication
+
+DESIGN SUGGESTIONS
+  App Favorites
+    Allow apps in the app bar to be marked as Favorites
+    Favorites are stored in the db along with the user profile information when a user logs in first time
+      How to identify and match the profile to the logged in user information?
+    If favorites list is not empty
+      Show a Launch Favorites button somewhere in the subheader bar
+        Loops through the list of favorite apps and if found in the current list launches a browser showing the app
+          Check to see if app already exists
+          Dont launch if already exists
+  
+
+

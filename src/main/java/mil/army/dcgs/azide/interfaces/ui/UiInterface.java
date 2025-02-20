@@ -28,7 +28,7 @@ public abstract class UiInterface extends RestInterface {
 
     protected TemplateInstance getDefaultAuthPageSetup(Template template){
         return this.getDefaultPageSetup(template)
-                .data("user", this.getFullUser());
+                .data("user", this.getAccessToken());
     }
 
     protected TemplateInstance getDefaultAuthPageSetup(){
