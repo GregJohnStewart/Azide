@@ -7,8 +7,8 @@
   "refreshTokenMaxReuse": 10,
   "accessTokenLifespan": 600,
   "accessTokenLifespanForImplicitFlow": 900,
-  "ssoSessionIdleTimeout": 1800,
-  "ssoSessionMaxLifespan": 600,
+  "ssoSessionIdleTimeout": 7200,
+  "ssoSessionMaxLifespan": 3600,
   "ssoSessionIdleTimeoutRememberMe": 0,
   "ssoSessionMaxLifespanRememberMe": 0,
   "offlineSessionIdleTimeout": 2592000,
@@ -19,8 +19,8 @@
   "clientOfflineSessionIdleTimeout": 0,
   "clientOfflineSessionMaxLifespan": 0,
   "accessCodeLifespan": 60,
-  "accessCodeLifespanUserAction": 300,
-  "accessCodeLifespanLogin": 1800,
+  "accessCodeLifespanUserAction": 1800,
+  "accessCodeLifespanLogin": 7200,
   "actionTokenGeneratedByAdminLifespan": 43200,
   "actionTokenGeneratedByUserLifespan": 300,
   "oauth2DeviceCodeLifespan": 600,
@@ -75,6 +75,15 @@
         "id": "7c98f2d4-9b54-4d8d-901b-0bccbf4509c8",
         "name": "uma_authorization",
         "description": "${role_uma_authorization}",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "04445e5f-cae8-4562-8ae2-512281430d18",
+        "attributes": {}
+      },
+	  {
+        "id": "51bbc0f6-574e-4fcf-8699-f72610dbe7b3",
+        "name": "dcgsa_admin",
+        "description": "",
         "composite": false,
         "clientRole": false,
         "containerId": "04445e5f-cae8-4562-8ae2-512281430d18",
@@ -487,6 +496,93 @@
       ],
       "notBefore": 0,
       "groups": []
+    },
+    {
+      "username":"alice",
+      "firstName":"Alice",
+      "lastName":"Wonderland",
+      "email":"alice@keycloak.org",
+      "enabled":true,
+      "credentials":[
+          {
+            "type":"password",
+            "value":"alice"
+          }
+      ],
+      "clientRoles":{
+          "account":[
+            "manage-account"
+          ]
+      },
+      "realmRoles": [
+        "default-roles-quarkus"
+      ]
+    },
+    {
+      "username":"csereno",
+      "firstName":"Chad",
+      "lastName":"Sereno",
+      "email":"csereno@secisd.unclass.lab",
+      "enabled":true,
+      "credentials":[
+          {
+            "type":"password",
+            "value":"default"
+          }
+      ],
+      "clientRoles":{
+          "account":[
+            "manage-account"
+          ]
+      },
+      "realmRoles": [
+        "default-roles-quarkus",
+		"dcgsa_admin"
+      ]
+    },
+    {
+      "username":"gpaulin",
+      "firstName":"Greg",
+      "lastName":"Paulin",
+      "email":"gpaulin@secisd.unclass.lab",
+      "enabled":true,
+      "credentials":[
+          {
+            "type":"password",
+            "value":"default"
+          }
+      ],
+      "clientRoles":{
+          "account":[
+            "manage-account"
+          ]
+      },
+      "realmRoles": [
+        "default-roles-quarkus",
+		"dcgsa_admin"
+      ]
+    },
+    {
+      "username":"gstewart",
+      "firstName":"Greg",
+      "lastName":"Stewart",
+      "email":"gstewart@secisd.unclass.lab",
+      "enabled":true,
+      "credentials":[
+          {
+            "type":"password",
+            "value":"default"
+          }
+      ],
+      "clientRoles":{
+          "account":[
+            "manage-account"
+          ]
+      },
+      "realmRoles": [
+        "default-roles-quarkus",
+		"dcgsa_admin"
+      ]
     }
   ],
   "scopeMappings": [

@@ -1,4 +1,30 @@
-# azide
+# AZIDE
+
+Azide is the replacement for OWF (Ozone Widget Framework)
+
+# Startup for dev
+
+## Keycloak
+
+Uses podman compose to startup the keycloak and its corresponding postgres db.
+The compose and keycloak files are in the Azide project under the compose folder.
+Open a command prompt and cd to the Azide\compose folder then run the following command
+
+  `podman compose -f .\podman-compose.yml up`
+
+## Azide
+
+Open a command prompt and cd to the Azide folder then run the following command
+
+  `mvnw quarkus:dev`
+
+## Message Service App
+
+Open a command prompt and cd to the MessageService folder then run the following command
+
+  `mvnw quarkus:dev`
+
+# QUARKUS Related Info
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
