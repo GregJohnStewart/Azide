@@ -8,6 +8,7 @@ import mil.army.dcgs.azide.entities.model.Person;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import java.util.Optional;
+import java.util.ArrayList;
 
 @Slf4j
 @ApplicationScoped
@@ -31,6 +32,7 @@ public class PersonRepository implements PanacheRepository<Person> {
             Person newUser = Person.builder()
                     .externalId(externalId)
                     .name(context.getUserPrincipal().getName())
+                    .favorites(new ArrayList<String>())
                     .build();
             this.persist(newUser);
             log.info("Created new user: {}", newUser);

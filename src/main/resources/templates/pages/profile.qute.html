@@ -12,5 +12,9 @@
     <body>
 		<h1 class="text-light">Profile</h1>
 		<p class="text-light">Username: {user.getName()}</p>
+		<p class="text-light">Person: {profile.getName()}</p>
+		{#if profile.getFavorites().isEmpty}
+		<p class="text-light">No Favorite Apps found!</p>
+		{/if}
     </body>
 </html>

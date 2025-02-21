@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.UUID;
+import java.util.List;
 
 @Getter
 @Setter
@@ -27,4 +28,8 @@ public class Person extends PanacheEntityBase {
     @NotNull
     @Basic(optional=false)
     public String name;
+
+    @NotNull
+    @Basic(optional=false)
+    public List<String> favorites;
 }
