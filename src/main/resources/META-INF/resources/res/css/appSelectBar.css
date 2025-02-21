@@ -11,6 +11,14 @@ div.appSelectCard {
 	display: inline-block;
 }
 
+.appSelectTitle {
+	max-width: 120px; 
+	margin: 0 auto; 
+	white-space: normal; 
+	overflow-wrap: break-word;
+	min-height: 2.5em; /* Forces a minimum height for the title */
+}
+
 img.appSelectImage {
 	max-width: 100%;
 	max-height: 100px;

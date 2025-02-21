@@ -22,10 +22,18 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
     
     private static final URI DEFAULT_URI = URI.create("/app/viewer/no-app");
     private static final ApplicationInfo DEFAULT_APP = ApplicationInfo.builder()
-                                                           .name("")
-                                                           .location(DEFAULT_URI)
-                                                           .build();
-    
+        .name("")
+        .location(DEFAULT_URI)
+        .build();
+
+    private static final URI PROFILE_URI = URI.create("/app/viewer/profile");
+    private static final ApplicationInfo PROFILE_APP = ApplicationInfo.builder()
+        .name("Profile")
+        .reference("profile")
+        .location(PROFILE_URI)
+        .showInAppBar(false)
+        .build();
+
     @Inject
     ApplicationInfoConfig applicationInfoConfig;
 
@@ -113,6 +121,9 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
                 log.info("Created new application: {}", newAppInfo);
             }
         }
+        
+        this.persist(PROFILE_APP);
+
         this.initted = true;
         log.info("Finished populating appInfo.");
     }

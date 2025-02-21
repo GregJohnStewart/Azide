@@ -13,23 +13,23 @@
 					{#icons/apps /} Apps
 				</button>
 			</div>
-			{#if !defaultScreen}
-			<a href="/app/viewer" class="btn btn-danger btn-sm ms-1">
-				{#icons/closeApp /} Close App
-			</a>
-			{/if}
 			<h1 class="h6 ms-3 mt-auto mb-auto" id="navBarAppNameLabel">
 				{app.name}
 			</h1>
 		</div>
 		
 		<div class="col-6 d-flex justify-content-end">
+			{#if !defaultScreen}
+			<a href="/app/viewer" class="btn btn-secondary btn-sm ms-1">
+				{#icons/closeApp /} Close App
+			</a>
+			{/if}
 			<div class="dropdown">
 				<button class="btn btn-secondary btn-sm me-1 dropdown-toggle" type="button" id="userMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
 					{#icons/user /} {user.getName()}
 				</button>
 				<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuButton">
-					<li><a class="dropdown-item" href="#profile">{#icons/user /} Profile</a></li>
+					<li><a class="dropdown-item" href="javascript:AppSelectUi.openApp('profile');">{#icons/user /} Profile</a></li>
 					<li><a class="dropdown-item" href="/logout" id="logoutButton">{#icons/logout /} Logout</a></li>
 				</ul>
 			</div>
@@ -59,7 +59,9 @@
 						<img src="{application.image}" class="card-img-top appSelectImage" alt="{application.name} image">
 						{/if}
 						<div class="card-body p-1 text-center">
-							<h2 class="card-title h6">{application.name}</h2>
+							<h2 class="card-title h6 appSelectTitle">
+								{application.name}
+							</h2>
 							<div class="d-grid gap-2">
 								<div class="btn-group" role="group" aria-label="{application.name} navigation buttons">
 									{#if isCurApp}
@@ -71,7 +73,7 @@
 											{#icons/openAppHere /}
 										</button>
 									{/if}
-									<button type="button" class="btn btn-sm btn-outline-primary" title="Open app in new window." onclick="AppSelectUi.openApp('{application.reference}', true);">
+									<button type="button" class="btn btn-sm btn-outline-primary" title="Open app in new window." onclick="AppSelectUi.openApp('{application.reference}', true);AppSelectUi.toggleAppBar();">
 										{#icons/openAppNew /}
 									</button>
 								</div>
