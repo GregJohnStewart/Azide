@@ -1,9 +1,7 @@
 package mil.army.dcgs.azide.interfaces.rest;
 
-import jakarta.decorator.Delegate;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.DELETE;
-import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 import mil.army.dcgs.azide.service.ApplicationInfoRepository;

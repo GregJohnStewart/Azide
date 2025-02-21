@@ -4,11 +4,9 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import java.net.URI;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
 @Getter
