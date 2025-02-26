@@ -113,4 +113,38 @@ public class ProfileEndpoints extends RestInterface {
          List<Profile> profiles = profileRepository.getProfiles();
          return profiletablefragment.data("profiles", profiles);
     }
+
+    @PUT
+    @Path("/favorite/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public @NotNull String addFavorite(
+        @NotNull @PathParam("id") UUID id,
+        ObjectNode favoriteNameJson) {
+
+        Profile profile = this.profileRepository.find("id", id).firstResultOptional()
+            .orElseThrow(NotFoundException::new);
+
+		this.profileRepository.addFavoriteApp(profile, favoriteNameJson.get("name").asText());
+
+        return profile.toJSON();
+    }
+
+    @DELETE
+    @Path("/favorite/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public @NotNull String deleteFavorite(
+        @NotNull @PathParam("id") UUID id,
+        ObjectNode favoriteNameJson) {
+
+        Profile profile = this.profileRepository.find("id", id).firstResultOptional()
+            .orElseThrow(NotFoundException::new);
+
+		this.profileRepository.deleteFavoriteApp(profile, favoriteNameJson.get("name").asText());
+
+        return profile.toJSON();
+    }
 }

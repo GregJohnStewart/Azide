@@ -1,29 +1,49 @@
 function addFavorite(profileId, name) {
-    fetch('/api/profile/' + profileId + '/favorite', {
-        method: 'POST',
+    fetch('/api/profile/favorite/' + profileId, {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(name)
+        body: '{"name":"' + name + '"}'
     })
     .then(response => {
+        console.log(profileId);
+        console.log(name);
+
         if (!response.ok) {
             throw new Error('Error adding favorite app: ' + response.statusText);
         }
         return response.json();
     })
-    /*
     .then(responseData => {
-        refreshTable(); // Refresh the table with updated data
-        let modal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
-        modal.hide();
-
-        showNotification('Message saved successfully', 'success');
+        showNotification('Favorite app: ' + name + ' added successfully', 'success');
     })
-    */
     .catch(error => {
         console.error('Error adding favorite app:', error);
         showNotification('Error adding favorite app: ' + error, 'danger');
+    });
+}
+
+function deleteFavorite(profileId, name) {
+    fetch('/api/profile/favorite/' + profileId, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: '{"name":"' + name + '"}'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error deleting favorite app: ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(responseData => {
+        showNotification('Favorite app: ' + name + ' deleted successfully', 'success');
+    })
+    .catch(error => {
+        console.error('Error deleting favorite app:', error);
+        showNotification('Error deleting favorite app: ' + error, 'danger');
     });
 }
 
@@ -45,9 +65,11 @@ function stripQuotes(str) {
 
 function showDetails(profileId, selectedProfileId) {
     userProfileId = profileId;
-console.log(userProfileId);
+
     const jsonprofile = document.getElementById('profile-row-' + selectedProfileId).dataset.profileData;
     selectedProfile = JSON.parse(stripQuotes(jsonprofile));
+
+//    console.log(jsonprofile);
 
     document.getElementById('username').innerText = selectedProfile.username;
     document.getElementById('lastLogin').innerText = selectedProfile.lastLogin;
@@ -88,14 +110,14 @@ function refreshTable() {
 
 // Instead of a native confirm, show a custom delete confirmation modal.
 function deleteProfile() {
+    let editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
+    if (editModal) editModal.hide();
+
     // Check to make sure the user is not deleting their own profile
     if(userProfileId == selectedProfile.id) {
         showNotification('Deleting your own profile is not allowed.', 'danger');
         return;
     }
-
-    let editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
-    if (editModal) editModal.hide();
 
     $('#confirmDeleteProfileUsername').text(selectedProfile.username);
 

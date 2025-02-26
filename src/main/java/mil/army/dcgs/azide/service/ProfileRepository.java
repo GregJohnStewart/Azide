@@ -82,9 +82,11 @@ public class ProfileRepository implements PanacheRepository<Profile> {
         return sortedProfiles;
     }
 
-    public void addFavoriteApp(Profile profile, String name) {
+    public void addFavoriteApp(Profile profile, String favoriteName) {
+        // TODO Make sure the favorite app being added does not already exist.
+
         FavoriteApp favorite = FavoriteApp.builder()
-            .name(name)
+            .name(favoriteName)
             .xLocation(0)
             .yLocation(0)
             .windowWidth(800)
@@ -93,5 +95,17 @@ public class ProfileRepository implements PanacheRepository<Profile> {
 
         profile.getFavorites().add(favorite);
         this.persist(profile);
+    }
+
+    public void deleteFavoriteApp(Profile profile, String favoriteName) {
+        // Remove the favorite app that matches the given favoriteId
+        boolean removed = profile.getFavorites().removeIf(fav -> fav.getName().equals(favoriteName));
+        
+        if (removed) {
+            // Persist the updated profile. Since the Profile is attached and the
+            // favorites collection has orphanRemoval enabled, the removed FavoriteApp
+            // will be deleted from the database.
+            this.persist(profile);
+        }
     }
 }
