@@ -14,10 +14,10 @@ import lombok.Getter;
 @RequestScoped
 @Path("/app/viewer/profile")
 @PermitAll
-public class ProfileUi extends UiInterface {
+public class ProfileViewerUi extends UiInterface {
 
     @Getter
-    @Location("pages/profile")
+    @Location("pages/profile-veiwer")
     Template pageTemplate;
 
     @GET

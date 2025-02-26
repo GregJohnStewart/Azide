@@ -8,9 +8,9 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
-import mil.army.dcgs.azide.entities.model.Person;
+import mil.army.dcgs.azide.entities.model.Profile;
 
-import mil.army.dcgs.azide.service.PersonRepository;
+import mil.army.dcgs.azide.service.ProfileRepository;
 
 @Slf4j
 public abstract class RestInterface {
@@ -20,21 +20,19 @@ public abstract class RestInterface {
 
     @Getter(AccessLevel.PROTECTED)
     @Inject
-    PersonRepository personRepository;
+    ProfileRepository profileRepository;
 
     @Getter(AccessLevel.PROTECTED)
     @Context
     SecurityContext securityContext;
 
     @Getter(AccessLevel.PRIVATE)
-    Person user = null;
+    Profile profile = null;
 
-    protected Person getFullUser(){
-        if(this.getUser() == null){
-            this.user = this.getPersonRepository().ensurePerson(this.getSecurityContext(), this.getUserToken());
-        }
+    protected Profile getFullProfile(){
+        this.profile = this.getProfileRepository().ensureProfile(this.getSecurityContext(), this.getUserToken());
 
-        return this.getUser();
+        return this.getProfile();
     }
 
     protected boolean hasAccessToken(){

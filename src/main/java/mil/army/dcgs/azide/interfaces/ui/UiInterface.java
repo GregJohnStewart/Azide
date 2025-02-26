@@ -19,6 +19,7 @@ public abstract class UiInterface extends RestInterface {
     protected TemplateInstance getDefaultPageSetup(Template template){
         return template
                 .data("user", null)
+                .data("profile", null)
                 .data("classificationBanner", this.classificationBannerConfig);
     }
 
@@ -29,7 +30,7 @@ public abstract class UiInterface extends RestInterface {
     protected TemplateInstance getDefaultAuthPageSetup(Template template){
         return this.getDefaultPageSetup(template)
             .data("user", this.getAccessToken())
-            .data("profile", this.getFullUser());
+            .data("profile", this.getFullProfile());
     }
 
     protected TemplateInstance getDefaultAuthPageSetup(){

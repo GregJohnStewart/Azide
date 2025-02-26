@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.UUID;
-import java.util.List;
 
 @Getter
 @Setter
@@ -15,15 +14,10 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Person extends PanacheEntityBase {
+public class FavoriteApp extends PanacheEntityBase {
     @Id
     @GeneratedValue
     private UUID id;
-
-    @NotNull
-    @Basic(optional=false)
-    @Column(unique=true)
-    public String externalId;
 
     @NotNull
     @Basic(optional=false)
@@ -31,5 +25,17 @@ public class Person extends PanacheEntityBase {
 
     @NotNull
     @Basic(optional=false)
-    public List<String> favorites;
+    public int xLocation;
+
+    @NotNull
+    @Basic(optional=false)
+    public int yLocation;
+
+    @NotNull
+    @Basic(optional=false)
+    public int windowWidth;
+
+    @NotNull
+    @Basic(optional=false)
+    public int windowHeight;
 }
