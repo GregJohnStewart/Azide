@@ -1,15 +1,19 @@
 FIXES
   App Dropdown
-    - When launching in another window the app bar does not get hidden
+    x When launching in another window the app bar does not get hidden
+      FIX: hide app bar when launching app in another window
     - Launching the default app sometimes shows the close app button...sometimes not.
-    - App name can be too long
+    x App name can be too long
+      FIX: Wrapped/Centered text if too long.  Currently max-height for app name is 2.5rem so effectively 2 lines of text and wraps on word boundary.
+        If 3 then will still have issues.
+        If still too long how to fix this?  font change?  more lines?  Hide overflow?
 
 
 TODO
   Profile Page
-    Add a page to show currently logged in user profile
+    x Add a page to show currently logged in user profile
       User information to include
-        username
+        x username
         list of favorite apps
         button to clear favorites or remove individual favorite
   Error Handling
