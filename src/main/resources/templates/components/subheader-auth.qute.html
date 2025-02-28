@@ -52,11 +52,26 @@
 				{#else}
 					{#for application in barApps}
 					{#let isCurApp=(application.reference.equals(curApp.reference))}
+					{#let appName=(application.name)}
+					{#let appId=(application.id)}
 					<div class="card appSelectCard me-1 {#if isCurApp}appSelectCardSelected{/if}" id="appSelectCard-{application.id}" data-searchText="{application.name.toLowerCase()}">
 						{#if application.image is null}
 						<!-- No image specified for app -->
 						{#else}
-						<img src="{application.image}" class="card-img-top appSelectImage" alt="{application.name} image">
+						<div class="position-relative">
+							<img src="{application.image}" class="card-img-top appSelectImage" alt="{application.name} image">
+							<div id="favorite-icon-{application.id}">
+							{#if profile.isFavoriteSet(appName)}
+								<span class="position-absolute top-0 end-0 p-2" style="cursor: pointer;" onclick="handleFavoriteClick('delete', '{profile.id}', '{appId}', '{appName}');">
+									<i class="bi bi-star-fill text-warning"></i>
+								</span>
+							{#else}
+								<span class="position-absolute top-0 end-0 p-2" style="cursor: pointer;" onclick="handleFavoriteClick('add', '{profile.id}', '{appId}', '{appName}');">
+									<i class="bi bi-star text-warning"></i>
+								</span>
+							{/if}
+							</div>
+						</div>
 						{/if}
 						<div class="card-body p-1 text-center">
 							<h2 class="card-title h6 appSelectTitle">

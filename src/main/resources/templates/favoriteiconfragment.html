@@ -1,0 +1,9 @@
+								{#if profile.isFavoriteSet(appName)}
+								<span class="position-absolute top-0 end-0 p-2" style="cursor: pointer;" onclick="handleFavoriteClick('delete', '{profile.id}', '{appId}', '{appName}');">
+									<i class="bi bi-star-fill text-warning"></i>
+								</span>
+								{#else}
+								<span class="position-absolute top-0 end-0 p-2" style="cursor: pointer;" onclick="handleFavoriteClick('add', '{profile.id}', '{appId}', '{appName}');">
+									<i class="bi bi-star text-warning"></i>
+								</span>
+								{/if}

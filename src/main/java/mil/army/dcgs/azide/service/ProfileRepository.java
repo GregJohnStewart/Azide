@@ -36,29 +36,9 @@ public class ProfileRepository implements PanacheRepository<Profile> {
         // Get the Profile object from the database based on the unique identifier.
         Optional<Profile> gotten = this.findByUsername(username);
 
-        ArrayList<FavoriteApp> favorites = new ArrayList<FavoriteApp>();
-        // TEST ============================================
-        FavoriteApp app = FavoriteApp.builder()
-            .name("Landing Page")
-            .xLocation(0)
-            .yLocation(0)
-            .windowWidth(800)
-            .windowHeight(800)
-            .build();
-        favorites.add(app);
-        app = FavoriteApp.builder()
-            .name("Test Data Viewer")
-            .xLocation(0)
-            .yLocation(0)
-            .windowWidth(800)
-            .windowHeight(800)
-            .build();
-        favorites.add(app);
-
-        // TEST ============================================
-
         Profile output;
         output = gotten.orElseGet(() -> {
+            ArrayList<FavoriteApp> favorites = new ArrayList<FavoriteApp>();
             Profile newProfile = Profile.builder()
                     .username(username)
                     .favorites(favorites)
@@ -71,7 +51,7 @@ public class ProfileRepository implements PanacheRepository<Profile> {
         return output;
     }
 
-    public List<Profile> getProfiles(){
+    public List<Profile> getProfiles() {
         List<Profile> profiles = this.findAll().stream().toList();
 
         ArrayList<Profile> sortedProfiles = new ArrayList<Profile>(profiles);
@@ -82,8 +62,10 @@ public class ProfileRepository implements PanacheRepository<Profile> {
         return sortedProfiles;
     }
 
-    public void addFavoriteApp(Profile profile, String favoriteName) {
+    public Profile addFavoriteApp(Profile profile, String favoriteName) {
         // TODO Make sure the favorite app being added does not already exist.
+
+
 
         FavoriteApp favorite = FavoriteApp.builder()
             .name(favoriteName)
@@ -95,9 +77,11 @@ public class ProfileRepository implements PanacheRepository<Profile> {
 
         profile.getFavorites().add(favorite);
         this.persist(profile);
+
+        return profile;
     }
 
-    public void deleteFavoriteApp(Profile profile, String favoriteName) {
+    public Profile deleteFavoriteApp(Profile profile, String favoriteName) {
         // Remove the favorite app that matches the given favoriteId
         boolean removed = profile.getFavorites().removeIf(fav -> fav.getName().equals(favoriteName));
         
@@ -107,5 +91,7 @@ public class ProfileRepository implements PanacheRepository<Profile> {
             // will be deleted from the database.
             this.persist(profile);
         }
+
+        return profile;
     }
 }

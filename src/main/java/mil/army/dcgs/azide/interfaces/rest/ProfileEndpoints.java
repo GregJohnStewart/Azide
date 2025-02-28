@@ -16,7 +16,9 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.SecurityContext;
 import lombok.extern.slf4j.Slf4j;
 
 import mil.army.dcgs.azide.entities.model.Profile;
@@ -35,6 +37,12 @@ public class ProfileEndpoints extends RestInterface {
 
     @Inject
     Template profiletablefragment; // Injects the Qute template named "profiletablefragment.html"
+
+    @Inject
+    Template favoriteiconfragment; // Injects the Qute template named "favoriteiconfragment.html"
+
+	@Context
+    SecurityContext securityContext;
 
     @GET
     @Path("/")
@@ -114,6 +122,16 @@ public class ProfileEndpoints extends RestInterface {
          return profiletablefragment.data("profiles", profiles);
     }
 
+    @GET
+    @Path("/favorite-icon")
+    @Produces(MediaType.TEXT_HTML)
+    public TemplateInstance getFavoriteIcon(@QueryParam("appId") String appId,
+											@QueryParam("appName") String appName) {
+		Profile profile = profileRepository.ensureProfile(securityContext, null);
+
+        return favoriteiconfragment.data("profile", profile).data("appId", appId).data("appName", appName);
+    }
+
     @PUT
     @Path("/favorite/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -126,7 +144,9 @@ public class ProfileEndpoints extends RestInterface {
         Profile profile = this.profileRepository.find("id", id).firstResultOptional()
             .orElseThrow(NotFoundException::new);
 
-		this.profileRepository.addFavoriteApp(profile, favoriteNameJson.get("name").asText());
+		if(!profile.isFavoriteSet(favoriteNameJson.get("name").asText())) {
+			profile = this.profileRepository.addFavoriteApp(profile, favoriteNameJson.get("name").asText());
+		}
 
         return profile.toJSON();
     }
@@ -143,7 +163,9 @@ public class ProfileEndpoints extends RestInterface {
         Profile profile = this.profileRepository.find("id", id).firstResultOptional()
             .orElseThrow(NotFoundException::new);
 
-		this.profileRepository.deleteFavoriteApp(profile, favoriteNameJson.get("name").asText());
+		if(profile.isFavoriteSet(favoriteNameJson.get("name").asText())) {
+			profile = this.profileRepository.deleteFavoriteApp(profile, favoriteNameJson.get("name").asText());
+		}
 
         return profile.toJSON();
     }
