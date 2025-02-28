@@ -60,6 +60,15 @@ public class DevApp {
 					<script src="/res/js/AzideApp.js"></script>
 					<script>
 					let azApp = new AzideApp('{' appName: "{0}" '}');
+					
+					
+					
+					
+					
+					
+					
+					
+					
 					</script>
 					""",
 				this.getAppRef()

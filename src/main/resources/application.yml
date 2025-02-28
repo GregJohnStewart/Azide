@@ -45,7 +45,7 @@ applicationInfo:
       # Lots of applications
       - name: Dev App
         reference: dev-app
-        location: /dev/app?testAppRef=dev-app
+        location: /dev/app?testAppRef=dev-app&azApp=true
         showInAppBar: true
         image: /dev/app/image?testAppRef=dev-app
         description: "Development app for testing things"
