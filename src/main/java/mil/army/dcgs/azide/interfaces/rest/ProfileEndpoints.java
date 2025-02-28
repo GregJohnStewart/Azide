@@ -122,27 +122,15 @@ public class ProfileEndpoints extends RestInterface {
          return profiletablefragment.data("profiles", profiles);
     }
 
-    @GET
-    @Path("/favorite-icon")
-    @Produces(MediaType.TEXT_HTML)
-    public TemplateInstance getFavoriteIcon(@QueryParam("appId") String appId,
-											@QueryParam("appName") String appName) {
-		Profile profile = profileRepository.ensureProfile(securityContext, null);
-
-        return favoriteiconfragment.data("profile", profile).data("appId", appId).data("appName", appName);
-    }
-
     @PUT
-    @Path("/favorite/{id}")
+    @Path("/favorite")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public @NotNull String addFavorite(
-        @NotNull @PathParam("id") UUID id,
         ObjectNode favoriteNameJson) {
 
-        Profile profile = this.profileRepository.find("id", id).firstResultOptional()
-            .orElseThrow(NotFoundException::new);
+        Profile profile = this.profileRepository.ensureProfile(securityContext, null);
 
 		if(!profile.isFavoriteSet(favoriteNameJson.get("name").asText())) {
 			profile = this.profileRepository.addFavoriteApp(profile, favoriteNameJson.get("name").asText());
@@ -152,16 +140,14 @@ public class ProfileEndpoints extends RestInterface {
     }
 
     @DELETE
-    @Path("/favorite/{id}")
+    @Path("/favorite")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public @NotNull String deleteFavorite(
-        @NotNull @PathParam("id") UUID id,
         ObjectNode favoriteNameJson) {
 
-        Profile profile = this.profileRepository.find("id", id).firstResultOptional()
-            .orElseThrow(NotFoundException::new);
+        Profile profile = this.profileRepository.ensureProfile(securityContext, null);
 
 		if(profile.isFavoriteSet(favoriteNameJson.get("name").asText())) {
 			profile = this.profileRepository.deleteFavoriteApp(profile, favoriteNameJson.get("name").asText());

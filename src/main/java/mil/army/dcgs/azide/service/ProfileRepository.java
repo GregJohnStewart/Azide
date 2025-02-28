@@ -82,7 +82,7 @@ public class ProfileRepository implements PanacheRepository<Profile> {
     }
 
     public Profile deleteFavoriteApp(Profile profile, String favoriteName) {
-        // Remove the favorite app that matches the given favoriteId
+        // Remove the favorite app that matches the given favoriteName
         boolean removed = profile.getFavorites().removeIf(fav -> fav.getName().equals(favoriteName));
         
         if (removed) {

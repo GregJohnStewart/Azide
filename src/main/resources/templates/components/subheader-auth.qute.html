@@ -56,35 +56,23 @@
 					{#let appId=(application.id)}
 					{#let isFav=profile.isFavoriteSet(appName)}
 					<div class="card appSelectCard me-1 {#if isCurApp}appSelectCardSelected{/if}" id="appSelectCard-{application.id}" data-searchText="{application.name.toLowerCase()}">
-						{#if application.image is null}
-						<!-- No image specified for app -->
-						{#else}
 						<div class="position-relative">
-							
+							{#if application.image is null}
+							<!-- No image specified for app -->
+							<div class="card-img-placeholder">
+								<!-- Optionally, you can show a default icon or text here -->
+								
+							</div>
+							{#else}
 							<img src="{application.image}" class="card-img-top appSelectImage" alt="{application.name} image">
+							{/if}
 							<div id="favorite-icon-{application.id}">
-								<span class="position-absolute top-0 end-0 p-2" style="cursor: pointer;" onclick="toggleFavorite($(this), '{appId}', '{appName}');">
-									{!
-									
-									toggleFavorite(favSpanJq, appId, appName){
-										let favoritedIcon = favSpanJq.find(".favIconFavorited");
-										let notFavoritedIcon = favSpanJq.find(".favIconNotFavorited");
-									
-										if favoritedIcon.is(":visible")
-											//send code to unfavorite
-											favIconFavorited.show();
-											favIconNotFavorited.hide();
-									}
-									
-									
-									
-									!}
-									<i class="bi bi-star-fill text-warning favIconFavorited" {#if isFav}style="display:none"{/if}></i>
-									<i class="bi bi-star-fill text-warning favIconNotFavorited" {#if !isFav}style="display:none"{/if}></i>
+								<span class="position-absolute top-0 end-0 p-1" style="cursor: pointer;" onclick="toggleFavorite($(this), '{appId}', '{appName}');">
+									<i class="bi bi-star-fill text-warning favIconFavorited" {#if !isFav}style="display:none"{/if}></i>
+									<i class="bi bi-star text-warning favIconNotFavorited" {#if isFav}style="display:none"{/if}></i>
 								</span>
 							</div>
 						</div>
-						{/if}
 						<div class="card-body p-1 text-center">
 							<h2 class="card-title h6 appSelectTitle">
 								{application.name}

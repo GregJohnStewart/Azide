@@ -38,3 +38,11 @@ div.appSelectCardSelected {
 #appSelectBarFilterContainer {
 	-webkit-mask-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0));
 }
+
+.card-img-placeholder {
+	min-height: 42px; /* Adjust as needed */
+	/*background-color: #f8f9fa; *//* Optional: a light background color */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

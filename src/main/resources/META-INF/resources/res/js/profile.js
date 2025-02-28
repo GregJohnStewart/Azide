@@ -57,22 +57,6 @@ function refreshProfileTable() {
     });
 }
 
-function refreshFavoriteIcon(appId, appName) {
-    fetch('/api/profile/favorite-icon?appId=' + encodeURIComponent(appId) + '&appName=' + encodeURIComponent(appName))
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Error refreshing favorite icon: ' + response.statusText);
-        }
-        return response.text();
-    })
-    .then(htmlFragment => {
-        document.querySelector('#favorite-icon-' + appId).innerHTML = htmlFragment;
-    })
-    .catch(error => {
-        showNotification('Error refreshing favorite icon: ' + error, 'danger');
-    });
-}
-
 // Instead of a native confirm, show a custom delete confirmation modal.
 function deleteProfile() {
     let editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
@@ -115,21 +99,30 @@ function confirmDelete() {
     });
 }
 
-function handleFavoriteClick(action, profileId, appId, appName) {
+function toggleFavorite(favSpan, appId, appName) {
+    let favoritedIcon = favSpan.find(".favIconFavorited");
+    let notFavoritedIcon = favSpan.find(".favIconNotFavorited");
 
-    if(action === 'add') {
-        console.log("Adding favorite for app: " + appName);
-        addFavorite(profileId, appName);
+    if(favoritedIcon.is(":visible")) {
+        //send code to unfavorite
+        deleteFavorite(appName);
+
+        // Show/Hide correct favorite icon
+        favoritedIcon.hide();
+        notFavoritedIcon.show();
     } else {
-        console.log("Deleting favorite for app: " + appName);
-        deleteFavorite(profileId, appName);
+        //send code to unfavorite
+        addFavorite(appName);
+
+        // Show/Hide correct favorite icon
+        favoritedIcon.show();
+        notFavoritedIcon.hide();
     }
 
-    refreshFavoriteIcon(appId, appName);
 }
 
-function addFavorite(profileId, name) {
-    fetch('/api/profile/favorite/' + profileId, {
+function addFavorite(name) {
+    fetch('/api/profile/favorite', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -151,8 +144,8 @@ function addFavorite(profileId, name) {
     });
 }
 
-function deleteFavorite(profileId, name) {
-    fetch('/api/profile/favorite/' + profileId, {
+function deleteFavorite(name) {
+    fetch('/api/profile/favorite', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'

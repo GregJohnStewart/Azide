@@ -53,7 +53,7 @@ applicationInfo:
       - name: Test Data Viewer
         reference: testdataviewer
         location: http://localhost:8082
-        image: "/res/media/dcgsalogo.png"
+        #image: "/res/media/dcgsalogo.png"
         showInAppBar: true
         description: "Test Data Viewer for testing cross app communications"
         splashApp: false
