@@ -54,22 +54,34 @@
 					{#let isCurApp=(application.reference.equals(curApp.reference))}
 					{#let appName=(application.name)}
 					{#let appId=(application.id)}
+					{#let isFav=profile.isFavoriteSet(appName)}
 					<div class="card appSelectCard me-1 {#if isCurApp}appSelectCardSelected{/if}" id="appSelectCard-{application.id}" data-searchText="{application.name.toLowerCase()}">
 						{#if application.image is null}
 						<!-- No image specified for app -->
 						{#else}
 						<div class="position-relative">
+							
 							<img src="{application.image}" class="card-img-top appSelectImage" alt="{application.name} image">
 							<div id="favorite-icon-{application.id}">
-							{#if profile.isFavoriteSet(appName)}
-								<span class="position-absolute top-0 end-0 p-2" style="cursor: pointer;" onclick="handleFavoriteClick('delete', '{profile.id}', '{appId}', '{appName}');">
-									<i class="bi bi-star-fill text-warning"></i>
+								<span class="position-absolute top-0 end-0 p-2" style="cursor: pointer;" onclick="toggleFavorite($(this), '{appId}', '{appName}');">
+									{!
+									
+									toggleFavorite(favSpanJq, appId, appName){
+										let favoritedIcon = favSpanJq.find(".favIconFavorited");
+										let notFavoritedIcon = favSpanJq.find(".favIconNotFavorited");
+									
+										if favoritedIcon.is(":visible")
+											//send code to unfavorite
+											favIconFavorited.show();
+											favIconNotFavorited.hide();
+									}
+									
+									
+									
+									!}
+									<i class="bi bi-star-fill text-warning favIconFavorited" {#if isFav}style="display:none"{/if}></i>
+									<i class="bi bi-star-fill text-warning favIconNotFavorited" {#if !isFav}style="display:none"{/if}></i>
 								</span>
-							{#else}
-								<span class="position-absolute top-0 end-0 p-2" style="cursor: pointer;" onclick="handleFavoriteClick('add', '{profile.id}', '{appId}', '{appName}');">
-									<i class="bi bi-star text-warning"></i>
-								</span>
-							{/if}
 							</div>
 						</div>
 						{/if}
