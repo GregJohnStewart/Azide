@@ -1,32 +1,3 @@
-function addFavorite(profileId, name) {
-    fetch('/api/profile/' + profileId + '/favorite', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(name)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Error adding favorite app: ' + response.statusText);
-        }
-        return response.json();
-    })
-    /*
-    .then(responseData => {
-        refreshTable(); // Refresh the table with updated data
-        let modal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
-        modal.hide();
-
-        showNotification('Message saved successfully', 'success');
-    })
-    */
-    .catch(error => {
-        console.error('Error adding favorite app:', error);
-        showNotification('Error adding favorite app: ' + error, 'danger');
-    });
-}
-
 // ====================================================
 // Functions etc for profile viewer/editor
 // ====================================================
@@ -45,7 +16,7 @@ function stripQuotes(str) {
 
 function showDetails(profileId, selectedProfileId) {
     userProfileId = profileId;
-console.log(userProfileId);
+
     const jsonprofile = document.getElementById('profile-row-' + selectedProfileId).dataset.profileData;
     selectedProfile = JSON.parse(stripQuotes(jsonprofile));
 
@@ -70,7 +41,7 @@ function showNotification(message, type) {
     }, 5000);
 }
 
-function refreshTable() {
+function refreshProfileTable() {
     fetch('/api/profile/profile-table')
     .then(response => {
         if (!response.ok) {
@@ -88,14 +59,14 @@ function refreshTable() {
 
 // Instead of a native confirm, show a custom delete confirmation modal.
 function deleteProfile() {
+    let editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
+    if (editModal) editModal.hide();
+
     // Check to make sure the user is not deleting their own profile
     if(userProfileId == selectedProfile.id) {
         showNotification('Deleting your own profile is not allowed.', 'danger');
         return;
     }
-
-    let editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
-    if (editModal) editModal.hide();
 
     $('#confirmDeleteProfileUsername').text(selectedProfile.username);
 
@@ -115,7 +86,7 @@ function confirmDelete() {
         return response.text();
     })
     .then(responseData => {
-        refreshTable();
+        refreshProfileTable();
         let editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
         if (editModal) editModal.hide();
         let confirmModal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal'));
@@ -125,5 +96,73 @@ function confirmDelete() {
     .catch(error => {
         console.error('Error deleting profile:', error);
         showNotification('Error deleting profile: ' + error, 'danger');
+    });
+}
+
+function toggleFavorite(favSpan, appId, appName) {
+    let favoritedIcon = favSpan.find(".favIconFavorited");
+    let notFavoritedIcon = favSpan.find(".favIconNotFavorited");
+
+    if(favoritedIcon.is(":visible")) {
+        //send code to unfavorite
+        deleteFavorite(appName);
+
+        // Show/Hide correct favorite icon
+        favoritedIcon.hide();
+        notFavoritedIcon.show();
+    } else {
+        //send code to unfavorite
+        addFavorite(appName);
+
+        // Show/Hide correct favorite icon
+        favoritedIcon.show();
+        notFavoritedIcon.hide();
+    }
+
+}
+
+function addFavorite(name) {
+    fetch('/api/profile/favorite', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: '{"name":"' + name + '"}'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error adding favorite app: ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(responseData => {
+        showNotification('Favorite app: ' + name + ' added successfully', 'success');
+    })
+    .catch(error => {
+        console.error('Error adding favorite app:', error);
+        showNotification('Error adding favorite app: ' + error, 'danger');
+    });
+}
+
+function deleteFavorite(name) {
+    fetch('/api/profile/favorite', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: '{"name":"' + name + '"}'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error deleting favorite app: ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(responseData => {
+        showNotification('Favorite app: ' + name + ' deleted successfully', 'success');
+    })
+    .catch(error => {
+        console.error('Error deleting favorite app:', error);
+        showNotification('Error deleting favorite app: ' + error, 'danger');
     });
 }

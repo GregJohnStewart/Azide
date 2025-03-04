@@ -16,7 +16,9 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.SecurityContext;
 import lombok.extern.slf4j.Slf4j;
 
 import mil.army.dcgs.azide.entities.model.Profile;
@@ -35,6 +37,12 @@ public class ProfileEndpoints extends RestInterface {
 
     @Inject
     Template profiletablefragment; // Injects the Qute template named "profiletablefragment.html"
+
+    @Inject
+    Template favoriteiconfragment; // Injects the Qute template named "favoriteiconfragment.html"
+
+	@Context
+    SecurityContext securityContext;
 
     @GET
     @Path("/")
@@ -112,5 +120,39 @@ public class ProfileEndpoints extends RestInterface {
     public TemplateInstance getProfileTable() {
          List<Profile> profiles = profileRepository.getProfiles();
          return profiletablefragment.data("profiles", profiles);
+    }
+
+    @PUT
+    @Path("/favorite")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public @NotNull String addFavorite(
+        ObjectNode favoriteNameJson) {
+
+        Profile profile = this.profileRepository.ensureProfile(securityContext, null);
+
+		if(!profile.isFavoriteSet(favoriteNameJson.get("name").asText())) {
+			profile = this.profileRepository.addFavoriteApp(profile, favoriteNameJson.get("name").asText());
+		}
+
+        return profile.toJSON();
+    }
+
+    @DELETE
+    @Path("/favorite")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public @NotNull String deleteFavorite(
+        ObjectNode favoriteNameJson) {
+
+        Profile profile = this.profileRepository.ensureProfile(securityContext, null);
+
+		if(profile.isFavoriteSet(favoriteNameJson.get("name").asText())) {
+			profile = this.profileRepository.deleteFavoriteApp(profile, favoriteNameJson.get("name").asText());
+		}
+
+        return profile.toJSON();
     }
 }

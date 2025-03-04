@@ -21,12 +21,15 @@
       <a href="/app/viewer/profileManage" class="btn btn-primary btn-sm">Manage</a>
     </div>
   </div>
+
+  <!-- Notification Container -->
+  <div id="notification-container"></div>   
   
   <!-- Center the profile details with 50% width -->
   <div class="w-50 mx-auto text-light">
     <dl class="row">
       <dt class="col-sm-3">Username:</dt>
-      <dd class="col-sm-9 text-start" id="username">{profile.getUsername()}</dd>
+      <dd class="col-sm-9 text-start" id="username">{profile.username}</dd>
       <dt class="col-sm-3">Last Login:</dt>
       <dd class="col-sm-9 text-start" id="lastlogin">{profile.getFormattedLastLogin()}</dd>
     </dl>
@@ -46,5 +49,10 @@
     </div>
   {/if}
   </div>
+  <script src="/res/lib/jquery/3.7.1/jquery.min.js"></script>
+  <script src="/res/lib/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  <script src="/res/js/profile.js"></script>
+  <script>
+  </script>
 </body>
 </html>

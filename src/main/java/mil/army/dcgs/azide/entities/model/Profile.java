@@ -4,6 +4,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import jakarta.transaction.Transactional;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -42,7 +43,7 @@ public class Profile extends PanacheEntityBase {
 
     @NotNull
     @Basic(optional=false)
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "profile_id")
     public List<FavoriteApp> favorites;
 
@@ -70,5 +71,16 @@ public class Profile extends PanacheEntityBase {
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Error converting Profile to JSON", e);
         }
+    }
+
+    @Transactional
+    public boolean isFavoriteSet(String appName) {
+        for(FavoriteApp fav : favorites) {
+            if(fav.name.equals(appName)) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }
