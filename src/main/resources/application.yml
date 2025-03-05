@@ -26,6 +26,8 @@ service:
     Welcome to our Acceptable Use Policy (AUP) page. By using our service, you agree to the following terms...
 applicationInfo:
   applications:
+azide:
+  dateTimeDisplayFormat: "yyyy-MM-dd HH:MM:SS"
 
 "%dev":
   quarkus:

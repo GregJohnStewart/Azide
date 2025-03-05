@@ -3,16 +3,17 @@
  *
  * Functionality:
  *
- *  - Open app
+ *  - Open target app
  *    - with or without message
  *    - either focuses existing window or force open new one
- *  - Close app (window)
+ *  - Close this app (window)
  *    - passes message to window to close it
+ *  - If not already open, open target app and pass message
  *
  *  - Send and wait for response
  *    - non-blocking; let UI handle being "blocked" or not
  *    - Use promises returned to facilitate
- *
+ *  
  *
  */
 class AzideApp {

@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import mil.army.dcgs.azide.config.ApplicationInfoConfig;
@@ -19,20 +20,21 @@ import mil.army.dcgs.azide.entities.model.ApplicationInfo;
 @Named("ApplicationInfoRepository")
 @ApplicationScoped
 public class ApplicationInfoRepository implements PanacheRepository<ApplicationInfo> {
-    
-    private static final URI DEFAULT_URI = URI.create("/app/viewer/no-app");
-    private static final ApplicationInfo DEFAULT_APP = ApplicationInfo.builder()
-        .name("")
-        .location(DEFAULT_URI)
-        .build();
 
-    private static final URI PROFILE_URI = URI.create("/app/viewer/profile");
-    private static final ApplicationInfo PROFILE_APP = ApplicationInfo.builder()
-        .name("Profile")
-        .reference("profile")
-        .location(PROFILE_URI)
-        .showInAppBar(false)
-        .build();
+    public static final String BUILTIN_DEFAULT = "azide-default";
+    public static final String BUILTIN_PROFILE = "azide-profile";
+    private static final Map<String, ApplicationInfo> BUILTIN_APPS = Map.of(
+        BUILTIN_DEFAULT, ApplicationInfo.builder()
+                             .name("")
+                             .location(URI.create("/app/viewer/no-app"))
+                             .build(),
+        BUILTIN_PROFILE, ApplicationInfo.builder()
+                             .name("Azide Profile")
+                             .reference(BUILTIN_PROFILE)
+                             .location(URI.create("/app/viewer/profile"))
+                             .showInAppBar(false)
+                             .build()
+    );
 
     @Inject
     ApplicationInfoConfig applicationInfoConfig;
@@ -121,32 +123,24 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
                 log.info("Created new application: {}", newAppInfo);
             }
         }
-        
-        this.persist(PROFILE_APP);
 
         this.initted = true;
         log.info("Finished populating appInfo.");
     }
     
     public ApplicationInfo appOrDefault(Optional<ApplicationInfo> app) {
-        return app.orElse(DEFAULT_APP);
-    }
-    
-    public ApplicationInfo getAppFromId(Optional<String> appId){
-        if(appId.isPresent()) {
-            return this.appOrDefault(this.find("id", appId).firstResultOptional());
-        }
-        log.info("No app id given.");
-        
-        return DEFAULT_APP;
+        return app.orElse(BUILTIN_APPS.get(BUILTIN_DEFAULT));
     }
     
     public ApplicationInfo getAppFromRef(Optional<String> appRef){
         if(appRef.isPresent()) {
+            if(BUILTIN_APPS.containsKey(appRef.get())) {
+                return BUILTIN_APPS.get(appRef.get());
+            }
             return this.appOrDefault(this.find("reference", appRef.get()).firstResultOptional());
         }
         log.info("No app reference given.");
         
-        return DEFAULT_APP;
+        return BUILTIN_APPS.get(BUILTIN_DEFAULT);
     }
 }
