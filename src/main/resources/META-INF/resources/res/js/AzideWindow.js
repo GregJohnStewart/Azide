@@ -1,6 +1,10 @@
 /**
  * These classes define the methodology of communicating between browsing contexts of different apps hosted at the same hostname.
  *
+ * Functionalities:
+ *
+ * - process window open messages
+ * - process window close messages
  *
  */
 
@@ -40,16 +44,48 @@ class AzideWindow {
             case IwcConstants.intents.launchApp:
                 this.launchApp(message.getMessage());
                 break;
+            //TODO:: app open check
+            //TODO:: app close
             default:
                 console.warn("Got message with intent that the window doesn't support: ", message);
         }
     }
 
-    launchApp(launching){
-        //TODO:: launch app
+    launchApp(appRef, newWindow = false, iwcMessage = null){
+        let params = new URLSearchParams();
+        params.set("appRef", appRef);
+        if(iwcMessage != null){
+            params.set("intent", intent);
+            params.set("message", message);
+            //TODO:: more?
+        }
+
+        let newUri = "/app/viewer?" + params.toString();
+
+        console.log("Navigating to new app: ", appRef, newUri)
+        if(newWindow){
+            window.open(
+                newUri,
+                '_blank',
+                'menubar=no,toolbar=no,location=no,status=no,resizable=yes,scrollbars=yes'
+            );
+        } else {
+            window.location.href = newUri;
+        }
     }
 
     getName(){
         return this.#iwc.getThisChannelName();
     }
+
+    getAvailableApps(){
+
+    }
+
+    appOpen(appRef) {
+        //TODO
+        return false;
+    }
+
+
 }

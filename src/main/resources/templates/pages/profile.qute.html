@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en_us">
+<head>
+	<meta charset="UTF-8">
+	<title>Profile</title>
+	<link rel="stylesheet" href="/res/lib/bootstrap/5.3.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/res/lib/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+	<link rel="stylesheet" href="/res/css/base.css">
+	<link rel="stylesheet" href="/res/css/profile.css">
+	<style>
+		/* Additional custom styling if needed */
+	</style>
+</head>
+<body>
+<div class="container">
+	<h1 class="text-light">Profile</h1>
+	<!-- Notification Container -->
+	<div id="notification-container"></div>
+	
+	<div class="card">
+		<div class="card-body">
+			<dl class="card-text">
+				<dt>Username:</dt>
+				<dd id="username">{profile.username}</dd>
+				<dt>Last Seen:</dt>
+				<dd id="lastseen">{profile.getLastSeen().format(config:['azide.dateTimeDisplayFormat'])}</dd>
+			</dl>
+		</div>
+		<hr />
+		<div class="card-body">
+			{#if profile.getFavorites().isEmpty}
+				<p class="card-text">No Favorite Apps found!</p>
+			{#else}
+				<h3 class="card-header">Favorite Apps</h3>
+				<ul class="card-text">
+					{#for favorite in profile.getFavorites()}
+						<li>{favorite.getName()}</li>
+					{/for}
+				</ul>
+			{/if}
+		</div>
+	</div>
+</div>
+
+<script src="/res/lib/jquery/3.7.1/jquery.min.js"></script>
+<script src="/res/lib/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="/res/js/profile.js"></script>
+<script>
+</script>
+</body>
+</html>

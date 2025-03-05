@@ -5,6 +5,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 import jakarta.ws.rs.core.SecurityContext;
 import lombok.extern.slf4j.Slf4j;
+import mil.army.dcgs.azide.entities.model.ApplicationInfo;
 import mil.army.dcgs.azide.entities.model.Profile;
 import mil.army.dcgs.azide.entities.model.FavoriteApp;
 import org.eclipse.microprofile.jwt.JsonWebToken;
@@ -62,13 +63,11 @@ public class ProfileRepository implements PanacheRepository<Profile> {
         return sortedProfiles;
     }
 
-    public Profile addFavoriteApp(Profile profile, String favoriteName) {
+    public Profile addFavoriteApp(Profile profile, ApplicationInfo app) {
         // TODO Make sure the favorite app being added does not already exist.
-
-
-
+        
         FavoriteApp favorite = FavoriteApp.builder()
-            .name(favoriteName)
+            .app(app)
             .xLocation(0)
             .yLocation(0)
             .windowWidth(800)
@@ -81,9 +80,9 @@ public class ProfileRepository implements PanacheRepository<Profile> {
         return profile;
     }
 
-    public Profile deleteFavoriteApp(Profile profile, String favoriteName) {
+    public Profile deleteFavoriteApp(Profile profile, ApplicationInfo app) {
         // Remove the favorite app that matches the given favoriteName
-        boolean removed = profile.getFavorites().removeIf(fav -> fav.getName().equals(favoriteName));
+        boolean removed = profile.getFavorites().removeIf(fav -> fav.getApp().equals(app));
         
         if (removed) {
             // Persist the updated profile. Since the Profile is attached and the

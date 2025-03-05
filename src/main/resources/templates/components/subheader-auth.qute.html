@@ -29,7 +29,7 @@
 					{#icons/user /} {user.getName()}
 				</button>
 				<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuButton">
-					<li><a class="dropdown-item" href="javascript:AppSelectUi.openApp('profile');">{#icons/user /} Profile</a></li>
+					<li><a class="dropdown-item" href="javascript:AppSelectUi.openApp('azide-profile');">{#icons/user /} Profile</a></li>
 					<li><a class="dropdown-item" href="/logout" id="logoutButton">{#icons/logout /} Logout</a></li>
 				</ul>
 			</div>
@@ -52,9 +52,10 @@
 				{#else}
 					{#for application in barApps}
 					{#let isCurApp=(application.reference.equals(curApp.reference))}
+					{#let appRef=(application.reference)}
 					{#let appName=(application.name)}
 					{#let appId=(application.id)}
-					{#let isFav=profile.isFavoriteSet(appName)}
+					{#let isFav=profile.isFavoriteSet(appRef)}
 					<div class="card appSelectCard me-1 {#if isCurApp}appSelectCardSelected{/if}" id="appSelectCard-{application.id}" data-searchText="{application.name.toLowerCase()}">
 						<div class="position-relative">
 							{#if application.image is null}
@@ -67,7 +68,7 @@
 							<img src="{application.image}" class="card-img-top appSelectImage" alt="{application.name} image">
 							{/if}
 							<div id="favorite-icon-{application.id}">
-								<span class="position-absolute top-0 end-0 p-1" style="cursor: pointer;" onclick="toggleFavorite($(this), '{appId}', '{appName}');">
+								<span class="position-absolute top-0 end-0 p-1" style="cursor: pointer;" onclick="AzideProfile.toggleFavorite($(this), '{appRef}');">
 									<i class="bi bi-star-fill text-warning favIconFavorited" {#if !isFav}style="display:none"{/if}></i>
 									<i class="bi bi-star text-warning favIconNotFavorited" {#if isFav}style="display:none"{/if}></i>
 								</span>

@@ -23,27 +23,8 @@ let AppSelectUi = {
 	 * @param newWindow If to open in a new window or not.
 	 * @param iwcMessage The message to prime the new app window with.
 	 */
-	openApp(appRef, newWindow = false, iwcMessage = null){
-		let params = new URLSearchParams();
-		params.set("appRef", appRef);
-		if(iwcMessage != null){
-			params.set("intent", intent);
-			params.set("message", message);
-			//TODO:: more?
-		}
-
-		let newUri = "/app/viewer?" + params.toString();
-
-		console.log("Navigating to new app: ", appRef, newUri)
-		if(newWindow){
-			window.open(
-				newUri,
-				'_blank',
-				'menubar=no,toolbar=no,location=no,status=no,resizable=yes,scrollbars=yes'
-			);
-		} else {
-			window.location.href = newUri;
-		}
+	openApp(appRef, newWindow = false){
+		azideWin.launchApp(appRef, newWindow);
 	},
 
 	/**

@@ -1,4 +1,4 @@
-package mil.army.dcgs.azide.interfaces.ui;
+package mil.army.dcgs.azide.interfaces.ui.apps;
 
 import io.quarkus.qute.Location;
 import io.quarkus.qute.Template;
@@ -10,6 +10,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import lombok.Getter;
+import mil.army.dcgs.azide.interfaces.ui.UiInterface;
 
 @RequestScoped
 @Path("/app/viewer/profile")
@@ -17,7 +18,7 @@ import lombok.Getter;
 public class ProfileViewerUi extends UiInterface {
 
     @Getter
-    @Location("pages/profile-veiwer")
+    @Location("pages/profile")
     Template pageTemplate;
 
     @GET

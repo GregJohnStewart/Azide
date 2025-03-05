@@ -16,6 +16,8 @@ quarkus:
         logout:
           paths: ${quarkus.oidc.logout.path}
           policy: authenticated
+  container-image:
+    group: "dcgs"
 classificationBanner:
   classification: UNCLASSIFIED - FOR TESTING PURPOSES ONLY
   color: "#007a33"
@@ -24,6 +26,8 @@ service:
     Welcome to our Acceptable Use Policy (AUP) page. By using our service, you agree to the following terms...
 applicationInfo:
   applications:
+azide:
+  dateTimeDisplayFormat: "yyyy-MM-dd HH:MM:SS"
 
 "%dev":
   quarkus:
@@ -32,35 +36,44 @@ applicationInfo:
     hibernate-orm:
       database:
         generation: drop-and-create
-    oidc:
-      # Get this from config debug output from Azide
-      auth-server-url: http://localhost:8085/realms/quarkus
-      client-id: azide
-      credentials:
-        secret: "secret"
+#    oidc:
+#      # Get this from config debug output from Azide
+#      auth-server-url: http://localhost:8085/realms/quarkus
+#      client-id: azide
+#      credentials:
+#        secret: "secret"
   applicationInfo:
     applications:
       # Lots of applications
-      - name: Landing Page
-        reference: landing-page
-        location: http://localhost:8081
+      - name: Dev App
+        reference: dev-app
+        location: /dev/app?testAppRef=dev-app&azApp=true
         showInAppBar: true
-        image: "/res/media/dcgsalogo.png"
-        description: "Landing Page"
-        defaultApp: true
-        splashApp: true
-        splashEndpoint: http://localhost:8081
-      - name: Test Data Viewer
-        reference: testdataviewer
-        location: http://localhost:8082
-        #image: "/res/media/dcgsalogo.png"
-        showInAppBar: true
-        description: "Test Data Viewer for testing cross app communications"
+        image: /dev/app/image?testAppRef=dev-app
+        description: "Development app for testing things"
+        defaultApp: false
         splashApp: false
-      - name: Test Data Generator
-        reference: testdatagenerator
-        location: http://localhost:8083
-        image: "/res/media/dcgsalogo.png"
-        showInAppBar: true
-        description: "Test Data Generator for testing cross app communications"
-        splashApp: false
+        splashEndpoint: /dev/app?testAppRef=dev-app
+#      - name: Landing Page
+#        reference: landing-page
+#        location: http://localhost:8081
+#        showInAppBar: true
+#        image: "/res/media/dcgsalogo.png"
+#        description: "Landing Page"
+#        defaultApp: false
+#        splashApp: false
+#        splashEndpoint: http://localhost:8081
+#      - name: Test Data Viewer
+#        reference: testdataviewer
+#        location: http://localhost:8082
+#        image: "/res/media/dcgsalogo.png"
+#        showInAppBar: true
+#        description: "Test Data Viewer for testing cross app communications"
+#        splashApp: false
+#      - name: Test Data Generator
+#        reference: testdatagenerator
+#        location: http://localhost:8083
+#        image: "/res/media/dcgsalogo.png"
+#        showInAppBar: true
+#        description: "Test Data Generator for testing cross app communications"
+#        splashApp: false

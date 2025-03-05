@@ -26,13 +26,13 @@ public abstract class RestInterface {
     @Context
     SecurityContext securityContext;
 
-    @Getter(AccessLevel.PRIVATE)
     Profile profile = null;
 
-    protected Profile getFullProfile(){
-        this.profile = this.getProfileRepository().ensureProfile(this.getSecurityContext(), this.getUserToken());
-
-        return this.getProfile();
+    protected Profile getProfile(){
+        if(this.profile == null){
+            this.profile = this.getProfileRepository().ensureProfile(this.getSecurityContext(), this.getUserToken());
+        }
+        return this.profile;
     }
 
     protected boolean hasAccessToken(){

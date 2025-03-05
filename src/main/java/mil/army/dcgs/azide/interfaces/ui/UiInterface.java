@@ -30,7 +30,7 @@ public abstract class UiInterface extends RestInterface {
     protected TemplateInstance getDefaultAuthPageSetup(Template template){
         return this.getDefaultPageSetup(template)
             .data("user", this.getAccessToken())
-            .data("profile", this.getFullProfile());
+            .data("profile", this.getProfile());
     }
 
     protected TemplateInstance getDefaultAuthPageSetup(){
