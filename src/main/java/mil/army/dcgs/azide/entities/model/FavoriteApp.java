@@ -20,8 +20,8 @@ public class FavoriteApp extends PanacheEntityBase {
     private UUID id;
 
     @NotNull
-    @Basic(optional=false)
-    public String name;
+    @ManyToOne()
+    public ApplicationInfo app;
 
     @NotNull
     @Basic(optional=false)

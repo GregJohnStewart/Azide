@@ -40,32 +40,7 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
     ApplicationInfoConfig applicationInfoConfig;
 
     private boolean initted = false;
-
-    public String getApplicationId(String appName) {
-        
-        List<ApplicationInfo> apps = findAll().list();
-
-        for (ApplicationInfo app : apps) {
-            if (app.getName().equalsIgnoreCase(appName)) {
-                return app.getId().toString();
-            }
-        }
-
-        return null;
-    }
-
-    public URI getApplicationLocation(String appName) {
-        List<ApplicationInfo> apps = findAll().list();
-
-        for (ApplicationInfo app : apps) {
-            if (app.getName().equalsIgnoreCase(appName)) {
-                return app.getLocation();
-            }
-        }
-
-        return null;
-    }
-
+    
     public Optional<ApplicationInfo> getDefaultApp() {
         return this.find("defaultApp", true).firstResultOptional();
     }
@@ -132,7 +107,7 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
         return app.orElse(BUILTIN_APPS.get(BUILTIN_DEFAULT));
     }
     
-    public ApplicationInfo getAppFromRef(Optional<String> appRef){
+    public ApplicationInfo getAppOrDefaultFromRef(Optional<String> appRef){
         if(appRef.isPresent()) {
             if(BUILTIN_APPS.containsKey(appRef.get())) {
                 return BUILTIN_APPS.get(appRef.get());
@@ -142,5 +117,9 @@ public class ApplicationInfoRepository implements PanacheRepository<ApplicationI
         log.info("No app reference given.");
         
         return BUILTIN_APPS.get(BUILTIN_DEFAULT);
+    }
+    
+    public ApplicationInfo getAppFromRef(String appRef){
+        return this.find("reference", appRef).firstResult();
     }
 }

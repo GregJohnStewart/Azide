@@ -26,7 +26,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Profile extends PanacheEntityBase {
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Id
     @GeneratedValue
@@ -47,13 +46,11 @@ public class Profile extends PanacheEntityBase {
     
     /**
      * TODO:: is probably a better way to implement in the db side
-     * @param appName
-     * @return
      */
     @Transactional
-    public boolean isFavoriteSet(String appName) {
+    public boolean isFavoriteSet(String appRef) {
         for(FavoriteApp fav : favorites) {
-            if(fav.name.equals(appName)) {
+            if(fav.getApp().getReference().equals(appRef)) {
                 return true;
             }
         }
