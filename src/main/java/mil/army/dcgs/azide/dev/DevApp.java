@@ -53,11 +53,9 @@ public class DevApp {
 				this.getAppRef()
 			);
 		} else if (this.azApp) {
-			
 			js = MessageFormat.format(
 				"""
-					<script src="/res/js/iwc.js"></script>
-					<script src="/res/js/AzideApp.js"></script>
+					<script src="/res/js/iwc-azApp-bundle.js"></script>
 					<script>
 					let azApp = new AzideApp('{' appName: "{0}" '}');
 					
@@ -104,7 +102,6 @@ public class DevApp {
 		).build();
 	}
 	
-	
 	@GET
 	@Path("image")
 	@Produces(MediaType.TEXT_HTML)
@@ -128,22 +125,17 @@ public class DevApp {
 						      fill: red;
 						    }
 						  </style>
-						
 						  <text x="20" y="35" class="small">This</text>
 						  <text x="40" y="35" class="heavy">app</text>
 						  <text x="55" y="55" class="small">is</text>
 						  <text x="65" y="55" class="Rrrrr">{0}</text>
 						</svg>
-						
 						""",
 					this.getAppRef()
 				),
 				"image/svg+xml"
 			)
-				   .header(
-					   "Content-Disposition",
-					   "attachment;filename=appImage.svg"
-				   )
+				   .header("Content-Disposition", "attachment;filename=appImage.svg")
 				   .build();
 	}
 }

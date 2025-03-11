@@ -20,7 +20,6 @@ AzideProfile = {
 			favoritedIcon.show();
 			notFavoritedIcon.hide();
 		}
-
 	},
 	addFavorite(appRef) {
 		console.log("Adding favorite status of ", appRef);

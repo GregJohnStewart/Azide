@@ -26,6 +26,7 @@ class AzideWindow {
                     appName = "azideWindow",
                     network = "iwc"
                 }) {
+        console.log("======== Initializing new azide window: ", appName);
         this.#iwc = new Iwc(new IwcConfig({
             appName: appName,
             network: network
@@ -86,6 +87,4 @@ class AzideWindow {
         //TODO
         return false;
     }
-
-
 }

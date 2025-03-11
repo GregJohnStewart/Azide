@@ -28,13 +28,14 @@ class AzideApp {
 					appName = "azideApp",
 					network = "iwc"
 				}) {
+		console.log("======== Initializing new azide app: ", appName);
 		this.#iwc = new Iwc(new IwcConfig({
 			appName: appName,
 			network: network
 		}));
 
 		let azideWindow = window.parent.azideWin;
-		console.debug("Azide Window: ", azideWindow);
+		console.debug("Azide Window for this app: ", azideWindow);
 
 		if (azideWindow == null) {
 			console.info("Azide Window not found.");
