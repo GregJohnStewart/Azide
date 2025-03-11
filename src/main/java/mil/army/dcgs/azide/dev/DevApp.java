@@ -44,7 +44,7 @@ public class DevApp {
 		if (this.iwc) {
 			js = MessageFormat.format(
 				"""
-					<script src="/res/js/iwc.js"></script>
+					<script src="/res/js/ifc.js"></script>
 					<script>
 					let iwc = new Iwc(new IwcConfig('{' appName: "{0}" }));
 					
@@ -55,7 +55,7 @@ public class DevApp {
 		} else if (this.azApp) {
 			js = MessageFormat.format(
 				"""
-					<script src="/res/js/iwc-azApp-bundle.js"></script>
+					<script src="/res/js/ifc-azApp-bundle.js"></script>
 					<script>
 					let azApp = new AzideApp('{' appName: "{0}" '}');
 					

@@ -10,11 +10,11 @@
 
 
 /**
- * The main configuration object to inform the setup of the {@link Iwc} object.
+ * The main configuration object to inform the setup of the {@link Ifc} object.
  */
 class AzideWindow {
     #iwc;
-    #appFrame = $("#appframe");
+    #appPageFrameJq = $("#appframe");
 
     /**
      * @param {string|null} appName (optional, but recommended) the name of this app.
@@ -27,8 +27,8 @@ class AzideWindow {
                     appName = "azideWindow",
                     network = "iwc"
                 }) {
-        console.log("======== Initializing new Azide window: ", appName);
-        this.#iwc = new Iwc(new IwcConfig({
+        console.log("======== Initializing new Azide window frame: ", appName);
+        this.#iwc = new Ifc(new IfcConfig({
             appName: appName,
             network: network
         }));
@@ -36,21 +36,21 @@ class AzideWindow {
         //TODO:: load list of available apps
 
         this.#iwc.registerHandler(
-            this.#iwc.getChannels().getThisWindowChannel(),
-            this.#thisWindowMessageHandler.bind(this)
+            this.#iwc.getChannels().getThisFrameChannel(),
+            this.#thisFrameMessageHandler.bind(this)
         );
-        console.debug("Finished initializing new Azide window: ", this.#iwc.getThisChannelName());
+        console.debug("Finished initializing new Azide window frame: ", this.#iwc.getThisChannelName());
     }
 
-    #thisWindowMessageHandler(message) {
+    #thisFrameMessageHandler(message) {
         switch (message.getIntent()) {
-            case IwcConstants.intents.launchApp:
+            case IfcConstants.intents.launchApp:
                 this.launchApp(message.getMessage());
                 break;
             //TODO:: app open check
             //TODO:: app close
             default:
-                console.warn("Got message with intent that the window doesn't support: ", message);
+                console.warn("Got message with intent that the frame doesn't support: ", message);
         }
     }
 

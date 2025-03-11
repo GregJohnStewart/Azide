@@ -25,13 +25,17 @@ public class AzWindowBasicsTest extends WebUiTest {
 		Page page = this.newPage();
 		PageLog pageLog = this.getLog(page);
 		
-		Pattern windowInitBannerLog = Pattern.compile("======== Initializing new Azide window:\nazideWindow");
+		Pattern windowInitBannerLog = Pattern.compile("======== Initializing new Azide window frame:\nazideWindow");
+		Pattern windowInitFinishedBannerLog = Pattern.compile("Finished initializing new Azide window frame:");
 		
-		pageLog.registerPattern(windowInitBannerLog);
+		pageLog.registerPattern(windowInitBannerLog, windowInitFinishedBannerLog);
 		
 		this.loginPage(page, user);
 		
 		pageLog.assertPatternHits(windowInitBannerLog, 1);
+		pageLog.assertPatternHits(windowInitFinishedBannerLog, 1);
+		
+		//TODO:: get azide window id
 		
 		//TODO:: get console message from app about being initted, getting parent id. assert got the right one.
 	}

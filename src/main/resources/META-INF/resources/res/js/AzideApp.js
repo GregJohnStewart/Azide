@@ -29,7 +29,7 @@ class AzideApp {
 					network = "iwc"
 				}) {
 		console.log("======== Initializing new azide app: ", appName);
-		this.#iwc = new Iwc(new IwcConfig({
+		this.#iwc = new Ifc(new IfcConfig({
 			appName: appName,
 			network: network
 		}));

@@ -24,18 +24,18 @@ public class JsEndpoints extends RestInterface {
 		}
 	}
 	
-	private static final String IWC_CONTENT;
+	private static final String IFC_CONTENT;
 	private static final String AZ_APP_CONTENT;
 	private static final String COMBO;
 	
 	static {
-		IWC_CONTENT = readFile("/META-INF/resources/res/js/iwc.js");
+		IFC_CONTENT = readFile("/META-INF/resources/res/js/ifc.js");
 		AZ_APP_CONTENT = readFile("/META-INF/resources/res/js/AzideApp.js");
-		COMBO = IWC_CONTENT + System.lineSeparator() + AZ_APP_CONTENT;
+		COMBO = IFC_CONTENT + System.lineSeparator() + AZ_APP_CONTENT;
 	}
 	
 	@GET
-	@Path("iwc-azApp-bundle.js")
+	@Path("ifc-azApp-bundle.js")
 	@Produces("text/javascript")
 	public String iwcAzAppBundle() {
 		return COMBO;

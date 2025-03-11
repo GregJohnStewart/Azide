@@ -202,8 +202,10 @@ public class WebUiTest extends RunningServerTest {
 			this.logOutputStream = new FileOutputStream(this.logPath.toFile());
 		}
 		
-		public void registerPattern(Pattern pattern){
-			this.searchPatterns.put(pattern, new ArrayList<>());
+		public void registerPattern(Pattern... patterns){
+			for(Pattern curPattern : patterns){
+				this.searchPatterns.put(curPattern, new ArrayList<>());
+			}
 		}
 		
 		public int patternHits(Pattern pattern){
