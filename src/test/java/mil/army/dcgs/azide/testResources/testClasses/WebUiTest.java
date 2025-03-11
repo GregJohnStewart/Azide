@@ -37,6 +37,8 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @Slf4j
 @Tag("ui")
 public class WebUiTest extends RunningServerTest {
@@ -120,6 +122,10 @@ public class WebUiTest extends RunningServerTest {
 		this.context.close();
 	}
 	
+	public PageLog getLog(Page page){
+		return this.pageLogs.get(this.getContext().pages().indexOf(page));
+	}
+	
 	public Page newPage(){
 		log.info("Getting new page in window.");
 		Page output = this.getContext().newPage();
@@ -142,34 +148,42 @@ public class WebUiTest extends RunningServerTest {
 	protected Page getLoggedInPage(TestUser user, String page) {
 		log.debug("Getting new logged in page.");
 		Page output = this.newPage();
-		
+		this.loginPage(output, user, page);
+		return output;
+	}
+	
+	protected Page loginPage(Page page, TestUser user, String destination){
 		log.debug("Getting new logged in page; Navigating to /");
-		NavUtils.navigateToEndpoint(output, "/");
+		NavUtils.navigateToEndpoint(page, "/");
 		
-		output.locator(IndexPage.LOGIN_LINK).click();
+		page.locator(IndexPage.LOGIN_LINK).click();
 		log.debug("Getting new logged in page: Clicked login link.");
 		
-		MainAssertions.assertDoneProcessing(output);
+		MainAssertions.assertDoneProcessing(page);
 		
 		
-		if (output.title().contains("Sign in")) {
+		if (page.title().contains("Sign in")) {
 			log.debug("Getting new logged in page: Not signed in yet.");
-			KeycloakUi.loginUser(user, output);
+			KeycloakUi.loginUser(user, page);
 			
-			output.locator(AupPage.AUP_ACCEPT_BUTTON).click();
+			page.locator(AupPage.AUP_ACCEPT_BUTTON).click();
 			
-			MainAssertions.assertDoneProcessing(output);
+			MainAssertions.assertDoneProcessing(page);
 		} else {
 			log.info("Was already logged in?");
 		}
 		
-		if(page != null){
-			NavUtils.navigateToEndpoint(output, page);
+		if(destination != null){
+			NavUtils.navigateToEndpoint(page, destination);
 		}
 		
 		log.debug("Done getting logged in page.");
 		
-		return output;
+		return page;
+	}
+	
+	protected Page loginPage(Page page, TestUser user){
+		return this.loginPage(page, user, null);
 	}
 	
 	protected Page getLoggedInPage(TestUser user){
@@ -177,11 +191,11 @@ public class WebUiTest extends RunningServerTest {
 	}
 	
 	@Data
-	private static class PageLog implements Closeable {
+	public static class PageLog implements Closeable {
 		
 		private Path logPath;
 		private OutputStream logOutputStream;
-		private Map<Pattern, Integer> searchPatterns = new HashMap<>();
+		private Map<Pattern, List<String>> searchPatterns = new HashMap<>();
 		
 		public PageLog(Path logPath) throws FileNotFoundException {
 			this.logPath = logPath;
@@ -189,11 +203,18 @@ public class WebUiTest extends RunningServerTest {
 		}
 		
 		public void registerPattern(Pattern pattern){
-			this.searchPatterns.put(pattern, 0);
+			this.searchPatterns.put(pattern, new ArrayList<>());
 		}
 		
 		public int patternHits(Pattern pattern){
-			return this.searchPatterns.get(pattern);
+			return this.searchPatterns.get(pattern).size();
+		}
+		
+		public void assertPatternHits(Pattern pattern, int hits){
+			assertEquals(
+				hits,
+				this.patternHits(pattern)
+			);
 		}
 		
 		public void log(String message){
@@ -203,12 +224,12 @@ public class WebUiTest extends RunningServerTest {
 				log.error("Failed to write log message to file ", e);
 			}
 			
-			for(Map.Entry<Pattern, Integer> entry : this.searchPatterns.entrySet()){
+			for(Map.Entry<Pattern, List<String>> entry : this.searchPatterns.entrySet()){
 				Pattern pattern = entry.getKey();
-				int hits = entry.getValue();
+				List<String> hits = entry.getValue();
 				
 				if(pattern.matcher(message).find()){
-					this.searchPatterns.put(pattern, hits + 1);
+					hits.add(message);
 				}
 			}
 		}
@@ -223,7 +244,12 @@ public class WebUiTest extends RunningServerTest {
 							first = false;
 							message.append("\t");
 						}
-						message.append(curHandle.jsonValue().toString().strip()).append("\n");
+						Object jsonValue = curHandle.jsonValue();
+						message.append(
+							jsonValue == null?
+								"null":
+							jsonValue.toString().strip()
+						).append("\n");
 					}
 				}
 				
@@ -235,7 +261,7 @@ public class WebUiTest extends RunningServerTest {
 				);
 				
 				this.log(output);
-			}catch(PlaywrightException e){
+			}catch(PlaywrightException|NullPointerException e){
 				log.warn("FAILED to build log message: ", e);
 			}
 		}

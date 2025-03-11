@@ -14,6 +14,7 @@
  */
 class AzideWindow {
     #iwc;
+    #appFrame = $("#appframe");
 
     /**
      * @param {string|null} appName (optional, but recommended) the name of this app.
@@ -26,7 +27,7 @@ class AzideWindow {
                     appName = "azideWindow",
                     network = "iwc"
                 }) {
-        console.log("======== Initializing new azide window: ", appName);
+        console.log("======== Initializing new Azide window: ", appName);
         this.#iwc = new Iwc(new IwcConfig({
             appName: appName,
             network: network
@@ -38,6 +39,7 @@ class AzideWindow {
             this.#iwc.getChannels().getThisWindowChannel(),
             this.#thisWindowMessageHandler.bind(this)
         );
+        console.debug("Finished initializing new Azide window: ", this.#iwc.getThisChannelName());
     }
 
     #thisWindowMessageHandler(message) {
@@ -80,11 +82,17 @@ class AzideWindow {
     }
 
     getAvailableApps(){
-
+        return apps;
     }
 
-    appOpen(appRef) {
+    appIsOpen(appRef) {
         //TODO
         return false;
+    }
+
+    getOpenAppInstances(appRef){
+        let output = [];
+        //TODO
+        return output;
     }
 }

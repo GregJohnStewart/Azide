@@ -77,14 +77,16 @@ public class DevApp {
 		return Response.ok(
 			MessageFormat.format(
 				"""
+					<!DOCTYPE html>
 					<html>
 					<head>
-					<title>Test App {0}</title>
-					<style>
-						body '{'
-							background-color: white;
-						}
-					</style>
+						<meta charset="utf-8">
+						<title>Test App {0}</title>
+						<style>
+							body '{'
+								background-color: white;
+							}
+						</style>
 					</head>
 					<body>
 					
