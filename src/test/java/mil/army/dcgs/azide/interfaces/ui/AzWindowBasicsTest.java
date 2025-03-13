@@ -1,6 +1,6 @@
 package mil.army.dcgs.azide.interfaces.ui;
 
-import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.FrameLocator;
 import com.microsoft.playwright.Page;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.TestProfile;
@@ -8,8 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import mil.army.dcgs.azide.testResources.profiles.AppFillingProfile;
 import mil.army.dcgs.azide.testResources.testClasses.WebUiTest;
 import mil.army.dcgs.azide.testResources.testUser.TestUser;
-import mil.army.dcgs.azide.testResources.ui.pages.AllPages;
-import mil.army.dcgs.azide.testResources.ui.pages.AppViewerPage;
 import org.junit.jupiter.api.Test;
 
 import java.util.regex.Pattern;
@@ -126,6 +124,16 @@ public class AzWindowBasicsTest extends WebUiTest {
 			"[test-service-0, "+appFrameId+"]",
 			listInWindow
 		);
+		
+		FrameLocator appFrame = page.frameLocator("#appframe");
+		
+		String listInApp = appFrame.locator(":root").evaluate("""
+			JSON.stringify(azApp.getIfc().getChannels().getOtherChannelNames());
+			""").toString();
+		log.info("Result from running js in frame: {}", listInApp);
+		assertEquals(
+			"[\"azideWindow\",\""+windowFrameId+"\"]",
+			listInApp
+		);
 	}
-	
 }

@@ -17,7 +17,7 @@
  *
  */
 class AzideApp {
-	#iwc;
+	#ifc;
 	#windowFrameId = "";
 
 	/**
@@ -29,7 +29,7 @@ class AzideApp {
 					network = "ifc"
 				}) {
 		console.log("======== Initializing new azide app: ", appName);
-		this.#iwc = new Ifc(new IfcConfig({
+		this.#ifc = new Ifc(new IfcConfig({
 			appName: appName,
 			network: network
 		}));
@@ -43,7 +43,15 @@ class AzideApp {
 			this.#windowFrameId = azideWindow.getFrameId();
 			console.info("Parent window frame id: ", this.#windowFrameId);
 		}
-		console.debug("Finished initializing new Azide app frame: ", this.#iwc.getFrameId());
+		console.debug("Finished initializing new Azide app frame: ", this.#ifc.getFrameId());
+	}
+
+	getIfc(){
+		return this.#ifc;
+	}
+
+	getFrameId(){
+		return this.getIfc().getFrameId();
 	}
 
 	haveWindow() {
@@ -58,7 +66,7 @@ class AzideApp {
 
 	getWindowChannel() {
 		this.assertHaveWindow();
-		return this.#iwc.getChannel(this.#windowFrameId);
+		return this.#ifc.getChannel(this.#windowFrameId);
 	}
 
 }
