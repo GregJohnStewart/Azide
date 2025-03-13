@@ -12,14 +12,14 @@ services:
       - keycloak_network
   keycloak:
     image: quay.io/keycloak/keycloak:25.0.6
-    command: start --import-realm
+    command: start-dev --import-realm
     environment:
       KC_HOSTNAME: localhost
       KC_HOSTNAME_PORT: 8080
-      KC_HOSTNAME_STRICT_BACKCHANNEL: false
-      KC_HTTP_ENABLED: true
-      KC_HOSTNAME_STRICT_HTTPS: false
-      KC_HEALTH_ENABLED: true
+      KC_HOSTNAME_STRICT_BACKCHANNEL: "false"
+      KC_HTTP_ENABLED: "true"
+      KC_HOSTNAME_STRICT_HTTPS: "false"
+      KC_HEALTH_ENABLED: "true"
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_DB: postgres
@@ -35,9 +35,21 @@ services:
       - ./realm-quarkus.json:/opt/keycloak/data/import/realm-quarkus.json
     networks:
       - keycloak_network
+  message-service:
+    image: dcgs/message-service:1.0.0-SNAPSHOT
+    environment:
+      QUARKUS_OIDC_AUTH_SERVER_URL: "http://localhost:8085"
+      QUARKUS_DATASOURCE_USERNAME: keycloak_db_user
+      QUARKUS_DATASOURCE_PASSWORD: password
+      QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://postgres/message-db
+      QUARKUS_HIBERNATE_ORM_DATABASE_GENERATION: drop-and-create
+    ports:
+      - "8081:8080"
+    networks:
+      - keycloak_network
 volumes:
   postgres_data:
     driver: local
 networks:
   keycloak_network:
-    driver: bridge
+#    driver: bridge

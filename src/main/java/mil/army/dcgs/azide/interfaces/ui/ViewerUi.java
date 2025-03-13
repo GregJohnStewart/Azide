@@ -40,7 +40,7 @@ public class ViewerUi extends UiInterface {
         ApplicationInfo appInfo;
         
         if(this.appRef.isPresent()){
-            appInfo = this.applicationInfoRepository.getAppFromRef(appRef);
+            appInfo = this.applicationInfoRepository.getAppOrDefaultFromRef(appRef);
         } else {
             appInfo = this.applicationInfoRepository.getSplashAppOrDefault();
             defaultScreen = true;

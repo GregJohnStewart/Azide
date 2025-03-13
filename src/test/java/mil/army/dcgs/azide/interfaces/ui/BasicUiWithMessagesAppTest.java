@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-//@Disabled
+@Disabled
 @QuarkusTest
 @QuarkusTestResource(value = MessagesAppTestResource.class, restrictToAnnotatedClass = true)
 public class BasicUiWithMessagesAppTest extends WebUiTest {

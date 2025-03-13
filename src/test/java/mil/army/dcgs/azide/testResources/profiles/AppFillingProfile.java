@@ -15,7 +15,8 @@ public abstract class AppFillingProfile {
 		Map<String, String> output = new HashMap<>();
 		for (int i = 0; i < numApps; i++) {
 			String ref = "test-service-" + i;
-			String endpoint = "/test/app?testAppRef=" + ref;
+			String endpoint = "/dev/app?testAppRef=" + ref;
+			String imageEndpoint = "/dev/app/image?testAppRef=" + ref;
 			
 			if(iwc){
 				endpoint += "&iwc=true";
@@ -27,6 +28,7 @@ public abstract class AppFillingProfile {
 			output.put("applicationInfo.applications["+i+"].description", "Test App " + i + " description.");
 			output.put("applicationInfo.applications["+i+"].reference", ref);
 			output.put("applicationInfo.applications["+i+"].location", endpoint);
+			output.put("applicationInfo.applications["+i+"].image", imageEndpoint);
 			output.put("applicationInfo.applications["+i+"].showInAppBar", "true");
 			
 			if(i == 0){
