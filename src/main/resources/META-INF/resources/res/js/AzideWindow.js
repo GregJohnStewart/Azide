@@ -13,7 +13,7 @@
  * The main configuration object to inform the setup of the {@link Ifc} object.
  */
 class AzideWindow {
-    #iwc;
+    #ifc;
     #appPageFrameJq = $("#appframe");
 
     /**
@@ -25,21 +25,21 @@ class AzideWindow {
      */
     constructor({
                     appName = "azideWindow",
-                    network = "iwc"
+                    network = "ifc"
                 }) {
         console.log("======== Initializing new Azide window frame: ", appName);
-        this.#iwc = new Ifc(new IfcConfig({
+        this.#ifc = new Ifc(new IfcConfig({
             appName: appName,
             network: network
         }));
 
         //TODO:: load list of available apps
 
-        this.#iwc.registerHandler(
-            this.#iwc.getChannels().getThisFrameChannel(),
+        this.#ifc.registerMessageHandler(
+            this.#ifc.getChannels().getThisFrameChannel(),
             this.#thisFrameMessageHandler.bind(this)
         );
-        console.debug("Finished initializing new Azide window frame: ", this.#iwc.getThisChannelName());
+        console.debug("Finished initializing new Azide window frame: ", this.#ifc.getFrameId());
     }
 
     #thisFrameMessageHandler(message) {
@@ -77,8 +77,8 @@ class AzideWindow {
         }
     }
 
-    getName(){
-        return this.#iwc.getThisChannelName();
+    getFrameId(){
+        return this.#ifc.getFrameId();
     }
 
     getAvailableApps(){
@@ -94,5 +94,9 @@ class AzideWindow {
         let output = [];
         //TODO
         return output;
+    }
+
+    getIfc(){
+        return this.#ifc;
     }
 }

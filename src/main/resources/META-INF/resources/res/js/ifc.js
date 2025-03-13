@@ -8,6 +8,7 @@
  *  - app name - The name of a running app. Multiple instances of an app can be opened, differentiated by a specific frame id
  *  - frame id - The particular id of a given frame.
  *  - network - the context network all communication happens in. Used to segment communications (if needed)
+ *  - channel - The underlying utility that allows for the different windows to communicate.
  *
  */
 
@@ -32,7 +33,7 @@ class IfcConfig {
 	 */
 	constructor({
 					appName = null,
-					network = "iwc",
+					network = "ifc",
 					allChannel = "all",
 					roleCallChannel = "roleCall",
 					nameSeparator = "-"
@@ -83,6 +84,9 @@ class IfcConfig {
 	}
 }
 
+/**
+ * Defines a message that gets sent on a channel.
+ */
 class IfcMessage {
 	#id;
 	#appName;
@@ -200,20 +204,37 @@ class IfcMessage {
 }
 
 /**
- *
+ * This object handles holding and organizing the various channels used in communicating with other frames.
  */
 class IfcChannels {
+	/**
+	 * The overall IfcConfig object. Here for availability
+	 */
 	#config;
+	/**
+	 * The channel to send a message to all frames in the network.
+	 */
 	#all;
+	/**
+	 * The channel to send a role call message. It should not be necessary to interact with this outside of the IFC utilities.
+	 */
 	#roleCall;
+	/**
+	 * The channel to communicate between different frames of this app.
+	 */
 	#app;
+	/**
+	 * The channel to communicate with this specific frame.
+	 */
 	#thisFrame;
 	/**
 	 * Set of broadcasters for other apps/frames.
 	 *
+	 * Map of app name/ frame id to the broadcast channel
+	 *
 	 * Example: {
 	 *     "appName": BroadcastChannel,
-	 *     "appName-frameId": BroadcastChannel
+	 *     "frameId": BroadcastChannel
 	 * }
 	 */
 	#others;
@@ -233,7 +254,7 @@ class IfcChannels {
 
 	/**
 	 * Ensures that the app and frame both exist in the set of other
-	 * @param appName
+	 * @param appName Nullable, the app tho ensure exists.
 	 * @param frameId
 	 */
 	ensureInOthers(appName, frameId) {
@@ -249,6 +270,11 @@ class IfcChannels {
 		}
 	}
 
+	/**
+	 *
+	 * @param appName
+	 * @param frameId
+	 */
 	removeFromOthers(appName, frameId) {
 		if (frameId in this.getOtherChannels()) {
 			console.log("Removing channel ", frameId);
@@ -273,10 +299,20 @@ class IfcChannels {
 		}
 	}
 
+	/**
+	 * Determines if the app given has an open instance.
+	 * @param appName The name of the app to check.
+	 * @returns {boolean}
+	 */
 	appOpen(appName) {
 		return this.#config.getAppName() === appName || appName in this.getOtherChannels();
 	}
 
+	/**
+	 * Determines if the given frame is open.
+	 * @param frameId The frame to check.
+	 * @returns {boolean}
+	 */
 	frameOpen(frameId) {
 		return frameId in this.getOtherChannels();
 	}
@@ -307,12 +343,10 @@ class IfcChannels {
 		} else {
 			return config.getChannelNetwork() + config.getNameSeparator() + config.getFrameId();
 		}
-
-
 	}
 
 	/**
-	 *
+	 * Gets the "all" channel.
 	 * @returns {BroadcastChannel}
 	 */
 	getAllChannel() {
@@ -320,7 +354,7 @@ class IfcChannels {
 	}
 
 	/**
-	 *
+	 * Gets the role call channel
 	 * @returns {BroadcastChannel}
 	 */
 	getRoleCallChannel() {
@@ -328,7 +362,7 @@ class IfcChannels {
 	}
 
 	/**
-	 *
+	 * Gets the channel for the frame's app
 	 * @returns {BroadcastChannel}
 	 */
 	getAppChannel() {
@@ -336,7 +370,7 @@ class IfcChannels {
 	}
 
 	/**
-	 *
+	 * Gets the channel for the current frame.
 	 * @returns {BroadcastChannel}
 	 */
 	getThisFrameChannel() {
@@ -344,23 +378,28 @@ class IfcChannels {
 	}
 
 	/**
-	 *
+	 * Gets the set of other channels.
 	 * @returns {Object}
 	 */
 	getOtherChannels() {
 		return this.#others;
 	}
 
-	getOtherChannel(key) {
-		return this.getOtherChannels()[key];
+	/**
+	 * Gets a list of the keys of the other channels object.
+	 * @returns {string[]}
+	 */
+	getOtherChannelNames(){
+		return Object.keys(this.getOtherChannels());
 	}
 
-	getOtherFrameChannel(frameId) {
-		return this.getOtherChannel(frameId);
-	}
-
-	getOtherAppChannel(appName) {
-		return this.getOtherChannel(appName);
+	/**
+	 * Gets a particular channel in the set of 'others'
+	 * @param appNameOrFrameId
+	 * @returns {*}
+	 */
+	getOtherChannel(appNameOrFrameId) {
+		return this.getOtherChannels()[appNameOrFrameId];
 	}
 }
 
@@ -383,6 +422,9 @@ class Ifc {
 	#config;
 	#channels;
 
+	/**
+	 * @param {IfcConfig} config
+	 */
 	constructor(config) {
 		if (!config instanceof IfcConfig) {
 			throw "Config must be an instance of IwcConfig.";
@@ -391,7 +433,7 @@ class Ifc {
 		this.#config = config;
 		this.#channels = new IfcChannels(this.#config);
 
-		this.registerHandler(this.getChannels().getRoleCallChannel(), this.#roleCallChannelHandler.bind(this));
+		this.registerMessageHandler(this.getChannels().getRoleCallChannel(), this.#roleCallChannelHandler.bind(this));
 
 		window.addEventListener('unload', () => {
 			this.close();
@@ -408,11 +450,11 @@ class Ifc {
 	}
 
 	/**
-	 * This is the default handler to take in raw messages from te channels.
+	 * This is the default handler to take in raw messages from the channels.
 	 *
 	 * Intended use like:
 	 * <pre>
-	 * this.#channels.getRoleCallChannel().onmessage = (event) => this.#msgReceived(event, this.#roleCallChannelHandler);
+	 * this.#channels.getRoleCallChannel().onmessage = (event) => this.#msgReceived(event, function(message){...} );
 	 * </pre>
 	 * @param {MessageEvent} event The raw message from the BroadcastChannel
 	 * @param {function} handler The handler to further handle the deserialized message.
@@ -424,15 +466,15 @@ class Ifc {
 
 		console.debug("Received a new message on channel '" + event.target.name + "': ", message);
 
-		return handler(message);
+		return handler(message, event);
 	}
 
 	/**
-	 * registers a handler with a channel, wrapping it in the default handler.
+	 * Registers a handler with a channel, wrapping it in the default handler.
 	 * @param {BroadcastChannel} channel
-	 * @param {function} handler
+	 * @param {function} handler A function to handle the message. Will be passed the IwcMessage, and the overall event, so: handler(message, event)
 	 */
-	registerHandler(channel, handler) {
+	registerMessageHandler(channel, handler) {
 		channel.onmessage = (event) => this.#msgReceived(event, handler);
 	}
 
@@ -442,7 +484,7 @@ class Ifc {
 	 * @param {IfcMessage} message
 	 */
 	#roleCallChannelHandler(message) {
-		console.log(this.getThisChannelName() + " Received new role call '"+message.getIntent()+"' message: ", message);
+		console.log(this.getFrameId() + " Received new role call '"+message.getIntent()+"' message: ", message);
 
 		switch (message.getIntent()) {
 			case Ifc.#roleCallIntentCall:
@@ -464,12 +506,12 @@ class Ifc {
 	}
 
 	/**
-	 * Sends a message on a given channel.
+	 * Sends a message on a given channel. Handles the serialization.
 	 * @param {BroadcastChannel} channel
 	 * @param {IfcMessage} message
 	 */
 	sendMessage(channel, message) {
-		console.log(this.getThisChannelName() + " Sending message: ", message);
+		console.log(this.getFrameId() + " Sending message: ", message);
 		channel.postMessage(message.serialize());
 	}
 
@@ -480,7 +522,7 @@ class Ifc {
 	 */
 	respondToMessage(received, message) {
 		this.sendMessage(
-			this.getChannels().getOtherFrameChannel(received.getFrameId()),
+			this.getChannels().getOtherChannel(received.getFrameId()),
 			message
 		);
 	}
@@ -499,12 +541,17 @@ class Ifc {
 		return this.#channels;
 	}
 
+	/**
+	 * Gets a channel from the "others"
+	 * @param name
+	 * @returns {*}
+	 */
 	getChannel(name) {
-		return this.getChannels()[name];
+		return this.getChannels().getOtherChannel(name);
 	}
 
-	getThisChannelName() {
-		return this.getChannels().getThisFrameChannel().name;
+	getFrameId(){
+		return this.#config.getFrameId();
 	}
 
 	/**
@@ -513,7 +560,7 @@ class Ifc {
 	 * Given we expect the whole page to be closing, we don't explicitly close channels, but that might be something to do in the future.
 	 */
 	close() {
-		console.log("Closing IWC object.");
+		console.log("Closing IFC object.");
 		this.sendMessage(this.#channels.getRoleCallChannel(), IfcMessage.create(this.getConfig(), Ifc.#roleCallIntentExit));
 		//TODO:: determine if this is adequate, or if we need to do anything else, clean-wise to clear dead frames
 	}

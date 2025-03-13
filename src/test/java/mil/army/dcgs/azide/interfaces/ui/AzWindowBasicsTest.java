@@ -56,7 +56,7 @@ public class AzWindowBasicsTest extends WebUiTest {
 		Pattern windowInitFinishedBannerLog = Pattern.compile("Finished initializing new Azide window frame:");
 		Pattern appInitBannerLog = Pattern.compile("======== Initializing new azide app:\ntest-service-0");
 		Pattern appInitFinishedBannerLog = Pattern.compile("Finished initializing new Azide app frame:");
-		Pattern appInitParentWindowLog = Pattern.compile("Parent window channel name:");
+		Pattern appInitParentWindowLog = Pattern.compile("Parent window frame id:");
 		
 		pageLog.registerPattern(windowInitFinishedBannerLog, appInitBannerLog, appInitFinishedBannerLog, appInitParentWindowLog);
 		
@@ -118,6 +118,13 @@ public class AzWindowBasicsTest extends WebUiTest {
 		);
 		assertTrue(
 			pageLog.getPatternHits(roleCallHereLog).get(0).contains(appFrameId + roleCallHereLog.pattern())
+		);
+		
+		String listInWindow = page.waitForFunction("azideWin.getIfc().getChannels().getOtherChannelNames()").jsonValue().toString();
+		log.info("channel list in window: {}", listInWindow);
+		assertEquals(
+			"[test-service-0, "+appFrameId+"]",
+			listInWindow
 		);
 	}
 	

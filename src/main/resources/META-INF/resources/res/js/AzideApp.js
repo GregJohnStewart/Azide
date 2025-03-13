@@ -18,7 +18,7 @@
  */
 class AzideApp {
 	#iwc;
-	#windowName = "";
+	#windowFrameId = "";
 
 	/**
 	 * @param {string|null} appName (optional, but recommended) the name of this app.
@@ -26,7 +26,7 @@ class AzideApp {
 	 */
 	constructor({
 					appName = "azideApp",
-					network = "iwc"
+					network = "ifc"
 				}) {
 		console.log("======== Initializing new azide app: ", appName);
 		this.#iwc = new Ifc(new IfcConfig({
@@ -40,14 +40,14 @@ class AzideApp {
 		if (azideWindow == null) {
 			console.info("Azide Window not found.");
 		} else {
-			this.#windowName = azideWindow.getName();
-			console.info("Parent window channel name: ", this.#windowName);
+			this.#windowFrameId = azideWindow.getFrameId();
+			console.info("Parent window frame id: ", this.#windowFrameId);
 		}
-		console.debug("Finished initializing new Azide app frame: ", this.#iwc.getThisChannelName());
+		console.debug("Finished initializing new Azide app frame: ", this.#iwc.getFrameId());
 	}
 
 	haveWindow() {
-		return this.#windowName != null;
+		return this.#windowFrameId != null;
 	}
 
 	assertHaveWindow() {
@@ -58,7 +58,7 @@ class AzideApp {
 
 	getWindowChannel() {
 		this.assertHaveWindow();
-		return this.#iwc.getChannel(this.#windowName);
+		return this.#iwc.getChannel(this.#windowFrameId);
 	}
 
 }
