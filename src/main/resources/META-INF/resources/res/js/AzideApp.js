@@ -43,6 +43,7 @@ class AzideApp {
 			this.#windowName = azideWindow.getName();
 			console.info("Parent window channel name: ", this.#windowName);
 		}
+		console.debug("Finished initializing new Azide app frame: ", this.#iwc.getThisChannelName());
 	}
 
 	haveWindow() {

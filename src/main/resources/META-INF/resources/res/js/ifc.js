@@ -112,7 +112,6 @@ class IfcMessage {
 					message = null,
 					id = crypto.randomUUID()
 				}) {
-
 		this.#id = id;
 		this.#appName = appName;
 		this.#frameId = frameId;
@@ -154,7 +153,7 @@ class IfcMessage {
 			intent: message.getIntent(),
 			message: message.getMessage()
 		};
-		console.debug("Plain message: ", plain);
+		console.debug("Serialized message: ", plain);
 		return JSON.stringify(plain);
 	}
 
@@ -443,7 +442,7 @@ class Ifc {
 	 * @param {IfcMessage} message
 	 */
 	#roleCallChannelHandler(message) {
-		console.log("Received new role call message: ", message);
+		console.log(this.getThisChannelName() + " Received new role call '"+message.getIntent()+"' message: ", message);
 
 		switch (message.getIntent()) {
 			case Ifc.#roleCallIntentCall:
@@ -470,7 +469,7 @@ class Ifc {
 	 * @param {IfcMessage} message
 	 */
 	sendMessage(channel, message) {
-		console.log("Sending message: ", message);
+		console.log(this.getThisChannelName() + " Sending message: ", message);
 		channel.postMessage(message.serialize());
 	}
 

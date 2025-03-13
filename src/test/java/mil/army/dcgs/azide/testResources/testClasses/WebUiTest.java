@@ -219,6 +219,26 @@ public class WebUiTest extends RunningServerTest {
 			);
 		}
 		
+		public List<String> getPatternHits(Pattern pattern){
+			return List.copyOf(this.searchPatterns.get(pattern));
+		}
+		
+		public void resetPatternHits(Pattern pattern){
+			List<String> hits = this.getPatternHits(pattern);
+			
+			if(hits == null){
+				return;
+			}
+			
+			hits.clear();
+		}
+		
+		public void resetPatternHits(){
+			for(Pattern curPattern : this.getSearchPatterns().keySet()){
+				this.resetPatternHits(curPattern);
+			}
+		}
+		
 		public void log(String message){
 			try {
 				this.logOutputStream.write(message.getBytes());
