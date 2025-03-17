@@ -8,7 +8,7 @@
  *  - app name - The name of a running app. Multiple instances of an app can be opened, differentiated by a specific frame id
  *  - frame id - The particular id of a given frame.
  *  - network - the context network all communication happens in. Used to segment communications (if needed)
- *  - channel - The underlying utility that allows for the different windows to communicate.
+ *  - channel - The underlying utility that allows for the different windows to communicate: https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel
  *
  */
 

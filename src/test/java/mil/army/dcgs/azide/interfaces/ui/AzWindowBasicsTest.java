@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import mil.army.dcgs.azide.testResources.profiles.AppFillingProfile;
 import mil.army.dcgs.azide.testResources.testClasses.WebUiTest;
 import mil.army.dcgs.azide.testResources.testUser.TestUser;
+import mil.army.dcgs.azide.testResources.ui.utilities.AzAppUtils;
 import org.junit.jupiter.api.Test;
 
 import java.util.regex.Pattern;
@@ -78,6 +79,9 @@ public class AzWindowBasicsTest extends WebUiTest {
 			windowFrameId,
 			pageLog.getPatternHits(appInitParentWindowLog).get(0).split("\n")[1]
 		);
+		
+		assertEquals(windowFrameId, AzAppUtils.getAzWinFrameId(page));
+		assertEquals(appFrameId, AzAppUtils.getAzAppFrameId(page));
 	}
 	
 	@Test
@@ -135,5 +139,6 @@ public class AzWindowBasicsTest extends WebUiTest {
 			"[\"azideWindow\",\""+windowFrameId+"\"]",
 			listInApp
 		);
+		
 	}
 }
