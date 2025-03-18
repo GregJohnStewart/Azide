@@ -11,22 +11,21 @@ import mil.army.dcgs.azide.testResources.ui.pages.AllPages;
 import mil.army.dcgs.azide.testResources.ui.pages.AppViewerPage;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
-@TestProfile(AppFillingProfile.TwoApps.class)
-public class IwcMultiAppTest extends WebUiTest {
+@TestProfile(AppFillingProfile.TwoAzApps.class)
+public class MultiAppUiBasicsTest extends WebUiTest {
 	
 	@Test
-	public void testLoggedInScreen() {
+	public void testAppList() {
 		TestUser user = this.getTestUserService().getUser();
 		
 		Page page = this.getLoggedInPage(user);
-		
-		page.locator(AllPages.NAV_LOGO);
-		page.locator(AppViewerPage.USER_MENU_BUTTON);
 		
 		{//Verify starting app
 			Locator appTitleLocator = page.frameLocator("#appframe").locator("#appTitle");
@@ -43,13 +42,33 @@ public class IwcMultiAppTest extends WebUiTest {
 		assertTrue(page.locator(AppViewerPage.APPS_FILTER_INPUT).isVisible());
 		
 		Locator appsBarLocator = page.locator(AppViewerPage.APPS_BAR);
-		Locator otherAppButton = appsBarLocator.locator(".appSelectCard").nth(1);
+//		Locator otherAppButton = appsBarLocator.locator(".appSelectCard").nth(1);
 		
+		//TODO:: verify app list
 		
+	}
+	
+	
+	@Test
+	public void testAppOpen() throws InterruptedException {
+		TestUser user = this.getTestUserService().getUser();
 		
+		Page page = this.getLoggedInPage(user);
 		
+		assertFalse(page.locator(AppViewerPage.APPS_SELECT_BAR).isVisible());
+		page.locator(AppViewerPage.APPS_BUTTON).click();
+		assertTrue(page.locator(AppViewerPage.APPS_SELECT_BAR).isVisible());
+		assertTrue(page.locator(AppViewerPage.APPS_FILTER_INPUT).isVisible());
 		
+		List<Locator> appsDisplayed = page.locator(AppViewerPage.APPS_BAR).locator("div.appSelectCard").all();
 		
+		assertEquals(2, appsDisplayed.size());
+		
+		Locator otherApp = appsDisplayed.getLast();
+		
+		otherApp.locator(".appOpenNewWindowButton").click();
+		
+		//TODO:: get other window, test opened and displaying correct app
 	}
 	
 }

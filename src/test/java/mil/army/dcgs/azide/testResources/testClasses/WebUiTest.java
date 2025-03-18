@@ -82,6 +82,8 @@ public class WebUiTest extends RunningServerTest {
 														  .setViewportSize(1920, 1080);
 		
 		this.context = PlaywrightSetup.getInstance().getBrowser().newContext(newContextOptions);
+		
+		this.getContext().onPage(this::initPage);
 	}
 	
 	@AfterEach
@@ -126,9 +128,7 @@ public class WebUiTest extends RunningServerTest {
 		return this.pageLogs.get(this.getContext().pages().indexOf(page));
 	}
 	
-	public Page newPage(){
-		log.info("Getting new page in window.");
-		Page output = this.getContext().newPage();
+	public Page initPage(Page output){
 		int pageIndex = this.getContext().pages().indexOf(output);
 		Path curPageConsoleFile = this.curTestUiResultDir.resolve("page-" + (pageIndex + 1) + "-console.log");
 		PageLog logs;
@@ -143,6 +143,11 @@ public class WebUiTest extends RunningServerTest {
 		output.onConsoleMessage(logs::log);
 		
 		return output;
+	}
+	
+	public Page newPage(){
+		log.info("Getting new page.");
+		return this.getContext().newPage();
 	}
 	
 	protected Page getLoggedInPage(TestUser user, String page) {

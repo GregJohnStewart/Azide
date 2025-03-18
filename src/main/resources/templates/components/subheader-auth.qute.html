@@ -81,15 +81,15 @@
 							<div class="d-grid gap-2">
 								<div class="btn-group" role="group" aria-label="{application.name} navigation buttons">
 									{#if isCurApp}
-										<button class="btn btn-outline-primary btn-sm" title="Start fresh in current window." onclick="AppSelectUi.openApp('{application.reference}');">
+										<button class="btn btn-outline-primary btn-sm appRefreshButton" title="Start fresh in current window." onclick="AppSelectUi.openApp('{application.reference}');">
 											{#icons/refreshAppHere /}
 										</button>
 									{#else}
-										<button class="btn btn-outline-primary btn-sm" title="Open app in this window." onclick="AppSelectUi.openApp('{application.reference}');" {#if isCurApp}disabled{/if}>
+										<button class="btn btn-outline-primary btn-sm appOpenHereButton" title="Open app in this window." onclick="AppSelectUi.openApp('{application.reference}');" {#if isCurApp}disabled{/if}>
 											{#icons/openAppHere /}
 										</button>
 									{/if}
-									<button type="button" class="btn btn-sm btn-outline-primary" title="Open app in new window." onclick="AppSelectUi.openApp('{application.reference}', true);AppSelectUi.toggleAppBar();">
+									<button type="button" class="btn btn-sm btn-outline-primary appOpenNewWindowButton" title="Open app in new window." onclick="AppSelectUi.openApp('{application.reference}', true);AppSelectUi.toggleAppBar();">
 										{#icons/openAppNew /}
 									</button>
 								</div>
